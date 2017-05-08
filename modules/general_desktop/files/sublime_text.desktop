@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Sublime Text
+Comment=Text Editor
+Exec=/opt/sublime_text_3/sublime_text
+Icon=/opt/sublime_text_3/Icon/256x256/sublime-text.png
+Type=Application
+Terminal=false
+NoDisplay=false
+Categories=Development;TextEditor;

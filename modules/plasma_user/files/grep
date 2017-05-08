@@ -1,0 +1,4 @@
+#!/bin/tcsh -f
+# -f : start faster by ignoring the start-up file
+
+/bin/grep --colour=auto --exclude-dir .svn --exclude-dir .deps $argv:q

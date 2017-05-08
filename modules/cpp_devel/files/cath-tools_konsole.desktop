@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=cath-tools-konsole
+Comment=
+Exec=konsole --tabs-from-file ~/svn/config/trunk/cath-tools.konsole_tabs_file
+Icon=utilities-terminal
+Type=Application
+Terminal=false
+NoDisplay=false
+StartupNotify=true

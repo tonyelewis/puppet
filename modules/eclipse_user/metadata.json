@@ -1,0 +1,10 @@
+{
+  "name": "eclipse_user",
+  "version": "0.1.0",
+  "summary": "Configure Eclipse environment for a user",
+  , // If this isn't here, puppet fails with: Could not find class XXX for YYY on node YYY
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+  ]
+}
+

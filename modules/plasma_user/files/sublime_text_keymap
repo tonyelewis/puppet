@@ -1,0 +1,28 @@
+[
+	{
+		"keys"    : ["ctrl+shift+s"],
+		"command" : "save_all"
+	},
+	{
+		"keys"    : ["f10"],
+		"command" : "toggle_setting",
+		"args"    : {
+			"setting" : "word_wrap"
+		}
+	},
+	{
+		"keys"    : ["ctrl+\\"],
+		"command" : "toggle_side_bar"
+	},
+	{
+		"keys"    : ["ctrl+."],
+		"command" : "toggle_white_space"
+	},
+	{
+		"keys"    : ["f12"],
+		"command" : "toggle_setting",
+		"args"    : {
+			"setting" : "line_numbers"
+		}
+	}
+]

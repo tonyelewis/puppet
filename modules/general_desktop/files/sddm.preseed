@@ -1,0 +1,4 @@
+# Default display manager:
+# Choices: lightdm, sddm
+lightdm shared/default-x-display-manager        select  sddm
+sddm    shared/default-x-display-manager        select  sddm

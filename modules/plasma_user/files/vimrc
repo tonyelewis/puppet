@@ -1,0 +1,7 @@
+set autoindent
+set tabstop=2
+set shiftwidth=2
+set ruler
+set background=dark
+autocmd Filetype gitcommit setlocal spell textwidth=72
+autocmd FileType svn       setlocal spell
