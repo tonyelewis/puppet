@@ -1,8 +1,10 @@
 {
   "name": "cpp_devel",
   "version": "0.1.0",
-  "summary": "",
-  , // If this isn't here, puppet fails with: Could not find class XXX for YYY on node YYY
+  "author": "anonymous",
+  "summary": null,
+  "license": "Apache-2.0",
+  "source": "",
   "dependencies": [
     {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
   ]
