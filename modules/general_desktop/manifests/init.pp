@@ -178,7 +178,7 @@ class general_desktop {
     uri    => 'https://atom.io/download/deb',
     target => '/opt/atom-amd64.deb'
   }->
-  package { 'atom' :
+  package { 'atom' : # Does this require package gconf2 ?
     provider => dpkg,
     ensure   => latest,
     source   => '/opt/atom-amd64.deb',
