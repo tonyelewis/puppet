@@ -42,7 +42,8 @@ class cpp_devel {
   package {
     [
       'clang',               #
-      'clang-format-3.6',    #
+      #'clang-format-3.6',    #
+      'clang-format',        #
       'clang-tidy',          #
       'cmake',               #
       'doxygen',             #
@@ -51,7 +52,7 @@ class cpp_devel {
       'kcachegrind',         #
       'libc++1',             #
       'libc++-dev',          #
-      'libc++abi-dev',       # Seems to be required for in Ubuntu 16.04 (3.8.0-2ubuntu4)
+      'libc++abi-dev',       #
       'libc6-dev-i386',      #
       'libclang-dev',        # For iwyu
       'libncurses5-dev',     # For iwyu
@@ -63,12 +64,12 @@ class cpp_devel {
     ]:
     ensure => 'latest'
   }->
-  # Seems to be required for in Ubuntu 16.04 (3.8.0-2ubuntu4)
-  file { 'put symlink to __cxxabi_config.h in the standard include directory' : 
-    name   => '/usr/include/c++/v1/__cxxabi_config.h',
-    ensure => 'link',
-    target => "/usr/include/libcxxabi/__cxxabi_config.h",
-  }
+  ## Seems to be required for in Ubuntu 16.04 (3.8.0-2ubuntu4)
+  #file { 'put symlink to __cxxabi_config.h in the standard include directory' :
+  #  name   => '/usr/include/c++/v1/__cxxabi_config.h',
+  #  ensure => 'link',
+  #  target => "/usr/include/libcxxabi/__cxxabi_config.h",
+  #}
   
   file { 'Install cath-tools_konsole.desktop shortcut' :
     path    => "$desktop_files_dir/cath-tools_konsole.desktop",

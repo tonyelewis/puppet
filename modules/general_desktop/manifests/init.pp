@@ -85,7 +85,7 @@ class general_desktop {
       'python3-click',                   # Required for mkdocs
       'r-base',
       'rasmol',
-      'sddm-theme-elarun',               # Should add this for Ubuntu >= 15.04 if encountering problems with entering   username at login
+      #'sddm-theme-elarun',               # Should add this for 15.04 <= Ubuntu <= 16.10 if encountering problems with entering   username at login
       'sshfs',
       'subversion',
       'synaptic',
@@ -247,6 +247,6 @@ class general_desktop {
   }->
   exec { 'untar cppreference archive' :
     command => "tar -zxvf /opt/cppreference-doc-20170214.tar.gz --directory /opt/cppreference-doc-20170214 --strip-components=1",
-    #creates => "$eclipse_dir/configuration/org.eclipse.update/platform.xml",
+    creates => "/opt/cppreference-doc-20170214/README.md",
   }
 }

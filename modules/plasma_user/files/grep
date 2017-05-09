@@ -2,3 +2,4 @@
 # -f : start faster by ignoring the start-up file
 
 /bin/grep --colour=auto --exclude-dir .svn --exclude-dir .deps $argv:q
+#/bin/grep --colour=auto                                        $argv:q
