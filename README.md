@@ -11,14 +11,15 @@ On XPS 15:
 After a fresh install...
 ------------------------
 
-Ensure you have puppet installed
+Ensure you have puppet installed:
 
-    apt-get -y install puppet puppet-module-puppetlabs-stdlib augeas-tools
+    apt-get -y install puppet puppet-module-puppetlabs-stdlib puppet-module-puppetlabs-vcsrepo augeas-tools
 
 ...and that puppet has the puppetlabs-vcsrepo and puppetlabs-git modules installed:
 
-    puppet module install puppetlabs-vcsrepo
     puppet module install puppetlabs-git
+
+(Pre Ubuntu 16.04, the puppet-module-puppetlabs-vcsrepo didn't exist so that has to be installed with `puppet module install puppetlabs-vcsrepo` instead)
 
 Example command
 ---------------
@@ -38,3 +39,21 @@ Prepare:
  * Check for any old repositories
  * Check for anything in home directory
  * Remove the biggest space-wasters in the home directory and mirror elsewhere
+
+Overwrite install
+
+Mirror old home directory into a new subdirectory
+
+Manual Steps
+------------
+ * "systemsettings" -> "Search" -> "File Search" -> Deselect "Enable File Search" -> "Apply"
+ * "systemsettings" -> "Power Management" -> make some decisions
+
+
+
+Notes on installing CUDA
+----------------------------------------------
+After a wasted day and lots of frustration, I still sddm to work with the drive installed by the CUDA 8 .deb file (and it flashed really annoyingly until I turned sddm off).
+I then gave up when I found that the new nvcc wasn't compiling an example PTX file any faster than the old one, based on this benchmark:
+
+Before, `/usr/bin/time nvcc --fmad=false --cubin -arch sm_30 --output-directory /tmp ~/compile_kernel.ptxtocubin.139960666117888.ptx` took about 1.14s user time
