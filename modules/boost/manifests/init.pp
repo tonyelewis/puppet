@@ -28,17 +28,19 @@ define boost (
 #   $boost_version = '1_62_0',
 #   $boost_version = '1_63_0_b1',
 #   $boost_version = '1_63_0',
-   $boost_version = '1_64_0_b2',
+#   $boost_version = '1_64_0_b2',
 #   $boost_version = '1_64_0',
+    $boost_version = '1_65_1',
+    $cpp_standard  = 'c++03',
 ) {
   
   # TODO Lower case $compiler
   case $compiler {
-    'clang' : { $b2_compiler_flags = 'toolset=clang cxxflags="-stdlib=libc++" linkflags="-stdlib=libc++"' }
-    'gcc'   : { $b2_compiler_flags = ''                                                                   }
-    default : { fail("In Boost, do not recognise compiler \"$compiler\"")                                 }
+    'clang' : { $b2_compiler_flags = "toolset=clang cxxflags=\"-stdlib=libc++ -std=${cpp_standard}\" linkflags=\"-stdlib=libc++ -std=${cpp_standard}\"" }
+    'gcc'   : { $b2_compiler_flags = "              cxxflags=\"               -std=${cpp_standard}\" linkflags=\"               -std=${cpp_standard}\"" }
+    default : { fail("In Boost, do not recognise compiler \"$compiler\"")                                                                               }
   }
-  
+
   if $boost_version != '1_58_0'    and
      $boost_version != '1_59_0'    and
      $boost_version != '1_60_0_b1' and
@@ -48,10 +50,11 @@ define boost (
      $boost_version != '1_62_0_b1' and
      $boost_version != '1_62_0'    and
      $boost_version != '1_63_0_b1' and
-     $boost_version != '1_64_0_b2' {
-    fail( "The Boost module does yet handle versions other than 1_58_0, 1_59_0, 1_60_0_b1, 1_60_0, 1_61_0_b1, 1_61_0, 1_62_0_b1, 1_62_0, 1_63_0_b1 and 1_64_0_b2 yet - please make it do so, so it can then handle your version \"${boost_version}\"" )
+     $boost_version != '1_64_0_b2' and
+     $boost_version != '1_65_1' {
+    fail( "The Boost module does yet handle versions other than 1_58_0, 1_59_0, 1_60_0_b1, 1_60_0, 1_61_0_b1, 1_61_0, 1_62_0_b1, 1_62_0, 1_63_0_b1, 1_64_0_b2 and 1_65_1 yet - please make it do so, so it can then handle your version \"${boost_version}\"" )
   }
-  $unique_string             = "UID:${compiler};${boost_version}"
+  $unique_string             = "UID:${compiler};${boost_version};${cpp_standard}"
 
 # $boost_version_underscores = '1_58_0'
 # $boost_version_periods     = '1.58.0'
@@ -71,12 +74,14 @@ define boost (
 # $boost_version_periods     = '1.62.0'
 # $boost_version_underscores = '1_63_0_b1'
 # $boost_version_periods     = '1.63.0.beta.1'
-  $boost_version_underscores = '1_64_0_b2'
-  $boost_version_periods     = '1.64.0.beta.2'
+# $boost_version_underscores = '1_64_0_b2'
+# $boost_version_periods     = '1.64.0.beta.2'
+  $boost_version_underscores = '1_65_1'
+  $boost_version_periods     = '1.65.1'
   $root_dir                  = '/opt'
   $archive_file              = "${root_dir}/boost_${boost_version_underscores}.tar.gz"
-  $working_dir               = "${root_dir}/boost_${boost_version_underscores}_${compiler}"
-  $build_dir                 = "${root_dir}/boost_${boost_version_underscores}_${compiler}_build"
+  $working_dir               = "${root_dir}/boost_${boost_version_underscores}_${compiler}_${cpp_standard}"
+  $build_dir                 = "${root_dir}/boost_${boost_version_underscores}_${compiler}_${cpp_standard}_build"
   
   File {
     owner => 'root',
@@ -110,7 +115,7 @@ define boost (
   }->
 
   # Ensure the working directory exists
-  file { "Make Boost working directory" :
+  file { "Make Boost working directory $unique_string" :
     path    => $working_dir,
     ensure  => 'directory',
     owner   => 'root',
