@@ -85,7 +85,8 @@ define boost (
   $root_dir                  = '/opt'
   $archive_file              = "${root_dir}/boost_${boost_version_underscores}.tar.gz"
   $working_dir               = "${root_dir}/boost_${boost_version_underscores}_${compiler}_${cpp_standard}"
-  $build_dir                 = "${root_dir}/boost_${boost_version_underscores}_${compiler}_${cpp_standard}_build"
+  $build_name                = "boost_${boost_version_underscores}_${compiler}_${cpp_standard}_build"
+  $build_dir                 = "${root_dir}/${$build_name}"
   
   File {
     owner => 'root',
@@ -206,7 +207,7 @@ define boost (
     file { "/opt/include $unique_string" :
         path   => '/opt/include',
         ensure => 'link',
-        target => "boost_${boost_version}_${compiler}_build/include",
+        target => "$build_name/include",
         owner  => 'root',
         group  => 'root',
     }
