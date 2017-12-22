@@ -30,7 +30,8 @@ define boost (
 #   $boost_version = '1_63_0',
 #   $boost_version = '1_64_0_b2',
 #   $boost_version = '1_64_0',
-    $boost_version = '1_65_1',
+#   $boost_version = '1_65_1',
+    $boost_version = '1_66_0',
     $cpp_standard  = 'c++03',
 ) {
   
@@ -51,8 +52,9 @@ define boost (
      $boost_version != '1_62_0'    and
      $boost_version != '1_63_0_b1' and
      $boost_version != '1_64_0_b2' and
-     $boost_version != '1_65_1' {
-    fail( "The Boost module does yet handle versions other than 1_58_0, 1_59_0, 1_60_0_b1, 1_60_0, 1_61_0_b1, 1_61_0, 1_62_0_b1, 1_62_0, 1_63_0_b1, 1_64_0_b2 and 1_65_1 yet - please make it do so, so it can then handle your version \"${boost_version}\"" )
+     $boost_version != '1_65_1'    and
+     $boost_version != '1_66_0' {
+    fail( "The Boost module does yet handle versions other than 1_58_0, 1_59_0, 1_60_0_b1, 1_60_0, 1_61_0_b1, 1_61_0, 1_62_0_b1, 1_62_0, 1_63_0_b1, 1_64_0_b2, 1_65_1 and 1_66_0 yet - please make it do so, so it can then handle your version \"${boost_version}\"" )
   }
   $unique_string             = "UID:${compiler};${boost_version};${cpp_standard}"
 
@@ -76,8 +78,10 @@ define boost (
 # $boost_version_periods     = '1.63.0.beta.1'
 # $boost_version_underscores = '1_64_0_b2'
 # $boost_version_periods     = '1.64.0.beta.2'
-  $boost_version_underscores = '1_65_1'
-  $boost_version_periods     = '1.65.1'
+# $boost_version_underscores = '1_65_1'
+# $boost_version_periods     = '1.65.1'
+  $boost_version_underscores = '1_66_0'
+  $boost_version_periods     = '1.66.0'
   $root_dir                  = '/opt'
   $archive_file              = "${root_dir}/boost_${boost_version_underscores}.tar.gz"
   $working_dir               = "${root_dir}/boost_${boost_version_underscores}_${compiler}_${cpp_standard}"
@@ -109,7 +113,9 @@ define boost (
   
   # Download the source archive (.tar.gz) file
   boost::download_file { "Download Boost archive ${unique_string}" :
-    uri           => "http://downloads.sourceforge.net/project/boost/boost/${boost_version_periods}/boost_${boost_version_underscores}.tar.gz",
+    #uri           => "http://downloads.sourceforge.net/project/boost/boost/${boost_version_periods}/boost_${boost_version_underscores}.tar.gz",
+    uri           => "https://downloads.sourceforge.net/project/boost/boost/${boost_version_periods}/boost_${boost_version_underscores}.tar.gz",
+    #uri           => "https://dl.bintray.com/boostorg/release/${boost_version_periods}/source/boost_${boost_version_underscores}.tar.gz",
     target        => $archive_file,
     unique_suffix => " ${unique_string}"
   }->
