@@ -118,11 +118,17 @@ class cpp_devel {
     key   => 'pager.diff',
     value => 'false',
   }
-  git::config { 'Set user Git config alias.st to status' :
+  git::config { 'Set user Git config alias.st to status --column' :
     user  => $repos_user,
     scope => 'global',
     key   => 'alias.st',
-    value => 'status',
+    value => 'status --column',
+  }
+  git::config { 'Set user Git config alias.sts to status -s' :
+    user  => $repos_user,
+    scope => 'global',
+    key   => 'alias.sts',
+    value => 'status -s',
   }
   git::config { 'Set user Git config alias.ls-modified to diff --name-only' :
     user  => $repos_user,
