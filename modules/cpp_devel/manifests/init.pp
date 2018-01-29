@@ -71,7 +71,18 @@ class cpp_devel {
   #  ensure => 'link',
   #  target => "/usr/include/libcxxabi/__cxxabi_config.h",
   #}
-  
+
+	# Seems to be required for in Ubuntu 17.10 (package libc++-dev 3.9.1-3)
+	# Demonstrable with : `echo '#include <locale>' | clang++ -stdlib=libc++ -c -x c++ -`
+	# See https://www.mail-archive.com/ubuntu-bugs@lists.ubuntu.com/msg5274201.html
+	#
+	# TODO: Come Ubuntu 18.04, check if this is still necessary and remove if possible
+	file { 'put symlink to locale.h called xlocale.h in the standard include directory' :
+		name   => '/usr/include/xlocale.h',
+		ensure => 'link',
+		target => "/usr/include/locale.h",
+	}
+
   file { 'Install cath-tools_konsole.desktop shortcut' :
     path    => "$desktop_files_dir/cath-tools_konsole.desktop",
     ensure  => 'present',
