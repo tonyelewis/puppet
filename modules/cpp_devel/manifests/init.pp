@@ -41,6 +41,7 @@ class cpp_devel {
   # C++ Development
   package {
     [
+      'cimg-dev',            # Currently required by LTFG code - can this be dropped for Boost Image Library?
       'clang',               #
       #'clang-format-3.6',    #
       'clang-format',        #

@@ -67,6 +67,7 @@ class general_desktop {
       'libimage-exiftool-perl',
       'libindicator7',                   # For Chrome
       'libipc-run3-perl',                # For general Perl use
+      'liblog-log4perl-perl',            # For general Perl use
       'libmoosex-params-validate-perl',  # MooseX::Params::Validate for General Perl use and for gen_cmake_list.pl in   particular
       'libmoosex-types-path-class-perl', #
       'libpath-class-perl',              # For General Perl use and for makeoutputparser.pl in particular
