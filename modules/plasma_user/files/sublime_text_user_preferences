@@ -333,5 +333,6 @@
 		"Vintage"
 	],
 	"spell_check": true,
+	"tab_size": 3,
 	"word_separators": "./\\()\"'-:,.;<>~!#%^&*|+=[]{}`~?"
 }
