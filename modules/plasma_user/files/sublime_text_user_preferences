@@ -326,8 +326,12 @@
 	],
 	"detect_indentation": false,
 	"dictionary": "Packages/Language - English/en_GB.dic",
-	"draw_white_space": "selection",
+	"draw_white_space": "all",
 	"font_size": 21,
+	"ignored_packages":
+	[
+		"Vintage"
+	],
 	"spell_check": true,
 	"word_separators": "./\\()\"'-:,.;<>~!#%^&*|+=[]{}`~?"
 }
