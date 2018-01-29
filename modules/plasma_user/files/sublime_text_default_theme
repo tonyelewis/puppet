@@ -1,12 +1,10 @@
 [ 
     { 
-        "class"           : "sidebar_label",
-        "color"           : [ 0, 0, 0 ],
-        "font.size"       : 19,
-        "font.face"       : "Helvetica",
+        "class"       : "sidebar_label",
+        "font.size"   : 22,
     }, 
     {
-        "class"           : "sidebar_tree",
-        "row_padding"     : [ 4, 14 ],
+        "class"       : "sidebar_tree",
+        "row_padding" : [ 4, 13 ],
     }, 
 ]
