@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=ltfg-konsole
+Comment=
+Exec=konsole --tabs-from-file ~/svn/config/trunk/ltfg.konsole_tabs_file
+Icon=utilities-terminal
+Type=Application
+Terminal=false
+NoDisplay=false
+StartupNotify=true

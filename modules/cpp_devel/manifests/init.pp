@@ -90,28 +90,89 @@ class cpp_devel {
     replace => 'yes',
     mode    => '0644',
   }
-
-  file { 'Install eclipse.desktop shortcut' :
-    path    => "$desktop_files_dir/eclipse.desktop",
+#
+#   file { 'Install eclipse.desktop shortcut' :
+#     path    => "$desktop_files_dir/eclipse.desktop",
+#     ensure  => 'present',
+#     source  => 'puppet:///modules/cpp_devel/eclipse.desktop',
+#     replace => 'yes',
+#     mode    => '0644',
+#   }
+#
+  file { 'Install ltfg_konsole.desktop shortcut' :
+    path    => "$desktop_files_dir/ltfg_konsole.desktop",
     ensure  => 'present',
-    source  => 'puppet:///modules/cpp_devel/eclipse.desktop',
+    source  => 'puppet:///modules/cpp_devel/ltfg_konsole.desktop',
     replace => 'yes',
     mode    => '0644',
   }
+#
+#   file { 'put symlink to ltfg in the root directory' :
+#     name   => '/ltfg',
+#     ensure => 'link',
+#     target => "$repos_root_dir/ltfg",
+#   }
+#
+#   vcsrepo { 'Checkout immediates of svn repo' :
+#     ensure   => present,
+#     provider => svn,
+#     source   => 'svn://192.168.0.32/',
+#     path     => '/home/lewis/svn',
+#     depth    => 'immediates',
+#     owner    => $repos_user,
+#     group    => $repos_group,
+#   }->
+#   vcsrepo { 'Checkout latest of config' :
+#     ensure   => latest,
+#     provider => svn,
+#     source   => 'svn://192.168.0.32/config',
+#     path     => '/home/lewis/svn/config',
+#     depth    => 'infinity',
+#     owner    => $repos_user,
+#     group    => $repos_group,
+#   }->
+#   vcsrepo { 'Checkout latest of cpan' :
+#     ensure   => latest,
+#     provider => svn,
+#     source   => 'svn://192.168.0.32/cpan',
+#     path     => '/home/lewis/svn/cpan',
+#     depth    => 'infinity',
+#     owner    => $repos_user,
+#     group    => $repos_group,
+#   }->
+#   vcsrepo { 'Checkout latest of tools' :
+#     ensure   => latest,
+#     provider => svn,
+#     source   => 'svn://192.168.0.32/tools',
+#     path     => '/home/lewis/svn/tools',
+#     depth    => 'infinity',
+#     owner    => $repos_user,
+#     group    => $repos_group,
+#   }->
+#   vcsrepo { 'Checkout latest of writing' :
+#     ensure   => latest,
+#     provider => svn,
+#     source   => 'svn://192.168.0.32/writing',
+#     path     => '/home/lewis/svn/writing',
+#     depth    => 'infinity',
+#     owner    => $repos_user,
+#     group    => $repos_group,
+#   }
+#   # This doesn't seem to chown all files to the correct user, so (as root) run: chown -R lewis:lewis ~lewis/svn
 
-  vcsrepo { 'clone cath-tools git repository' :
-    path     => "$repos_root_dir/cath-tools",
-    ensure   => present,
-    provider => git,
-    source   => $cath_tools_url,
-    owner    => $repos_user,
-    group    => $repos_group,
-  }->
-  file { 'put symlink to cath-tools in the root directory' :
-    name   => '/cath-tools',
-    ensure => 'link',
-    target => "$repos_root_dir/cath-tools",
-  }
+#   vcsrepo { 'clone cath-tools git repository' :
+#     path     => "$repos_root_dir/cath-tools",
+#     ensure   => present,
+#     provider => git,
+#     source   => $cath_tools_url,
+#     owner    => $repos_user,
+#     group    => $repos_group,
+#   }->
+#   file { 'put symlink to cath-tools in the root directory' :
+#     name   => '/cath-tools',
+#     ensure => 'link',
+#     target => "$repos_root_dir/cath-tools",
+#   }
   
   # These cause warnings like:
   #

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Eclipse
+Comment=Integrated Development Environment
+Exec=/opt/eclipse/eclipse
+Icon=/opt/eclipse/icon.xpm
+Type=Application
+Terminal=false
+NoDisplay=false
+Categories=Development;IDE;
