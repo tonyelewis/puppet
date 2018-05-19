@@ -1,0 +1,6 @@
+title:  dbg/ltfg ;; workdir: /ltfg/       ;; command: ~/puppet/config/echo_args_and_run_shell_script.zsh export BUILDTYPE=ninja_clang_debug_sharedNEWLINEninja  -k 0 -C ${BUILDTYPE}NEWLINEnar  build-test ;;
+title:  rel/ltfg ;; workdir: /ltfg/       ;; command: ~/puppet/config/echo_args_and_run_shell_script.zsh export BUILDTYPE=ninja_gcc_release       NEWLINEninjac -k 0 -C ${BUILDTYPE}NEWLINEnarc build-test ;;
+title: rwdi/ltfg ;; workdir: /ltfg/       ;; command: ~/puppet/config/echo_args_and_run_shell_script.zsh export BUILDTYPE=ninja_gcc_relwithdebinfoNEWLINEninjac -k 0 -C ${BUILDTYPE}NEWLINEnarc build-test ;;
+title: comp/ltfg ;; workdir: /ltfg/       ;; profile: Shell ;;
+title:  src/ltfg ;; workdir: /ltfg/source ;; profile: Shell ;;
+title:  dox/ltfg ;; workdir: /ltfg/       ;; command: ~/puppet/config/echo_args_and_run_shell_script.zsh doxygen ; date ;NEWLINEhtop ;;

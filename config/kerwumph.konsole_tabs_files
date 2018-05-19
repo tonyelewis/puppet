@@ -1,0 +1,3 @@
+title:  server/kw ;; workdir: /kerwumph/Kerwumph ;; command: ~/puppet/config/echo_args_and_run_shell.zsh export DBIC_TRACE=1NEWLINEscript/kerwumph_server.pl -d -r ;;
+title:  dbg/kw    ;; workdir: /kerwumph/Kerwumph ;;
+
