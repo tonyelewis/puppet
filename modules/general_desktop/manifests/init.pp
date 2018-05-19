@@ -219,14 +219,17 @@ class general_desktop {
     #uri    => 'https://download.sublimetext.com/sublime_text_3_build_3114_x64.tar.bz2',
     #uri    => 'https://download.sublimetext.com/sublime_text_3_build_3124_x64.tar.bz2',
     #uri    => 'https://download.sublimetext.com/sublime_text_3_build_3126_x64.tar.bz2',
-    uri    => 'https://download.sublimetext.com/sublime_text_3_build_3143_x64.tar.bz2',
-    target => "/opt/sublime_text_3_build_3143_x64.tar.bz2",
+    #uri    => 'https://download.sublimetext.com/sublime_text_3_build_3143_x64.tar.bz2',
+    #uri    => 'https://download.sublimetext.com/sublime_text_3_build_3170_x64.tar.bz2',
+    uri    => 'https://download.sublimetext.com/sublime_text_3_build_3176_x64.tar.bz2',
+
+    target => "/opt/sublime_text_3_build_3176_x64.tar.bz2",
   }->
   file { '/opt/sublime_text_3' :
     ensure => 'directory'
   }->
   exec { 'Untar Sublime Text archive' :
-    command => 'tar -axvf "/opt/sublime_text_3_build_3143_x64.tar.bz2" --directory /opt/sublime_text_3 --strip-components=1',
+    command => 'tar -axvf "/opt/sublime_text_3_build_3176_x64.tar.bz2" --directory /opt/sublime_text_3 --strip-components=1',
     creates => '/opt/sublime_text_3/sublime_text',
   }->
   file { 'Install sublime_text.desktop shortcut' :
