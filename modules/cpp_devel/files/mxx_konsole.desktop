@@ -1,7 +1,7 @@
 [Desktop Entry]
-Name=cath-tools-konsole
+Name=mxx-konsole
 Comment=
-Exec=konsole --tabs-from-file ~/puppet/config/cath-tools.konsole_tabs_file
+Exec=konsole --tabs-from-file ~/mxx/mxx.konsole_tabs_file
 Icon=utilities-terminal
 Type=Application
 Terminal=false

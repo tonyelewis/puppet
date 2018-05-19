@@ -42,20 +42,20 @@ class cpp_devel {
 	package {
 		[
 			'cimg-dev',            # Currently required by LTFG code - can this be dropped for Boost Image Library?
-			'clang',               #
+			#'clang',               #
 			# 'clang-format-3.6',    #
-			'clang-format',        #
-			'clang-tidy',          #
+			#'clang-format',        #
+			#'clang-tidy',          #
 			'cmake',               #
 			'doxygen',             #
 			'doxygen-doc',         #
 			'g++',                 #
 			'kcachegrind',         #
-			'libc++1',             #
-			'libc++-dev',          #
-			'libc++abi-dev',       #
-			'libc6-dev-i386',      #
-			'libclang-dev',        # For iwyu
+			#'libc++1',             #
+			#'libc++-dev',          #
+			#'libc++abi-dev',       #
+			#'libc6-dev-i386',      #
+			#'libclang-dev',        # For iwyu
 			'libncurses5-dev',     # For iwyu
 			'ninja-build',         #
 			# 'ninja-build-doc',    # Doesn't seem to exist in 16.10
