@@ -10,15 +10,15 @@ include cpp_devel
 # ./b2                                                                     --layout=tagged variant=release
 # ./b2                                                                     --layout=tagged variant=debug   define=_GLIBCXX_DEBUG
 
-boost { 'boost__clang__1_66_0__c++14':
+boost { 'boost__clang__1_67_0__c++14':
   compiler      => 'clang',
-  boost_version => '1_66_0',
+  boost_version => '1_67_0',
   cpp_standard  => 'c++14',
 }
 
-boost { 'boost__gcc__1_66_0__c++14':
+boost { 'boost__gcc__1_67_0__c++14':
   compiler      => 'gcc',
-  boost_version => '1_66_0',
+  boost_version => '1_67_0',
   cpp_standard  => 'c++14',
 }
 
