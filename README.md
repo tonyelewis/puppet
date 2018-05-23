@@ -18,6 +18,7 @@ Ensure you have puppet installed:
 ...and that puppet has the puppetlabs-vcsrepo and puppetlabs-git modules installed:
 
     puppet module install puppetlabs-git
+    puppet module install acme/ohmyzsh
 
 (Pre Ubuntu 16.04, the puppet-module-puppetlabs-vcsrepo didn't exist so that has to be installed with `puppet module install puppetlabs-vcsrepo` instead)
 

@@ -29,8 +29,8 @@ class plasma_user {
   user { 'theuser' :
     name    => $user,
     ensure  => 'present',
-    shell   => '/bin/tcsh',
-    require => Package[ tcsh ]
+    shell   => '/bin/zsh',
+    require => Package[ zsh ]
   }
 
   Exec {

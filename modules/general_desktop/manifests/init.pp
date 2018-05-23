@@ -11,20 +11,23 @@
 #   e.g. "Specify one or more upstream ntp servers as an array."
 
 class general_desktop {
-  include stdlib # For file_line
-  
-  $desktop_files_dir = '/usr/share/applications'
-  
-  # Set a sensible path so that binaries' paths don't have to be fully qualified
-  Exec {
-    path => [
-      '/usr/bin',
-      '/usr/sbin',
-      '/bin',
-      '/sbin'
-    ]
-  }
-  
+	include stdlib # For file_line
+
+	$user     = 'lewis'
+	$home_dir = "/home/${::general_desktop::user}"
+
+	$desktop_files_dir = '/usr/share/applications'
+
+	# Set a sensible path so that binaries' paths don't have to be fully qualified
+	Exec {
+		path => [
+			'/usr/bin',
+			'/usr/sbin',
+			'/bin',
+			'/sbin'
+		]
+	}
+
 #  # Execute 'apt-get update'
 #  exec { 'apt-update':
 #    command => 'apt-get update'
@@ -51,54 +54,83 @@ class general_desktop {
 #  # Ensure that an apt-get upgrade (and before that apt-get update) has been run before any package commands
 #  Exec['apt-upgrade'] -> Package <| |>
   
-  # Install standard desktop packages
-  package { [
-      'augeas-tools',
-      'git',
-      'gnuplot',
-      'graphviz',
-      'gwenview',
-      'htop',
-      'inkscape',
-      'kubuntu-desktop',
-      'latex-mk',
-      'libappindicator1',                # For Chrome
-      'libgd-perl',                      # For plotting pictures in Perl
-      'libimage-exiftool-perl',
-      'libindicator7',                   # For Chrome
-      'libipc-run3-perl',                # For general Perl use
-      'liblog-log4perl-perl',            # For general Perl use
-      'libmoosex-params-validate-perl',  # MooseX::Params::Validate for General Perl use and for gen_cmake_list.pl in   particular
-      'libmoosex-types-path-class-perl', #
-      'libpath-class-perl',              # For General Perl use and for makeoutputparser.pl in particular
-      'libreadonly-perl',                #
-      'meld',
-      'mkdocs',
-      'mkdocs-doc',
-      'nedit',
-      'okular',
-      'ps2eps',
-      'perl-doc',                        # To enable perldoc command
-      'psutils',
-      'puppet',
-      'puppet-module-puppetlabs-stdlib',
-      'pymol',
-      'python3-click',                   # Required for mkdocs
-      'r-base',
-      'rasmol',
-      #'sddm-theme-elarun',               # Should add this for 15.04 <= Ubuntu <= 16.10 if encountering problems with entering   username at login
-      'sshfs',
-      'subversion',
-      'synaptic',
-      'tcsh',
-      'tree',
-      'vim',
-      'virtualbox',
-      'vlc',
-      'wget',
-    ] :
-    ensure => 'latest',
-  }
+	# Install standard desktop packages
+	package { [
+			#'sddm-theme-elarun',               # Should add this for 15.04 <= Ubuntu <= 16.10 if encountering problems with entering   username at login
+			'augeas-tools',
+			'gconf2',                          # For Atom
+			'gnuplot',
+			'graphviz',
+			'gwenview',
+			'htop',
+			'inkscape',
+			'kubuntu-desktop',
+			'latex-mk',
+			'libappindicator1',                # For Chrome
+			'libgd-perl',                      # For plotting pictures in Perl
+			'libimage-exiftool-perl',
+			'libindicator7',                   # For Chrome
+			'libipc-run3-perl',                # For general Perl use
+			'liblog-log4perl-perl',            # For general Perl use
+			'libmoosex-params-validate-perl',  # MooseX::Params::Validate for General Perl use and for gen_cmake_list.pl in   particular
+			'libmoosex-types-path-class-perl', #
+			'libpath-class-perl',              # For General Perl use and for makeoutputparser.pl in particular
+			'libreadonly-perl',                #
+			'meld',
+			'mkdocs',
+			'mkdocs-doc',
+			'nedit',
+			'okular',
+			'perl-doc',                        # To enable perldoc command
+			'ps2eps',
+			'psutils',
+			'puppet',
+			'puppet-module-puppetlabs-stdlib',
+			'pymol',
+			'python3-click',                   # Required for mkdocs
+			'r-base',
+			'rasmol',
+			'sshfs',
+			'subversion',
+			'synaptic',
+			'tcsh',
+			'tree',
+			'vim',
+			'virtualbox',
+			'vlc',
+			'wget',
+			'zsh',
+			'zsh-common'
+		] :
+		ensure => 'latest',
+	}
+
+	# file { 'oh-my-zsh-install-file' :
+	# 	ensure  => file,
+	# 	mode    => 'a+rx',
+	# 	path    => '/opt/oh-my-zsh.install.sh',
+	# 	replace => 'false',
+	# 	require => Package[ 'zsh' ],
+	# 	source  => 'https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh',
+	# }->
+	# exec { 'install oh-my-zsh' :
+	# 	command   => '/bin/sh -c `cat /opt/oh-my-zsh.install.sh`',
+	# 	creates   => "${::general_desktop::home_dir}/.oh-my-zsh/README.md",
+	# 	logoutput => 'true',
+	# 	require   => User[ 'lewis with zsh' ],
+	# 	user      => 'lewis',
+	# }
+
+	class { 'ohmyzsh': }
+
+	# Install ohmyzsh for lewis
+	ohmyzsh::install { 'lewis':
+	}->
+	file_line { 'ohmyzsh prompt' :
+		path  => "${::general_desktop::home_dir}/.oh-my-zsh/themes/robbyrussell.zsh-theme",
+		match => '^PROMPT',
+		line  => 'PROMPT=\'${ret_status} %{$fg_bold[white]%}%M %{$fg[cyan]%}%d%{$reset_color%} $(git_prompt_info)\'',
+	}
 
   # Remove annoying would-you-like-to-install browser popups
   package { [
@@ -110,7 +142,7 @@ class general_desktop {
     ] :
     ensure => 'purged',
   }
-  
+
   # Ensure there's a file /root/.vimrc, and that it contains the line: `set background=dark`
   file { '/root/.vimrc':
     ensure => file,
@@ -119,7 +151,7 @@ class general_desktop {
     path => '/root/.vimrc',  
     line => 'set background=dark',
   }
-  
+
   # Extras for LaTeX
   package {
     [
@@ -138,13 +170,13 @@ class general_desktop {
     ] :
     ensure => 'latest'
   }
-  
+
   # Desktop
   package { 'sddm':
     ensure       => 'latest',
     responsefile => 'puppet:///general_desktop/sddm.preseed',
   }
-  
+
   # Download the Google Chrome package and install it
   general_desktop::download_file { 'Download of Chrome package file' :
     uri    => 'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb',
@@ -157,7 +189,7 @@ class general_desktop {
     require     => Package[ 'libappindicator1', 'libindicator7' ],
     # refreshonly => true, # This should be refreshonly but Puppet only allows that on exec, see https://projects.puppetlabs.com/issues/651
   }
-  
+
   ## $java_version_major = '8';
   ## $java_version_minor = ;
   ## $java_version_point = ;
@@ -173,7 +205,6 @@ class general_desktop {
   #update-alternatives --config javac
   #update-alternatives --config javaws
 
-  
   # Download the GithHub Atom package and install it
   general_desktop::download_file { 'Download of Atom package file' :
     uri    => 'https://atom.io/download/deb',

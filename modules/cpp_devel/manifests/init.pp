@@ -22,6 +22,7 @@
 #   of Puppet 2.6.)
 
 class cpp_devel {
+	include git
 
 	$repos_root_dir = '/home/lewis'
 	$repos_user     = 'lewis'
