@@ -311,4 +311,12 @@ class plasma_user {
     replace => 'no',
     mode    => '0644',
   }
+  
+	file { 'create empty directory':
+		ensure => 'directory',
+		mode   => '0755',
+		owner  => 'root',
+		path   => '/opt/empty_directory',
+	}
+
 }

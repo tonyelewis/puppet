@@ -30,8 +30,7 @@ class boost::packages {
   
   package {
     [
-      'python',                 # For Boost
-      'wget',                   # To download file
+      'python', # For Boost
     ] :
     ensure => 'latest',
   }

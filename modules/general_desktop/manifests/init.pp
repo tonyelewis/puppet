@@ -132,6 +132,17 @@ class general_desktop {
 		line  => 'PROMPT=\'${ret_status} %{$fg_bold[white]%}%M %{$fg[cyan]%}%d%{$reset_color%} $(git_prompt_info)\'',
 	}
 
+	general_desktop::download_file { 'download VSCode .deb file' :
+		target  => '/opt/vscode_amd64.deb',
+		uri     => 'https://go.microsoft.com/fwlink/?LinkID=760868',
+	}
+  ->package { 'vscode':
+    provider    => dpkg,
+    ensure      => latest,
+    source      => '/opt/vscode_amd64.deb',
+    # refreshonly => true, # This should be refreshonly but Puppet only allows that on exec, see https://projects.puppetlabs.com/issues/651
+  }
+
   # Remove annoying would-you-like-to-install browser popups
   package { [
       'unity-webapps-service',
@@ -181,12 +192,12 @@ class general_desktop {
   general_desktop::download_file { 'Download of Chrome package file' :
     uri    => 'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb',
     target => '/opt/google-chrome-stable_current_amd64.deb',
-  }->
-  package { 'google-chrome-stable':
-    provider    => dpkg,
-    ensure      => latest,
-    source      => '/opt/google-chrome-stable_current_amd64.deb',
-    require     => Package[ 'libappindicator1', 'libindicator7' ],
+  }
+  ->package { 'google-chrome-stable':
+    provider => dpkg,
+    ensure   => latest,
+    source   => '/opt/google-chrome-stable_current_amd64.deb',
+    require  => Package[ 'libappindicator1', 'libindicator7' ],
     # refreshonly => true, # This should be refreshonly but Puppet only allows that on exec, see https://projects.puppetlabs.com/issues/651
   }
 
@@ -211,8 +222,9 @@ class general_desktop {
     target => '/opt/atom-amd64.deb'
   }->
   package { 'atom' : # Does this require package gconf2 ?
-    provider => dpkg,
     ensure   => latest,
+    provider => dpkg,
+    require  => Package[ 'gconf2' ],
     source   => '/opt/atom-amd64.deb',
   }
 

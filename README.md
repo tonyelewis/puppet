@@ -1,15 +1,22 @@
-Puppet Notes
-============
+# Puppet Notes
 
-Notes on install
-----------------
+## Example command
+
+~~~bash
+cd <THIS_PROJECT_DIRECTORY>
+puppet apply --noop --test site.pp --modulepath 'modules:$basemodulepath'
+~~~
+
+Remove the `--noop` to actual perform the changes.
+
+## Notes on install
 
 On XPS 15:
- * To boot from Live USB, choose lower USB option not first (Legacy) one
- * To get wireless working on live boot and on first boot: ????
 
-After a fresh install...
-------------------------
+* To boot from Live USB, choose lower USB option not first (Legacy) one
+* To get wireless working on live boot and on first boot: ????
+
+## After a fresh install...
 
 Ensure you have puppet installed:
 
@@ -17,39 +24,44 @@ Ensure you have puppet installed:
 
 ...and that puppet has the puppetlabs-vcsrepo and puppetlabs-git modules installed:
 
-    puppet module install puppetlabs-git
     puppet module install acme/ohmyzsh
+    puppet module install puppet-alternatives
+    puppet module install puppetlabs-git
 
 (Pre Ubuntu 16.04, the puppet-module-puppetlabs-vcsrepo didn't exist so that has to be installed with `puppet module install puppetlabs-vcsrepo` instead)
 
-Example command
----------------
-
-    cd <THIS_PROJECT_DIRECTORY>
-    puppet apply --noop --test site.pp --modulepath 'modules:$basemodulepath'
-
-Remove the `--noop` to actual perform the changes.
-
-Procedure for wiping
---------------------
+## Procedure for wiping
 
 Prepare:
- * Copy ~/.eclipse/user_dictionary to the puppet repository's modules/eclipse_user/files/eclipse_user_dictionary and commit/push changes
- * Ensure all Git repositories are fully clean (ie up-to-date, stashless and pushed)
- * Check for other_stuff_to_git_ignore directories
- * Check for any old repositories
- * Check for anything in home directory
- * Remove the biggest space-wasters in the home directory and mirror elsewhere
+
+* Ensure the VSCode settings have been uploaded and that the access details are available
+* Copy ~/.eclipse/user_dictionary to the puppet repository's modules/eclipse_user/files/eclipse_user_dictionary and commit/push changes
+* Update `modules/plasma_user/files/sublime_text_user_preferences` from `~/.config/sublime-text-3/Packages/User/Preferences.sublime-settings`
+* Ensure all Git repositories are fully clean (ie up-to-date, stashless and pushed)
+* Check for other_stuff_to_git_ignore directories
+* Check for any old repositories
+* Check for anything in home directory
+* Remove the biggest space-wasters in the home directory and mirror elsewhere
 
 Overwrite install
 
 Mirror old home directory into a new subdirectory
 
-Manual Steps
-------------
- * "systemsettings" -> "Search" -> "File Search" -> Deselect "Enable File Search" -> "Apply"
- * "systemsettings" -> "Power Management" -> make some decisions
+## Manual Steps
 
+* For HiDPI XPS 15: "systemsettings &rarr; "Hardware" &rarr; "Display and Monitor" &rarr; "Scale Display" &rarr; 1.5
+* "systemsettings" &rarr; "Search" &rarr; "File Search" &rarr; Deselect "Enable File Search" &rarr; "Apply"
+* "systemsettings" &rarr; "Power Management" &rarr; make some decisions
+* "Configure Desktop" &rarr; "Wallpaper" &rarr; "Wallpaper Type" : Hunyango
+* "Configure Desktop" &rarr; "Location" &rarr; "Specify a folder" : `/opt/empty_directory`
+* Download VSCode settings
+* Icons:
+
+| | | | |
+ -|-|-|-
+ firefox | dolphin         | ltfg         | kate
+ chrome  | calculator      | sublime-text | cath-tools
+ konsole | system settings | synaptic     | update manager
 
 
 Notes on installing CUDA
