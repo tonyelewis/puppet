@@ -8,7 +8,7 @@ export      BOOST_TEST_LOG_LEVEL=message
 export   BOOST_TEST_REPORT_LEVEL=short
 export BUILD_EXTRA_CATH_BINARIES=1
 export                 BUILDTYPE=ninja_clang_relwithdebinfo
-export                      PATH=/home/lewis/bin:/home/lewis/svn/tools/trunk:$PATH:/usr/local/cuda-5.0/bin
+export                      PATH=~/bin:~/puppet/perl/tools:$PATH:/usr/local/cuda-5.0/bin
 
 # export                DBIC_TRACE_PROFILE=console
 # export                            EDITOR=vim
@@ -22,6 +22,7 @@ alias       mysortpipe='sed "s/_test\./#test\./g" | env LC_ALL=C sort | tr "#" "
 
 alias             auto='libtoolize --force;aclocal;autoconf;touch NEWS AUTHORS README ChangeLog;automake --add-missing'
 alias        datestamp='date +%Y%m%d'
+alias   gen_cmake_list='~/puppet/perl/cpan/Butler/scripts/gen_cmake_list.pl $PWD'
 alias              lgt='( git --no-pager log --color --all --decorate --oneline --graph --format=format:"%C(auto)%h%C(reset)%C(auto)%d%C(reset) %C(white)%s%C(reset)   %C(blue)%an, %ar%C(reset)" && echo ) | tac | perl -pe '\''s/(\w+)\\([^[:print:]])/\1#\2/g; s/(\w+)\/([^[:print:]])/\1\\\2/g; s/(\w+)#([^[:print:]])/\1\/\2/g;'\'' '
 alias         lsbigmov='find . \( -name "*.mp4" -o -name "*.wmv" -o -name "*.mp*g" -o -name "*.avi" -o -name "*.mov" -o -name "*.flv" -o -name "*.asf" \) -a -size +30M'
 alias              lsc='find . \( -iname "*.pl" -o -iname "*.pm" -o -iname "*.t" -o -name "*.c" -o -name "*.cpp" -o -name "*.cu" -o -name "*.cuh" -o -name "*.cxx" -o -name "*.h" -o -name "*.hpp" -o -name "*.tex" \) -print | grep -vP "\/\.backup\." | grep -vP "\/\.kate-backup" | sed "s/^\.\///g" | mysortpipe '
@@ -51,13 +52,13 @@ function clomp() {
 }
 function comp() {
 	echo "\033[1;34mGCC compiling $@\033[0m"
-	g++     -DBOOST_LOG -std=c++17                                                         -W -Wall -Werror -Wextra                           -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0 -ftabstop=2 -S -x c++ -o /tmp/.comp_gcc.dummy.o   -isystem /opt/include -isystem range-v3/include -isystem rapidjson/include -I /usr/local/cuda/include -I source/uni -I source/src_clustagglom -I source/src_common -I source/src_test -I source $@ |& head -n 800 |& ~/svn/tools/trunk/makeoutputparser.pl 
+	g++     -DBOOST_LOG -std=c++17                                                         -W -Wall -Werror -Wextra                           -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0 -ftabstop=2 -S -x c++ -o /tmp/.comp_gcc.dummy.o   -isystem /opt/include -isystem range-v3/include -isystem rapidjson/include -I /usr/local/cuda/include -I source/uni -I source/src_clustagglom -I source/src_common -I source/src_test -I source $@ |& head -n 800 |& ~/puppet/perl/tools/makeoutputparser.pl
 }
 function makeall() {
 	ls -1d build_* | xargs -I VAR make -C VAR -k $@
 }
 function makec() {
-	make $@ |& ~/svn/tools/trunk/makeoutputparser.pl
+	make $@ |& ~/puppet/perl/tools/makeoutputparser.pl
 }
 function nar() {
 	ninja         $1 -k 0    -C $BUILDTYPE                                          &&            $BUILDTYPE/$1 $@[2,-1]
@@ -66,16 +67,16 @@ function nar-debug() {
 	ninja         $1 -k 0    -C $BUILDTYPE                                          && gdb --args $BUILDTYPE/$1 $@[2,-1]
 }
 function narc() {
-	ninja         $1 -k 0    -C $BUILDTYPE |& ~/svn/tools/trunk/makeoutputparser.pl &&            $BUILDTYPE/$1 $@[2,-1]
+	ninja         $1 -k 0    -C $BUILDTYPE |& ~/puppet/perl/tools/makeoutputparser.pl &&            $BUILDTYPE/$1 $@[2,-1]
 }
 function narc-debug() {
-	ninja         $1 -k 0    -C $BUILDTYPE |& ~/svn/tools/trunk/makeoutputparser.pl && gdb --args $BUILDTYPE/$1 $@[2,-1]
+	ninja         $1 -k 0    -C $BUILDTYPE |& ~/puppet/perl/tools/makeoutputparser.pl && gdb --args $BUILDTYPE/$1 $@[2,-1]
 }
 function ninjaall() {
 	ls -1d ninja_* | xargs -I VAR ninja -C VAR -k 0 $@
 }
 function ninjac() {
-	ninja $@ | ~/svn/tools/trunk/makeoutputparser.pl
+	ninja $@ | ~/puppet/perl/tools/makeoutputparser.pl
 }
 function qmake_all_makes() {
 	rm    -rf build_clang_debug build_clang_release build_clang_profile build_gcc_debug build_gcc_release build_gcc_profile
@@ -98,34 +99,23 @@ unsetopt share_history
 # # alias cmake_all_ninjas        'rm -rf ninja_clang_debug_shared ninja_clang_release ninja_clang_relwithdebinfo ninja_gcc_debug_shared ninja_gcc_release ninja_gcc_relwithdebinfo; mkdir -p ninja_clang_debug_shared ninja_clang_release ninja_clang_relwithdebinfo ninja_gcc_debug_shared ninja_gcc_release ninja_gcc_relwithdebinfo; (cd ninja_clang_debug_shared   && /usr/bin/cmake -GNinja -DCMAKE_BUILD_TYPE=DEBUG          -DBUILD_SHARED_LIBS=ON -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_60_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" .. ) ; (cd ninja_clang_release        && /usr/bin/cmake -GNinja -DCMAKE_BUILD_TYPE=RELEASE                               -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_60_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" .. ) ; (cd ninja_clang_relwithdebinfo && /usr/bin/cmake -GNinja -DCMAKE_BUILD_TYPE=RELWITHDEBINFO                        -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_60_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" .. ) ; (cd ninja_gcc_debug_shared     && /usr/bin/cmake -GNinja -DCMAKE_BUILD_TYPE=DEBUG          -DBUILD_SHARED_LIBS=ON -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_60_0_gcc_build                                                                                                              .. ) ; (cd ninja_gcc_release          && /usr/bin/cmake -GNinja -DCMAKE_BUILD_TYPE=RELEASE                               -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_60_0_gcc_build                                                                                                              .. ) ; (cd ninja_gcc_relwithdebinfo   && /usr/bin/cmake -GNinja -DCMAKE_BUILD_TYPE=RELWITHDEBINFO                        -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_60_0_gcc_build                                                                                                              .. ) ; '
 # # alias desire                  'rsync -av --delete /home/lewis/Podcasts/Any\ Questions\?/ /home/lewis/Podcasts/Any\ Questions/; rsync -avu /home/lewis/Podcasts/ /oldpodcasts/ --exclude "*.wav"; rsync -avu --delete ~lewis/Podcasts/ /media/disk/podcasts/ --exclude "*.wav" ; ln -s --no-target-directory /home/lewis/Podcasts/More\ or\ Less_\ Behind\ the\ Stats /home/lewis/Podcasts/More\ or\ Less:\ Behind\ the\ Stats ; '
 # #alias clomp                    'echo "\033[1;34mClang compiling \!:1\033[0m" ; clang++ -DBOOST_LOG -std=c++17 -stdlib=libc++ -fcolor-diagnostics -ftemplate-depth=400 -W -Wall -Werror -Wextra -Wno-unused-local-typedef -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0             -S        -o /tmp/.comp_clang.dummy.o -isystem /opt/include -isystem range-v3/include -isystem rapidjson/include -I /usr/local/cuda/include -I source \!* |& sed '\''s/source\///g'\'' ; '
-# #alias comp                     'echo "\033[1;34mGCC compiling \!:1\033[0m"   ; g++     -DBOOST_LOG -std=c++17                                                         -W -Wall -Werror -Wextra                           -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0 -ftabstop=2 -S -x c++ -o /tmp/.comp_gcc.dummy.o   -isystem /opt/include -isystem range-v3/include -isystem rapidjson/include -I /usr/local/cuda/include -I source \!* |& head -n 800 |& ~/svn/tools/trunk/makeoutputparser.pl '
+# #alias comp                     'echo "\033[1;34mGCC compiling \!:1\033[0m"   ; g++     -DBOOST_LOG -std=c++17                                                         -W -Wall -Werror -Wextra                           -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0 -ftabstop=2 -S -x c++ -o /tmp/.comp_gcc.dummy.o   -isystem /opt/include -isystem range-v3/include -isystem rapidjson/include -I /usr/local/cuda/include -I source \!* |& head -n 800 |& ~/puppet/perl/tools/makeoutputparser.pl '
 # #alias grep                     'grep --color=auto '
-# #alias grep                     'grep --colour=auto --exclude-dir .svn --exclude-dir .deps'
 # #alias grepcol                  'grep --color=always '
 # #alias kate                     'kate -u '
 # #alias katec                    /bin/ls *.{cpp,h,c,cxx,hpp} | xargs kate'
-# #alias mar                      /usr/bin/make \!:1 -k -j 3 -C $BUILDTYPE |& ~/svn/tools/trunk/makeoutputparser.pl && $BUILDTYPE/\!:1 \!:2*'
+# #alias mar                      /usr/bin/make \!:1 -k -j 3 -C $BUILDTYPE |& ~/puppet/perl/tools/makeoutputparser.pl && $BUILDTYPE/\!:1 \!:2*'
 # alias ack                       'ack-grep --nogroup'
 # alias anyquestions              'mplayer -vo null -ao pcm:file=AnyQuestions.20100129.wav -playlist "http://www.iplayerconverter.co.uk/pid/b00q4430/stream.aspx"; lame -V2 -h AnyQuestions.20100129.wav AnyQuestions.20100129.mp3; rm -f AnyQuestions.20100129.wav'
 # alias buildall                  'echo clang_debug,clang_release,clang_relwithdebinfo,gcc_debug,gcc_release,gcc_relwithdebinfo | tr "," "\n" | sort | uniq | xargs -I VAR make -C VAR -k \!*'
 # alias cd                        'cd \!*;set prompt="`whoami`@`hostname` $cwd\/ \: "'
 # alias cha                       'cd /; ssh -X ucbctnl@bsmcha1.smb.ucl.ac.uk'
-# alias changes                   'svn st | ~/svn/tools/trunk/svnchangedparser.pl'
-# alias changesdi                 'changes | xargs svn di'
-# alias changesst                 'changes | xargs svn st'
 # alias codesummary               'lsc | xargs wc -l | sort -g | tail -n 1 | awk "{print $1}" | xargs -iVAR echo VAR lines of code. ; lsc | xargs grep -P "\S" | wc -l | xargs -iVAR echo VAR non-empty lines of code ; lsc | grep .cpp | grep -v test.cpp | grep -v main.cpp | wc -l | xargs -iVAR echo VAR [non-Test and non-Main] cpp files with most representing one class. ; lsc | grep test.cpp | wc -l | xargs -iVAR echo VAR test files. ;'
-# alias dcha                      'dolphin sftp://ucbctnl@bsmcha1.biochem.ucl.ac.uk/cath/homes2/ucbctnl/svn'
 # alias desire                    'rsync -avu /home/lewis/Podcasts/ /oldpodcasts/ --exclude "*.wav"; rsync -avu --delete ~lewis/Podcasts/ /media/disk/podcasts/ --exclude "*.wav" ; ln -s --no-target-directory /home/lewis/Podcasts/More\ or\ Less_\ Behind\ the\ Stats /home/lewis/Podcasts/More\ or\ Less:\ Behind\ the\ Stats ; '
 # alias desmount                  'pmount /dev/disk/by-uuid/6465-6463 disk'
 # alias desumount                 'pumount /media/disk'
-# alias dgate                     'dolphin sftp://ucbctnl@bsmgate1.biochem.ucl.ac.uk/cath/homes2/ucbctnlsvn'
-# alias fcha                      'sftp ucbctnl@bsmcha1.biochem.ucl.ac.uk'
-# alias fgate                     'sftp ucbctnl@bsmgate1.biochem.ucl.ac.uk'
 # alias fixhead                   'echo "\033[1;34mFixing header \!:1\033[0m"   ; clang-tidy -fix -checks=llvm-header-guard,llvm-namespace-comment \!* -- -x c++ -std=c++17 -isystem /opt/include -isystem range-v3/include -I source'
 # alias gate                      'cd /; ssh -X ucbctnl@bsmgate1.smb.ucl.ac.uk'
-# alias gen_cmake_list            /home/lewis/svn/cpan/trunk/Butler/scripts/gen_cmake_list.pl $PWD'
-# alias get_cath_binaries_dry_run 'rsync --dry-run -av --delete --exclude "doxygen_documentation" --exclude '\''ninja*'\'' --exclude "play_data" --exclude "data" --exclude "ob64_relwithdebinfo" --exclude "clang_debug" --exclude "clang_release" --exclude "clang_relwithdebinfo" --exclude "gcc_release" --exclude "gcc_debug" --exclude "gcc_relwithdebinfo" --exclude "release" --exclude "debug" --exclude "relwithdebinfo" --exclude ".settings" --exclude ".project" --exclude ".cproject" ucbctnl@sec1.smb.ucl.ac.uk:/cath/homes2/ucbctnl/svn/cath_binaries/trunk/ ~/cath_svn/cath_binaries/trunk/'
-# alias get_ltfg                  'rsync --dry-run -av --delete --exclude ".autotools" --exclude "doxygen_documentation" --exclude '\''ninja*'\'' --exclude "clang_debug" --exclude "clang_release" --exclude "clang_relwithdebinfo" --exclude "release" --exclude "debug" --exclude "relwithdebinfo" --exclude ".settings" --exclude ".csettings" --exclude ".project" --exclude ".cproject" lewis@tonyelewis.no-ip.biz:/home/lewis/svn/ltfg/trunk/ ~/svn/ltfg/trunk/'
 # alias katec                     'lsc | xargs kate -u'
 # alias latexchecks               'lsc | xargs grep -Pi --colour "\ban\s+[bcdfghjklmnpqrstvwxyz]" -n'
 # alias log_test_outputs          'nar build-test --log_level=test_suite >& other_stuff_to_gitignore/test_outputs/test_output.`datestamp`'
@@ -133,8 +123,6 @@ unsetopt share_history
 # alias lsbigmov                  'find . \( -name "*.mp4" -o -name "*.wmv" -o -name "*.mp*g" -o -name "*.avi" -o -name "*.mov" -o -name "*.flv" -o -name "*.asf" \) -a -size +30M'
 # alias lsmov                     'find . -name "*.mp4" -o -name "*.wmv" -o -name "*.mp*g" -o -name "*.avi" -o -name "*.mov" -o -name "*.flv" -o -name "*.asf"'
 # alias mplayer                   'mplayer -fs -zoom'
-# alias put_cath_binaries_dry_run 'rsync --dry-run -av --delete --exclude "doxygen_documentation" --exclude '\''ninja*'\'' --exclude "play_data" --exclude "data" --exclude "ob64_relwithdebinfo" --exclude "clang_debug" --exclude "clang_release" --exclude "clang_relwithdebinfo" --exclude "gcc_release" --exclude "gcc_debug" --exclude "gcc_relwithdebinfo" --exclude "release" --exclude "debug" --exclude "relwithdebinfo" --exclude ".settings" --exclude ".project" --exclude ".cproject" ~/cath_svn/cath_binaries/trunk/ ucbctnl@sec1.smb.ucl.ac.uk:/cath/homes2/ucbctnl/svn/cath_binaries/trunk/'
-# alias put_ltfg                  'rsync --dry-run -av --delete --exclude ".autotools" --exclude "doxygen_documentation" --exclude '\''ninja*'\'' --exclude "clang_debug" --exclude "clang_release" --exclude "clang_relwithdebinfo" --exclude "release" --exclude "debug" --exclude "relwithdebinfo" --exclude ".settings" --exclude ".csettings" --exclude ".project" --exclude ".cproject" ~/svn/ltfg/trunk/ lewis@tonyelewis.no-ip.biz:/home/lewis/svn/ltfg/trunk/'
 # alias rm                        'rm -I'
 # alias rmkatebackups             'find . -iname ".kate-backup*" -exec rm -f {} \;'
 # alias scsis                     'ssh tony@hermes.dcs.bbk.ac.uk' # ssh tony@193.61.44.27 # ssh tony@193.61.44.31# ssh tony@193.61.44.18
@@ -145,11 +133,7 @@ unsetopt share_history
 # alias speedtest                 'wget "http://www.mirrorservice.org/sites/mirror.centos.org/5.4/isos/i386/CentOS-5.4-i386-bin-4of6.iso"'
 # alias sticksync                 'rsync -avu /media/disk/backups/ /usbstickmirrorsource/backups/; rsync -avu /usbstickmirrorsource/podcasts/ /oldpodcasts/ ; rsync -avu --delete /usbstickmirrorsource/ /media/disk/'
 # alias summarise                 'exiftool * | grep -P "File Name.*|Title|Lyrics|Comment"'
-# alias svndi                     'svn --diff-cmd "diff" --extensions "-y --width=`tput cols`" di '
-# alias testsuites                'lsc | xargs grep -P "BOOST_(FIXTURE|AUTO)_TEST_SUITE\(" | grep -Po "\b\w+TestSuite\b" |sort |uniq | tr "\n" ","'
 # alias thesiswc                  'detex Thesis.tex | wc -w'
-# alias tree                      'tree -C \!*'
-# alias unknowns                  'svn st | grep "?" | sort'
 # alias unlimit                   'limit vmemoryuse unlimited ; limit memoryuse unlimited ; '
 # alias walkencode                'ffmpeg -i \!:1 -acodec libfaac -ab 128k -s 320x240 -vcodec libx264 -b 500k -flags +loop -cmp +chroma -partitions +parti4x4+partp8x8+partb8x8 -flags2 +mixed_refs -me_method umh -subq 6 -trellis 1 -refs 5 -coder 0 -me_range 16 -g 250 -keyint_min 25 -sc_threshold 40 -i_qfactor 0.71 -bt 500k -maxrate 768k -bufsize 2M -qcomp 0.6 -qmin 10 -qmax 51 -qdiff 4 -level 13 -threads 0 -f mp4 \!:2'
 # alias walkman                   'rsync -avu /home/lewis/Podcasts/ /oldpodcasts/ --exclude "*.wav"; rsync -avu --delete /home/lewis/Podcasts/ /media/WALKMAN/PODCASTS/ --exclude "*.wav" ; ln -s --no-target-directory /home/lewis/Podcasts/More\ or\ Less_\ Behind\ the\ Stats /home/lewis/Podcasts/More\ or\ Less:\ Behind\ the\ Stats ; '
@@ -171,7 +155,3 @@ unsetopt share_history
 # setenv GREP_COLORS   'ms=01;31:mc=01;31:sl=:cx=:fn=35:ln=32:bn=32:se=36'
 # setenv GREP_OPTIONS '--colour=auto --exclude-dir .svn --exclude-dir .deps'
 # setenv LD_LIBRARY_PATH  /usr/local/cuda/lib64
-# setenv PATH /home/lewis/bin:/home/lewis/svn/tools/trunk:${PATH}:/usr/local/cuda-7.5/bin
-# setenv PERL5LIB /home/lewis/lib:$PERL5LIB
-# setenv PERL5LIB ~/svn/cpan/trunk/Butler/lib
-# setenv SVNROOT /svn
