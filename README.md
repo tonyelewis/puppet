@@ -52,20 +52,22 @@ Mirror old home directory into a new subdirectory
 * For HiDPI XPS 15: "systemsettings &rarr; "Hardware" &rarr; "Display and Monitor" &rarr; "Scale Display" &rarr; 1.5
 * "systemsettings" &rarr; "Search" &rarr; "File Search" &rarr; Deselect "Enable File Search" &rarr; "Apply"
 * "systemsettings" &rarr; "Power Management" &rarr; make some decisions
+* "systemsettings" &rarr; "Startup and Shutdown" &rarr; "Login Screen (SDDM)" &rarr; "Background" &rarr; "
 * "Configure Desktop" &rarr; "Wallpaper" &rarr; "Wallpaper Type" : Hunyango
 * "Configure Desktop" &rarr; "Location" &rarr; "Specify a folder" : `/opt/empty_directory`
-* Download VSCode settings
+* Download VSCode settings (via "Settings Sync" extension)
+* Install "The Great Suspender" on Chrome
+* Download latest [`FindBoost.cmake`](https://raw.githubusercontent.com/Kitware/CMake/master/Modules/FindBoost.cmake) on top of relevant file (eg `/usr/share/cmake-3.10/Modules/FindBoost.cmake`)
 * Icons:
 
 | | | | |
  -|-|-|-
  firefox | dolphin         | ltfg         | kate
- chrome  | calculator      | sublime-text | cath-tools
+ chrome  | calculator      | sublime-text | VSCode/cath-tools
  konsole | system settings | synaptic     | update manager
 
+## Notes on installing CUDA
 
-Notes on installing CUDA
-----------------------------------------------
 After a wasted day and lots of frustration, I still sddm to work with the drive installed by the CUDA 8 .deb file (and it flashed really annoyingly until I turned sddm off).
 I then gave up when I found that the new nvcc wasn't compiling an example PTX file any faster than the old one, based on this benchmark:
 

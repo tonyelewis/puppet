@@ -59,6 +59,7 @@ class cpp_devel {
       #'libc++abi-dev',        #
       #'libc6-dev-i386',       #
       #'libclang-dev',         # For iwyu
+      'libgsl-dev',           # For cath-tools
       'libncurses5-dev',      # For iwyu
       'ninja-build',          #
       # 'ninja-build-doc',     # Does not seem to exist in 16.10
@@ -75,8 +76,17 @@ class cpp_devel {
   #   target => "/usr/include/libcxxabi/__cxxabi_config.h",
   # }
 
+  # file { 'Download CMake FindBoost file':
+  #   ensure  => file,
+  #   mode    => 'a+r',
+  #   path    => '/usr/share/cmake-3.10/Modules/FindBoost.cmake',
+  #   replace => false,
+  #   source  => 'https://raw.githubusercontent.com/Kitware/CMake/master/Modules/FindBoost.cmake',
+  # }
+
   exec { 'gcc_is_ready':
-    command => '/bin/true'
+    command     => '/bin/true',
+    refreshonly => true,
   }
   if ( $::operatingsystem == 'Ubuntu' and $::operatingsystemmajrelease == '18.04' ) {
     package {
@@ -183,7 +193,7 @@ class cpp_devel {
     replace => 'yes',
     mode    => '0644',
   }
-#
+
 #  file { 'Install eclipse.desktop shortcut' :
 #    path    => "$desktop_files_dir/eclipse.desktop",
 #    ensure  => 'present',
@@ -192,20 +202,28 @@ class cpp_devel {
 #    mode    => '0644',
 #  }
 #
-  file { 'Install ltfg_konsole.desktop shortcut' :
+
+  vcsrepo { 'clone ltfg git repository' :
+    ensure   => present,
+    path     => "${repos_root_dir}/ltfg",
+    provider => git,
+    source   => 'ssh://gituser@192.168.178.4/volume1/homes/gituser/ltfg.git',
+    owner    => $repos_user,
+    group    => $repos_group,
+  }
+  ->file { 'put symlink to ltfg in the root directory' :
+    ensure => 'link',
+    name   => '/ltfg',
+    target => "${repos_root_dir}/ltfg",
+  }
+  ->file { 'Install ltfg_konsole.desktop shortcut' :
     ensure  => 'present',
     path    => "${desktop_files_dir}/ltfg_konsole.desktop",
     source  => 'puppet:///modules/cpp_devel/ltfg_konsole.desktop',
     replace => 'yes',
     mode    => '0644',
   }
-#
-#  file { 'put symlink to ltfg in the root directory' :
-#    name   => '/ltfg',
-#    ensure => 'link',
-#    target => "${repos_root_dir}/ltfg",
-#  }
-#
+
 #  vcsrepo { 'Checkout immediates of svn repo' :
 #    ensure   => present,
 #    provider => svn,
@@ -281,11 +299,6 @@ class cpp_devel {
     target => "${repos_root_dir}/tell",
   }
 
-  # These cause warnings like:
-  #
-  #     warning: Scope(Git::Config[Set user Git config core.editor to vim]): Could not look up qualified variable '::git::package_manage'; class ::git has not been evaluated
-  #
-  # ...but the still seem to work
   git::config { 'Set user Git config core.editor to vim' :
     user  => $repos_user,
     scope => 'global',
@@ -296,7 +309,7 @@ class cpp_devel {
     user  => $repos_user,
     scope => 'global',
     key   => 'pager.diff',
-    value => 'false',
+    value => 'false', # This 'false' should be kept as a string, not changed to the Puppet value false
   }
   git::config { 'Set user Git config alias.st to status --column' :
     user  => $repos_user,
