@@ -1,6 +1,6 @@
-title:  dbg/cath-tools ;; workdir: /cath-tools        ;; command: ~/puppet/config/echo_args_and_run_shell_script.zsh export BUILDTYPE=ninja_clang_debug_sharedNEWLINEninja  -k 0 -C ninja_clang_debug_sharedNEWLINEnar  build-test ;;
-title:  rel/cath-tools ;; workdir: /cath-tools        ;; command: ~/puppet/config/echo_args_and_run_shell_script.zsh export BUILDTYPE=ninja_gcc_release       NEWLINEninjac -k 0 -C ninja_gcc_release       NEWLINEnarc build-test ;;
-title: rwdi/cath-tools ;; workdir: /cath-tools        ;; command: ~/puppet/config/echo_args_and_run_shell_script.zsh export BUILDTYPE=ninja_gcc_relwithdebinfoNEWLINEninjac -k 0 -C ninja_gcc_relwithdebinfoNEWLINEnarc build-test ;;
+title:  dbg/cath-tools ;; workdir: /cath-tools        ;; command: ~/puppet/config/echo_args_and_run_shell_script.zsh export BUILDTYPE=ninja_clang_debug_sharedNEWLINEninja  -k 0 -C ${BUILDTYPE}NEWLINEnar  build-test ;;
+title:  rel/cath-tools ;; workdir: /cath-tools        ;; command: ~/puppet/config/echo_args_and_run_shell_script.zsh export BUILDTYPE=ninja_gcc_release       NEWLINEninjac -k 0 -C ${BUILDTYPE}NEWLINEnarc build-test ;;
+title: rwdi/cath-tools ;; workdir: /cath-tools        ;; command: ~/puppet/config/echo_args_and_run_shell_script.zsh export BUILDTYPE=ninja_gcc_relwithdebinfoNEWLINEninjac -k 0 -C ${BUILDTYPE}NEWLINEnarc build-test ;;
 title: comp/cath-tools ;; workdir: /cath-tools        ;; profile: Shell ;;
 title:  src/cath-tools ;; workdir: /cath-tools/source ;; profile: Shell ;;
 title:  dox/cath-tools ;; workdir: /cath-tools        ;; command: ~/puppet/config/echo_args_and_run_shell_script.zsh doxygen ; date ;NEWLINEhtop ; ;;
