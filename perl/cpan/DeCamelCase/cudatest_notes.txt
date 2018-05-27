@@ -1,0 +1,26 @@
+lsc | xargs cat | perl -pi -e 's/\/\/.*//g' | grep -P '\S+' | grep -vP '^#include' | grep -P '".*[A-Z].*"' | grep -Po '[\w_]*[A-Z][\w_]*' | grep -P '[a-z]' | grep . | sort | uniq > /tmp/fred.txt
+lsc | xargs cat | perl -pi -e 's/\/\/.*//g' | grep -P '\S+' | grep -vP '^#include' | grep -P '".*[A-Z].*"' | sort | uniq | cat -n | grep -Ff /tmp/fred.txt --color=always | less -R
+
+
+Possibly try:
+tonysCudaKernel -> tonys_cuda_kernel
+dump_of_results -> DumpOfResults
+'population -> 'Population
+"population -> "Population
+"(run|thread|cuda|extend)\b
+\/\/\s*(run|thread|cuda|extend)\b
+
+
+Boost program Options -> Boost Program Options
+vectorOfTroublesomeIndividual -> vector_of_troublesome_individual
+BOOST_AUTO_TEST_CASE(Tournament) -> BOOST_AUTO_TEST_CASE(tournament)
+Cant -> Can't
+
+
+
+
+Return ThirdPartyCode/gnuplot-iostream.h to original
+
+
+Use the following to check for spurious the_ prefixes (such as the_container_join):
+  lsc | grep -P '\.h$' | xargs grep -P '\bthe[\w_]+\s*\(' -n

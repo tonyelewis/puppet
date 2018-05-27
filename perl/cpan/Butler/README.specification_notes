@@ -1,0 +1,17 @@
+I don't want to have to trigger things like builds - it should always be doing what it can to get things up to date.
+
+In particular, if I save a header file and then spend a while on a cpp file, I want it to have been compiling all other dependenents of the header in the background.
+
+If six targets succeed and then one fails and I modify a header that causes them all to be rebuilt, I don't want to have to wait for the six successes before I see the new status of the target that previously failed.
+
+If there is idle time, it may as well be checking for needless includes.
+
+It could help find the points GCC describes (show the context in the terminal? offer a key that signals Eclipse to move the cursor?)
+
+When all has built it could automatically run tests.
+
+If tests fail, it could automatically run with --log_level=test_suite and tell me which bits have failed.
+
+If tests succeed, it could automatically run something else.
+
+If tests or other code crashes, it could automatically obtain and display a stack trace.
