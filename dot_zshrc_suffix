@@ -2,13 +2,14 @@
 setopt NO_HUP
 setopt NO_CHECK_JOBS
 
-export     BOOST_TEST_BUILD_INFO=yes
-export   BOOST_TEST_COLOR_OUTPUT=yes
-export      BOOST_TEST_LOG_LEVEL=message
-export   BOOST_TEST_REPORT_LEVEL=short
-export BUILD_EXTRA_CATH_BINARIES=1
-export                 BUILDTYPE=ninja_clang_relwithdebinfo
-export                      PATH=~/bin:~/puppet/perl/tools:$PATH:/usr/local/cuda-5.0/bin
+export                  BOOST_TEST_BUILD_INFO=yes
+export                BOOST_TEST_COLOR_OUTPUT=yes
+export                   BOOST_TEST_LOG_LEVEL=message
+export                BOOST_TEST_REPORT_LEVEL=short
+export              BUILD_EXTRA_CATH_BINARIES=1
+export                              BUILDTYPE=ninja_clang_relwithdebinfo
+export MXX_ALWAYS_THROW_ON_CONTRACT_VIOLATION=1
+export                                   PATH=~/bin:~/puppet/perl/tools:$PATH:/usr/local/cuda-5.0/bin
 
 # export                DBIC_TRACE_PROFILE=console
 # export                            EDITOR=vim
