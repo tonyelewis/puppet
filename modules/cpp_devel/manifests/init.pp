@@ -138,7 +138,7 @@ class cpp_devel {
 
   $clang_bins = [ 'clang', 'clang++', 'clang-format', 'clang-include-fixer', 'clang-tidy', 'lldb', 'llvm-symbolizer', 'scan-build' ]
   $clang_bins.each | String $clang_bin | {
-    alternative_entry { "/opt/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04/bin/${clang_bin}" :
+    alternative_entry { "/opt/clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-14.04/bin/${clang_bin}" :
       ensure   => present,
       altlink  => "/usr/bin/${clang_bin}",
       altname  => $clang_bin,
@@ -146,34 +146,30 @@ class cpp_devel {
       require  => Exec[ 'Untar prebuilt Clang archive' ],
     }
   }
-  # $libcpp_libs' = [ libc++.a', 'libc++.so', 'libc++.so.1', 'libc++.so.1.0', 'libc++abi.a', 'libc++abi.so', 'libc++abi.so.1', 'libc++abi.so.1.0' ]
-  # /opt/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04/lib
-  # /usr/lib/x86_64-linux-gnu
-  #
-  # $libclang_libs = [ 'libclang.so', 'libclang.so.6', 'libclang.so.6.0' ]
-  # link
-  # /opt/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04/lib/libclang.so
-  # /opt/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04/lib/libclang.so.6
-  # /opt/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04/lib/libclang.so.6.0
 
-  # `sudo update-alternatives --install /usr/bin/clang               clang               /opt/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04/bin/clang                100`
-  # `sudo update-alternatives --install /usr/bin/clang++             clang++             /opt/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04/bin/clang++              100`
-  # `sudo update-alternatives --install /usr/bin/clang-format        clang-format        /opt/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04/bin/clang-format         100`
-  # `sudo update-alternatives --install /usr/bin/clang-include-fixer clang-include-fixer /opt/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04/bin/clang-include-fixer  100`
-  # `sudo update-alternatives --install /usr/bin/clang-tidy          clang-tidy          /opt/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04/bin/clang-tidy           100`
-  # `sudo update-alternatives --install /usr/bin/lldb                lldb                /opt/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04/bin/lldb                 100`
-  # `sudo update-alternatives --install /usr/bin/llvm-symbolizer     llvm-symbolizer     /opt/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04/bin/llvm-symbolizer      100`
-  # `sudo update-alternatives --install /usr/bin/scan-build          scan-build          /opt/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04/bin/scan-build           100`
-  #
-  # `sudo update-alternatives --set                                  clang               /opt/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04/bin/clang               `
-  # `sudo update-alternatives --set                                  clang++             /opt/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04/bin/clang++             `
-  # `sudo update-alternatives --set                                  clang-format        /opt/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04/bin/clang-format        `
-  # `sudo update-alternatives --set                                  clang-include-fixer /opt/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04/bin/clang-include-fixer `
-  # `sudo update-alternatives --set                                  clang-tidy          /opt/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04/bin/clang-tidy          `
-  # `sudo update-alternatives --set                                  lldb                /opt/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04/bin/lldb                `
-  # `sudo update-alternatives --set                                  llvm-symbolizer     /opt/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04/bin/llvm-symbolizer     `
-  # `sudo update-alternatives --set                                  scan-build          /opt/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04/bin/scan-build          `
+  $libcpp_libs = [
+    'libc++.a',    'libc++.so',    'libc++.so.1',    'libc++.so.1.0',
+    'libc++abi.a', 'libc++abi.so', 'libc++abi.so.1', 'libc++abi.so.1.0'
+  ]
+  $libcpp_libs.each | String $libcpp_lib | {
+    file{ "Copy lib ${libcpp_lib} from clang into system lib directory" :
+      ensure  => present,
+      mode    => 'a+r',
+      path    => "/usr/lib/x86_64-linux-gnu/${libcpp_lib}",
+      replace => false,
+      require => Exec[ 'Untar prebuilt Clang archive' ],
+      source  => "/opt/clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-14.04/lib/${libcpp_lib}",
+    }
+  }
 
+  $libclang_libs = [ 'libclang.so', 'libclang.so.6', 'libclang.so.6.0' ]
+  $libclang_libs.each | String $libclang_lib | {
+    file{ "Link to lib ${libclang_lib} in system lib directory" :
+      ensure => 'link',
+      path   =>  "/usr/lib/${libclang_lib}",
+      target => "/opt/clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-14.04/lib/${libclang_lib}",
+    }
+  }
 
   # Seems to be required for in Ubuntu 17.10 (package libc++-dev 3.9.1-3)
   # Demonstrable with : `echo '#include <locale>' | clang++ -stdlib=libc++ -c -x c++ -`
@@ -271,7 +267,7 @@ class cpp_devel {
 #  }
 #  # This doesn't seem to chown all files to the correct user, so (as root) run: chown -R lewis:lewis ~lewis/svn
 
-  vcsrepo { "clone cath-tools git repository" :
+  vcsrepo { 'clone cath-tools git repository' :
     ensure   => present,
     path     => "${repos_root_dir}/cath-tools",
     provider => git,
@@ -297,6 +293,20 @@ class cpp_devel {
     ensure => 'link',
     name   => '/tell',
     target => "${repos_root_dir}/tell",
+  }
+
+  file { 'Install .gitignore_global file' :
+    ensure  => 'present',
+    mode    => '0644',
+    path    => "${$repos_root_dir}/.gitignore_global",
+    replace => 'yes',
+    source  => 'puppet:///modules/cpp_devel/dot_gitignore_global',
+  }
+  ->git::config { 'Set user global Git ignore file to ~/.gitignore_global' :
+    key   => 'core.excludesfile',
+    scope => 'global',
+    user  => $repos_user,
+    value => "${$repos_root_dir}/.gitignore_global",
   }
 
   git::config { 'Set user Git config core.editor to vim' :
