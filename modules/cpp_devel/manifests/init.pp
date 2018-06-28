@@ -205,6 +205,7 @@ class cpp_devel {
     provider => git,
     source   => 'ssh://gituser@192.168.178.4/volume1/homes/gituser/ltfg.git',
     owner    => $repos_user,
+    user     => $repos_user,
     group    => $repos_group,
   }
   ->file { 'put symlink to ltfg in the root directory' :
@@ -274,6 +275,7 @@ class cpp_devel {
     source   => $cath_tools_url,
     owner    => $repos_user,
     group    => $repos_group,
+    user     => $repos_user,
   }
   ->file { 'put symlink to cath-tools in the root directory' :
     ensure => 'link',
@@ -288,6 +290,7 @@ class cpp_devel {
     source   => $tell_url,
     owner    => $repos_user,
     group    => $repos_group,
+    user     => $repos_user,
   }
   ->file { 'put symlink to tell in the root directory' :
     ensure => 'link',

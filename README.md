@@ -47,7 +47,11 @@ Overwrite install
 
 Mirror old home directory into a new subdirectory
 
-## Manual Steps
+## Manual Pre-Puppet Steps
+
+* Connect to GitHub and Diskstation as lewis
+
+## Manual Post-Puppet Steps
 
 * For HiDPI XPS 15: "systemsettings &rarr; "Hardware" &rarr; "Display and Monitor" &rarr; "Scale Display" &rarr; 1.5
 * "systemsettings" &rarr; "Search" &rarr; "File Search" &rarr; Deselect "Enable File Search" &rarr; "Apply"
