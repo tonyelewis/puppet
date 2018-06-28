@@ -9,6 +9,13 @@ puppet apply --noop --test site.pp --modulepath 'modules:$basemodulepath'
 
 Remove the `--noop` to actual perform the changes.
 
+# Issues
+
+Ubuntu 18.04 on floppyrabbit:
+
+* Whinged about 'concat ohmyzsh .zshrc and my suffix' using "${::general_desktop::home_dir}/.oh-my-zsh/templates/zshrc.zsh-template" which didn't yet exist.
+
+
 ## Notes on install
 
 On XPS 15:
@@ -16,7 +23,7 @@ On XPS 15:
 * To boot from Live USB, choose lower USB option not first (Legacy) one
 * To get wireless working on live boot and on first boot: ????
 
-## After a fresh install...
+## After a fresh install&hellip;
 
 Ensure you have puppet installed:
 
@@ -59,6 +66,9 @@ Mirror old home directory into a new subdirectory
 * "systemsettings" &rarr; "Startup and Shutdown" &rarr; "Login Screen (SDDM)" &rarr; "Background" &rarr; "
 * "Configure Desktop" &rarr; "Wallpaper" &rarr; "Wallpaper Type" : Hunyango
 * "Configure Desktop" &rarr; "Location" &rarr; "Specify a folder" : `/opt/empty_directory`
+* Chrome settings: "On start-up" -> "Continue where you left off"; "Download location" -> "/tmp"; "Ask where to save each file before downloading" -> true
+* Chrome bookmarks from `~/puppet/browser_bookmarks.html`
+* Firefox settings: "When Firefox starts" -> "Show my windows and tabs from last time"
 * Download VSCode settings (via "Settings Sync" extension)
 * Install "The Great Suspender" on Chrome
 * Download latest [`FindBoost.cmake`](https://raw.githubusercontent.com/Kitware/CMake/master/Modules/FindBoost.cmake) on top of relevant file (eg `/usr/share/cmake-3.10/Modules/FindBoost.cmake`)
