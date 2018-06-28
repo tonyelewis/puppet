@@ -8,6 +8,7 @@ export                   BOOST_TEST_LOG_LEVEL=message
 export                BOOST_TEST_REPORT_LEVEL=short
 export              BUILD_EXTRA_CATH_BINARIES=1
 export                              BUILDTYPE=ninja_clang_relwithdebinfo
+export                CTEST_OUTPUT_ON_FAILURE=1
 export MXX_ALWAYS_THROW_ON_CONTRACT_VIOLATION=1
 export                                   PATH=~/bin:~/puppet/perl/tools:$PATH:/usr/local/cuda-5.0/bin
 
@@ -26,7 +27,8 @@ alias        datestamp='date +%Y%m%d'
 alias   gen_cmake_list='~/puppet/perl/cpan/Butler/scripts/gen_cmake_list.pl $PWD'
 alias              lgt='( git --no-pager log --color --all --decorate --oneline --graph --format=format:"%C(auto)%h%C(reset)%C(auto)%d%C(reset) %C(white)%s%C(reset)   %C(blue)%an, %ar%C(reset)" && echo ) | tac | perl -pe '\''s/(\w+)\\([^[:print:]])/\1#\2/g; s/(\w+)\/([^[:print:]])/\1\\\2/g; s/(\w+)#([^[:print:]])/\1\/\2/g;'\'' '
 alias         lsbigmov='find . \( -name "*.mp4" -o -name "*.wmv" -o -name "*.mp*g" -o -name "*.avi" -o -name "*.mov" -o -name "*.flv" -o -name "*.asf" \) -a -size +30M'
-alias              lsc='find . \( -iname "*.pl" -o -iname "*.pm" -o -iname "*.t" -o -name "*.c" -o -name "*.cpp" -o -name "*.cu" -o -name "*.cuh" -o -name "*.cxx" -o -name "*.h" -o -name "*.hpp" -o -name "*.tex" \) -print | grep -vP "\/\.backup\." | grep -vP "\/\.kate-backup" | sed "s/^\.\///g" | mysortpipe '
+alias              lsc='find . \( -iname "*.pl" -o -iname "*.pm" -o -iname "*.t" -o -name "*.c" -o -name "*.cpp" -o -name "*.cu" -o -name "*.cuh" -o -name "*.cxx" -o -name "*.h" -o -name "*.hpp" -o -name "*.tex" \) -print | grep -vP "\/\.backup\." | grep -vP "\/\.kate-backup" | sed "s/^\.\///g"                                                                 | mysortpipe '
+alias              msc='find . \( -iname "*.pl" -o -iname "*.pm" -o -iname "*.t" -o -name "*.c" -o -name "*.cpp" -o -name "*.cu" -o -name "*.cuh" -o -name "*.cxx" -o -name "*.h" -o -name "*.hpp" -o -name "*.tex" \) -print | grep -vP "\/\.backup\." | grep -vP "\/\.kate-backup" | sed "s/^\.\///g" | grep -vP "^(juce|build_|ninja_|3rdparty|autogen|other_stuff)" | mysortpipe '
 alias            lscol='ls --color=always '
 alias            lsmov='find . -name "*.mp4" -o -name "*.wmv" -o -name "*.mp*g" -o -name "*.avi" -o -name "*.mov" -o -name "*.flv" -o -name "*.asf"'
 alias              lsp='find script lib t -iname "*.pm" -o -iname "*.pl" -o -name "*.t" | mysortpipe '
@@ -82,15 +84,36 @@ function ninjac() {
 function qmake_all_makes() {
 	rm    -rf build_clang_debug build_clang_release build_clang_profile build_gcc_debug build_gcc_release build_gcc_profile
 	mkdir -p  build_clang_debug build_clang_release build_clang_profile build_gcc_debug build_gcc_release build_gcc_profile
-	(cd build_clang_debug   && ~/Qt/5.10.1/gcc_64/bin/qmake CONFIG+=debug   'QMAKE_CXXFLAGS += -isystem /opt/boost_1_67_0_clang_c++14_build/include -isystem /home/lewis/source/cpprestsdk-master/Release/include' 'LIBS=-Wl,-rpath=/opt/boost_1_67_0_clang_c++14_build/lib -L/opt/boost_1_67_0_clang_c++14_build/lib -Wl,-rpath=/home/lewis/source/cpprestsdk-master/Release/ninja_clang_debug_shared/Binaries -L/home/lewis/source/cpprestsdk-master/Release/ninja_clang_debug_shared/Binaries' -spec linux-clang-libc++ .. )
-	(cd build_clang_release && ~/Qt/5.10.1/gcc_64/bin/qmake CONFIG+=release 'QMAKE_CXXFLAGS += -isystem /opt/boost_1_67_0_clang_c++14_build/include -isystem /home/lewis/source/cpprestsdk-master/Release/include' 'LIBS=-Wl,-rpath=/opt/boost_1_67_0_clang_c++14_build/lib -L/opt/boost_1_67_0_clang_c++14_build/lib -Wl,-rpath=/home/lewis/source/cpprestsdk-master/Release/ninja_clang_debug_shared/Binaries -L/home/lewis/source/cpprestsdk-master/Release/ninja_clang_debug_shared/Binaries' -spec linux-clang-libc++ .. )
-	(cd build_clang_profile && ~/Qt/5.10.1/gcc_64/bin/qmake CONFIG+=profile 'QMAKE_CXXFLAGS += -isystem /opt/boost_1_67_0_clang_c++14_build/include -isystem /home/lewis/source/cpprestsdk-master/Release/include' 'LIBS=-Wl,-rpath=/opt/boost_1_67_0_clang_c++14_build/lib -L/opt/boost_1_67_0_clang_c++14_build/lib -Wl,-rpath=/home/lewis/source/cpprestsdk-master/Release/ninja_clang_debug_shared/Binaries -L/home/lewis/source/cpprestsdk-master/Release/ninja_clang_debug_shared/Binaries' -spec linux-clang-libc++ .. )
-	(cd build_gcc_debug     && ~/Qt/5.10.1/gcc_64/bin/qmake CONFIG+=debug   'QMAKE_CXXFLAGS += -isystem /opt/boost_1_67_0_gcc_c++14_build/include   -isystem /home/lewis/source/cpprestsdk-master/Release/include' 'LIBS=-Wl,-rpath=/opt/boost_1_67_0_gcc_c++14_build/lib   -L/opt/boost_1_67_0_gcc_c++14_build/lib   -Wl,-rpath=/home/lewis/source/cpprestsdk-master/Release/ninja_gcc_debug_shared/Binaries   -L/home/lewis/source/cpprestsdk-master/Release/ninja_gcc_debug_shared/Binaries'                            .. )
-	(cd build_gcc_release   && ~/Qt/5.10.1/gcc_64/bin/qmake CONFIG+=release 'QMAKE_CXXFLAGS += -isystem /opt/boost_1_67_0_gcc_c++14_build/include   -isystem /home/lewis/source/cpprestsdk-master/Release/include' 'LIBS=-Wl,-rpath=/opt/boost_1_67_0_gcc_c++14_build/lib   -L/opt/boost_1_67_0_gcc_c++14_build/lib   -Wl,-rpath=/home/lewis/source/cpprestsdk-master/Release/ninja_gcc_debug_shared/Binaries   -L/home/lewis/source/cpprestsdk-master/Release/ninja_gcc_debug_shared/Binaries'                            .. )
-	(cd build_gcc_profile   && ~/Qt/5.10.1/gcc_64/bin/qmake CONFIG+=profile 'QMAKE_CXXFLAGS += -isystem /opt/boost_1_67_0_gcc_c++14_build/include   -isystem /home/lewis/source/cpprestsdk-master/Release/include' 'LIBS=-Wl,-rpath=/opt/boost_1_67_0_gcc_c++14_build/lib   -L/opt/boost_1_67_0_gcc_c++14_build/lib   -Wl,-rpath=/home/lewis/source/cpprestsdk-master/Release/ninja_gcc_debug_shared/Binaries   -L/home/lewis/source/cpprestsdk-master/Release/ninja_gcc_debug_shared/Binaries'                            .. )
+	(cd build_clang_debug   && ~/Qt/5.10.1/gcc_64/bin/qmake CONFIG+=debug   'QMAKE_CXXFLAGS += -isystem /opt/boost_1_66_0_clang_c++14_build/include -isystem /home/lewis/source/cpprestsdk-master/Release/include' 'LIBS=-Wl,-rpath=/opt/boost_1_66_0_clang_c++14_build/lib -L/opt/boost_1_66_0_clang_c++14_build/lib -Wl,-rpath=/home/lewis/source/cpprestsdk-master/Release/ninja_clang_debug_shared/Binaries -L/home/lewis/source/cpprestsdk-master/Release/ninja_clang_debug_shared/Binaries' -spec linux-clang-libc++ .. )
+	(cd build_clang_release && ~/Qt/5.10.1/gcc_64/bin/qmake CONFIG+=release 'QMAKE_CXXFLAGS += -isystem /opt/boost_1_66_0_clang_c++14_build/include -isystem /home/lewis/source/cpprestsdk-master/Release/include' 'LIBS=-Wl,-rpath=/opt/boost_1_66_0_clang_c++14_build/lib -L/opt/boost_1_66_0_clang_c++14_build/lib -Wl,-rpath=/home/lewis/source/cpprestsdk-master/Release/ninja_clang_debug_shared/Binaries -L/home/lewis/source/cpprestsdk-master/Release/ninja_clang_debug_shared/Binaries' -spec linux-clang-libc++ .. )
+	(cd build_clang_profile && ~/Qt/5.10.1/gcc_64/bin/qmake CONFIG+=profile 'QMAKE_CXXFLAGS += -isystem /opt/boost_1_66_0_clang_c++14_build/include -isystem /home/lewis/source/cpprestsdk-master/Release/include' 'LIBS=-Wl,-rpath=/opt/boost_1_66_0_clang_c++14_build/lib -L/opt/boost_1_66_0_clang_c++14_build/lib -Wl,-rpath=/home/lewis/source/cpprestsdk-master/Release/ninja_clang_debug_shared/Binaries -L/home/lewis/source/cpprestsdk-master/Release/ninja_clang_debug_shared/Binaries' -spec linux-clang-libc++ .. )
+	(cd build_gcc_debug     && ~/Qt/5.10.1/gcc_64/bin/qmake CONFIG+=debug   'QMAKE_CXXFLAGS += -isystem /opt/boost_1_66_0_gcc_c++14_build/include   -isystem /home/lewis/source/cpprestsdk-master/Release/include' 'LIBS=-Wl,-rpath=/opt/boost_1_66_0_gcc_c++14_build/lib   -L/opt/boost_1_66_0_gcc_c++14_build/lib   -Wl,-rpath=/home/lewis/source/cpprestsdk-master/Release/ninja_gcc_debug_shared/Binaries   -L/home/lewis/source/cpprestsdk-master/Release/ninja_gcc_debug_shared/Binaries'                            .. )
+	(cd build_gcc_release   && ~/Qt/5.10.1/gcc_64/bin/qmake CONFIG+=release 'QMAKE_CXXFLAGS += -isystem /opt/boost_1_66_0_gcc_c++14_build/include   -isystem /home/lewis/source/cpprestsdk-master/Release/include' 'LIBS=-Wl,-rpath=/opt/boost_1_66_0_gcc_c++14_build/lib   -L/opt/boost_1_66_0_gcc_c++14_build/lib   -Wl,-rpath=/home/lewis/source/cpprestsdk-master/Release/ninja_gcc_debug_shared/Binaries   -L/home/lewis/source/cpprestsdk-master/Release/ninja_gcc_debug_shared/Binaries'                            .. )
+	(cd build_gcc_profile   && ~/Qt/5.10.1/gcc_64/bin/qmake CONFIG+=profile 'QMAKE_CXXFLAGS += -isystem /opt/boost_1_66_0_gcc_c++14_build/include   -isystem /home/lewis/source/cpprestsdk-master/Release/include' 'LIBS=-Wl,-rpath=/opt/boost_1_66_0_gcc_c++14_build/lib   -L/opt/boost_1_66_0_gcc_c++14_build/lib   -Wl,-rpath=/home/lewis/source/cpprestsdk-master/Release/ninja_gcc_debug_shared/Binaries   -L/home/lewis/source/cpprestsdk-master/Release/ninja_gcc_debug_shared/Binaries'                            .. )
 }
 
 unsetopt share_history
+
+# Commands to remember to use:
+#   cloc    Count Lines Of Code
+#   column  Form input into aligned columns
+#   combine Like comm but more general (and/not/or/xor; files needn't be pre-sorted) (in Ubuntu package 'moreutils')
+#   comm    Find common lines in sorted files
+#   entr    Rerun a command whenever any of a bunch of files is updated
+#   join    Join (Like a database join) sorted files (pre sort with -k 1b,1)
+#   ncdu    Disk usage navigator
+#   paste   Horizontally join files
+#   pee     Pipe input to multiple commands (a la tee) (in Ubuntu package 'moreutils')
+#   pv      Quantify amount of data going through a pipe ("pipe viewer") (in Ubuntu package 'pv')
+#   ts      Prepend a timestamp before each line of stdin (in Ubuntu package 'moreutils')
+#   vipe    Run a text-editor to tweak data as it's passed through a pipe (in Ubuntu package 'moreutils')
+#
+# awk, find, grep, sed, seq, sort, tr, uniq, wc, xargs
+#
+# (oh-my-)zsh tricks to remember to use:
+#   g...  (git ...)
+#   la... (ls -lAh)
+#   ll... (ls -lh)
 
 # # Append something like this to the prompt: $'\u00A0'
 # nbsp=$'\u00A0'
@@ -111,7 +134,6 @@ unsetopt share_history
 # alias buildall                  'echo clang_debug,clang_release,clang_relwithdebinfo,gcc_debug,gcc_release,gcc_relwithdebinfo | tr "," "\n" | sort | uniq | xargs -I VAR make -C VAR -k \!*'
 # alias cd                        'cd \!*;set prompt="`whoami`@`hostname` $cwd\/ \: "'
 # alias cha                       'cd /; ssh -X ucbctnl@bsmcha1.smb.ucl.ac.uk'
-# alias codesummary               'lsc | xargs wc -l | sort -g | tail -n 1 | awk "{print $1}" | xargs -iVAR echo VAR lines of code. ; lsc | xargs grep -P "\S" | wc -l | xargs -iVAR echo VAR non-empty lines of code ; lsc | grep .cpp | grep -v test.cpp | grep -v main.cpp | wc -l | xargs -iVAR echo VAR [non-Test and non-Main] cpp files with most representing one class. ; lsc | grep test.cpp | wc -l | xargs -iVAR echo VAR test files. ;'
 # alias desire                    'rsync -avu /home/lewis/Podcasts/ /oldpodcasts/ --exclude "*.wav"; rsync -avu --delete ~lewis/Podcasts/ /media/disk/podcasts/ --exclude "*.wav" ; ln -s --no-target-directory /home/lewis/Podcasts/More\ or\ Less_\ Behind\ the\ Stats /home/lewis/Podcasts/More\ or\ Less:\ Behind\ the\ Stats ; '
 # alias desmount                  'pmount /dev/disk/by-uuid/6465-6463 disk'
 # alias desumount                 'pumount /media/disk'
