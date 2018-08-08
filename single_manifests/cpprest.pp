@@ -1,6 +1,6 @@
 $user         = 'lewis'
 $group        = 'lewis'
-$home_dir     = "/home/${$user}"
+$home_dir     = "/home/${user}"
 $user_src_dir = "${home_dir}/source"
 $cpprest_root = "${user_src_dir}/cpprestsdk-master"
 $release_dir  = "${cpprest_root}/Release"
@@ -42,7 +42,7 @@ $compiler_and_cmake_flags_pairs = {
 
 
 $compiler_and_cmake_flags_pairs.each | String $compiler, String $cmake_flags | {
-  $build_dir   = "${$release_dir}/${compiler}_build"
+  $build_dir   = "${release_dir}/${compiler}_build"
   $install_dir = "${user_src_dir}/cpprestsdk-${compiler}"
 
   file { $build_dir:
