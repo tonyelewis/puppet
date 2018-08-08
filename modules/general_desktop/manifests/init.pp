@@ -144,16 +144,20 @@ class general_desktop {
 
   # As of May 2018, can't just use a file resource with http source here because
   # that doesn't follow the redirect
+  # file { 'download VSCode .deb file' :
+  #   path    => '/opt/vscode_amd64.deb',
+  #   replace => false,
+  #   source  => 'https://go.microsoft.com/fwlink/?LinkID=760868',
+  # }
   general_desktop::download_file { 'download VSCode .deb file' :
     target => '/opt/vscode_amd64.deb',
     uri    => 'https://go.microsoft.com/fwlink/?LinkID=760868',
   }
   ->package { 'Install VSCode package':
-    ensure   => latest,
+    ensure   => installed,
     name     => 'code',
     provider => dpkg,
     source   => '/opt/vscode_amd64.deb',
-    # refreshonly => true, # This should be refreshonly but Puppet only allows that on exec, see https://projects.puppetlabs.com/issues/651
   }
   ->file { 'VSCode projects directory' :
     ensure => 'directory',
@@ -208,16 +212,20 @@ class general_desktop {
   }
 
   # Download the Google Chrome package and install it
-  general_desktop::download_file { 'Download of Chrome package file' :
-    uri    => 'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb',
-    target => '/opt/google-chrome-stable_current_amd64.deb',
+  # general_desktop::download_file { 'Download of Chrome package file' :
+  #   uri    => 'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb',
+  #   target => '/opt/google-chrome-stable_current_amd64.deb',
+  # }
+  file { 'Download of Chrome package file' :
+    path    => '/opt/google-chrome-stable_current_amd64.deb',
+    replace => false,
+    source  => 'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb',
   }
   ->package { 'google-chrome-stable':
-    ensure   => latest,
+    ensure   => installed,
     provider => dpkg,
     source   => '/opt/google-chrome-stable_current_amd64.deb',
     require  => Package[ 'libappindicator1', 'libindicator7' ],
-    # refreshonly => true, # This should be refreshonly but Puppet only allows that on exec, see https://projects.puppetlabs.com/issues/651
   }
 
   ## $java_version_major = '8';
