@@ -183,6 +183,14 @@ class plasma_user {
     ],
   }
 
+  augeas { 'Set Greeeter (ie login-screen) wallpaper to plain color (since ugly standard Greeter wallpaper of Ubuntu 18.04)' :
+    lens    => 'Rsyncd.lns',
+    incl    => "${::plasma_user::config_dir}/kscreenlockerrc",
+    context => "/files/${::plasma_user::config_dir}/kscreenlockerrc",
+    changes => [
+      'set Greeter/WallpaperPlugin "org.kde.color"',
+    ],
+  }
 
   augeas { 'Set Konsole tabbar to top' :
     lens    => 'Rsyncd.lns',
