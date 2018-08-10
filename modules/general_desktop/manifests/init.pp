@@ -69,6 +69,8 @@ class general_desktop {
       'kubuntu-desktop',
       'latex-mk',
       'libappindicator1',                # For Chrome
+      'libasound2-dev',                  # For MXX
+      'libcurl4-gnutls-dev',             # For MXX
       'libgd-perl',                      # For plotting pictures in Perl
       'libimage-exiftool-perl',
       'libindicator7',                   # For Chrome
@@ -79,6 +81,7 @@ class general_desktop {
       'libpath-class-perl',              # For General Perl use and for makeoutputparser.pl in particular
       'libreadonly-perl',                #
       'meld',
+      'mesa-common-dev',                 # For MXX
       'mkdocs',
       'mkdocs-doc',
       'nedit',
