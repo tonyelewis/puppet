@@ -80,6 +80,7 @@ class general_desktop {
       'libmoosex-types-path-class-perl', #
       'libpath-class-perl',              # For General Perl use and for makeoutputparser.pl in particular
       'libreadonly-perl',                #
+      'libsamplerate0-dev',              # For MXX
       'meld',
       'mesa-common-dev',                 # For MXX
       'mkdocs',
