@@ -1,11 +1,12 @@
-# puppet apply --noop --test single_manifests/qtav.pp`
+# puppet apply --noop --test single_manifests/qtav.pp
+# puppet apply        --test single_manifests/qtav.pp
 
 $user           = 'lewis'
 $group          = 'lewis'
 $home_dir       = "/home/${user}"
 $user_src_dir   = "${home_dir}/source"
 $qtav_root      = "${user_src_dir}/QtAV-master"
-$qt_install_dir = "${home_dir}/Qt/5.10.1/gcc_64"
+$qt_install_dir = "${home_dir}/Qt/5.11.1/gcc_64"
 
 Exec {
   path => [
@@ -19,6 +20,7 @@ Exec {
 # Prerequisites:
 #  * ffmpeg
 #  * libpulse-dev
+#  * libavfilter-dev
 #
 # From QtAV docs:
 #
@@ -29,7 +31,8 @@ Exec {
 # (but of these, only libpulse-dev was installed on bigslide at the time of writing)
 package { [
   'ffmpeg',
-  'libpulse-dev'
+  'libavfilter-dev',
+  'libpulse-dev',
   ] :
   ensure => 'latest',
 }
