@@ -93,7 +93,15 @@ $compiler_and_cmake_flags_pairs.each | String $compiler, String $cmake_flags | {
     command   => "ninja -j 2 -C ${build_dir} install",
     creates   => "${install_dir}/lib/libQtAV.so",
     group     => $user,
-    logoutput => true,
     user      => $user,
+    # logoutput => true,
+  }
+  # See https://github.com/wang-bin/QtAV/issues/1121
+  ->file { "symlink QtAV CMake config-mode files ${compiler}":
+    ensure => "link",
+    group  => $user,
+    owner  => $user,
+    path   => "${install_dir}/lib/cmake/QtAV/qtav-config.cmake",
+    target => "${install_dir}/lib/cmake/QtAV/QtAV-config.cmake",
   }
 }
