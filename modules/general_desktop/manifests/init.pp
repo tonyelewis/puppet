@@ -90,6 +90,7 @@ class general_desktop {
       'ps2eps',
       'psutils',
       'puppet',
+      'puppet-lint',                     # For Puppet in VSCode
       'puppet-module-puppetlabs-stdlib',
       'pymol',
       'python3-click',                   # Required for mkdocs
