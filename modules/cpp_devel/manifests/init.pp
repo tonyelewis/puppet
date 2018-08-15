@@ -324,6 +324,12 @@ class cpp_devel {
     key   => 'pager.diff',
     value => 'false', # This 'false' should be kept as a string, not changed to the Puppet value false
   }
+  git::config { 'Set user Git config pager.stash to false' :
+    user  => $repos_user,
+    scope => 'global',
+    key   => 'pager.stash',
+    value => 'false', # This 'false' should be kept as a string, not changed to the Puppet value false
+  }
   git::config { 'Set user Git config alias.st to status --column' :
     user  => $repos_user,
     scope => 'global',
