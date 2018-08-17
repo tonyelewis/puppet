@@ -2,6 +2,8 @@
 setopt NO_HUP
 setopt NO_CHECK_JOBS
 
+limit coredumpsize unlimited
+
 export                  BOOST_TEST_BUILD_INFO=yes
 export                BOOST_TEST_COLOR_OUTPUT=yes
 export                   BOOST_TEST_LOG_LEVEL=message
