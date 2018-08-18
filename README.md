@@ -52,6 +52,13 @@ Prepare:
 
 Overwrite install
 
+For bigslide:
+* `sudo dpkg -i /cdrom/pool/main/d/dkms/dkms_2.2.0.3-2ubuntu6_all.deb`
+* `sudo dpkg -i /cdrom/pool/restricted/b/bcmwl/bcmwl-kernel-source_6.30.223.248+bdcom-0ubuntu7_amd64.deb`
+(and manually install all the dependency tree those things require :) )
+
+When installing Ubuntu 18.04 on bigslide, the installer repeatedly crashed just at the point of getting going with the install. The solution turned out to be to turn the display setting to 100% (see [this](https://bugs.launchpad.net/ubuntu/+source/ubiquity/+bug/1751252)).
+
 Mirror old home directory into a new subdirectory
 
 ## Manual Pre-Puppet Steps
