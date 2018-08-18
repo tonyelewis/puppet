@@ -79,6 +79,7 @@ Mirror old home directory into a new subdirectory
 * Download VSCode settings (via "Settings Sync" extension)
 * Install "The Great Suspender" on Chrome
 * Download latest [`FindBoost.cmake`](https://raw.githubusercontent.com/Kitware/CMake/master/Modules/FindBoost.cmake) on top of relevant file (eg `/usr/share/cmake-3.10/Modules/FindBoost.cmake`)
+* Change clock to show date
 * Icons:
 
 | | | | |
