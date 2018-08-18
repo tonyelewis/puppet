@@ -6,7 +6,7 @@ $group          = 'lewis'
 $home_dir       = "/home/${user}"
 $user_src_dir   = "${home_dir}/source"
 $qtav_root      = "${user_src_dir}/QtAV-master"
-$qt_install_dir = "${home_dir}/Qt/5.11.1/gcc_64"
+$qt_install_dir = "${home_dir}/source/Qt/5.11.1/gcc_64"
 
 Exec {
   path => [
