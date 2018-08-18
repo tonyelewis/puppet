@@ -32,7 +32,8 @@ define boost (
 #   $boost_version = '1_64_0',
 #   $boost_version = '1_65_1',
 #   $boost_version = '1_66_0',
-    $boost_version = '1_67_0',
+#   $boost_version = '1_67_0',
+    $boost_version = '1_68_0',
     $cpp_standard  = 'c++03',
 ) {
   # TODO Lower case $compiler
@@ -56,6 +57,7 @@ define boost (
     '1_65_1',
     '1_66_0',
     '1_67_0',
+    '1_68_0',
   ];
   if ! $boost_version in $known_boost_vns {
     fail(
@@ -90,8 +92,10 @@ define boost (
 # $boost_version_periods     = '1.65.1'
 # $boost_version_underscores = '1_66_0'
 # $boost_version_periods     = '1.66.0'
-  $boost_version_underscores = '1_67_0'
-  $boost_version_periods     = '1.67.0'
+# $boost_version_underscores = '1_67_0'
+# $boost_version_periods     = '1.67.0'
+  $boost_version_underscores = '1_68_0'
+  $boost_version_periods     = '1.68.0'
   $root_dir                  = '/opt'
   $archive_file              = "${root_dir}/boost_${boost_version_underscores}.tar.gz"
   $working_dir               = "${root_dir}/boost_${boost_version_underscores}_${compiler}_${cpp_standard}"

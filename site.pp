@@ -4,15 +4,15 @@ class base {
   include cpp_devel
   include general_desktop
 
-  boost { 'boost__clang__1_67_0__c++14':
+  boost { 'boost__clang__1_68_0__c++14':
     compiler      => 'clang',
-    boost_version => '1_67_0',
+    boost_version => '1_68_0',
     cpp_standard  => 'c++14',
   }
 
-  boost { 'boost__gcc__1_67_0__c++14':
+  boost { 'boost__gcc__1_68_0__c++14':
     compiler      => 'gcc',
-    boost_version => '1_67_0',
+    boost_version => '1_68_0',
     cpp_standard  => 'c++14',
   }
 }
