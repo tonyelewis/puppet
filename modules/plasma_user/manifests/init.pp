@@ -247,6 +247,7 @@ class plasma_user {
     ensure  => 'directory',
   }->
   
+  # Still need this even with oh-my-zsh's grep in order to make ` | xargs grep ` use colour
   file { 'make grep script that adds arguments whilst passing-through' :
     path    =>"${::plasma_user::user_bin_dir}/grep",
     ensure  => 'present',
