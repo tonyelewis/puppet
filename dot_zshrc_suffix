@@ -12,7 +12,7 @@ export              BUILD_EXTRA_CATH_BINARIES=1
 export                              BUILDTYPE=ninja_clang_relwithdebinfo
 export                CTEST_OUTPUT_ON_FAILURE=1
 export MXX_ALWAYS_THROW_ON_CONTRACT_VIOLATION=1
-export                                   PATH=~/bin:~/puppet/perl/tools:$PATH:/usr/local/cuda-5.0/bin
+export                                   PATH=~/bin:~/puppet/perl/tools:$PATH:/usr/local/cuda/bin
 
 # export                DBIC_TRACE_PROFILE=console
 # export                            EDITOR=vim
@@ -173,8 +173,8 @@ unsetopt share_history
 # alias walkmount                 'pmount /dev/disk/by-uuid/0000-0002 WALKMAN'
 # alias walkumount                'pumount /media/WALKMAN'
 
-# # setenv LD_LIBRARY_PATH  /usr/local/cuda-5.0/lib64
-# # setenv LD_LIBRARY_PATH  /usr/local/cuda-7.5/lib64
+# # setenv LD_LIBRARY_PATH  /usr/local/cuda/lib64
+# # setenv LD_LIBRARY_PATH  /usr/local/cuda/lib64
 # setenv BOOST_TEST_CATCH_SYSTEM_ERRORS no
 # setenv BOOST_TEST_RANDOM        1
 # setenv BOOST_TEST_SHOW_PROGRESS yes
@@ -184,7 +184,7 @@ unsetopt share_history
 # setenv BUILDROOT /home/lewis/cath_svn
 # setenv BUILDROOT /opt/bioplib-2.1.2/src
 # setenv CATH_TOOLS_BIN_DIR /cath-tools/ninja_gcc_release
-# setenv CUDA_TOOLKIT_ROOT_DIR /usr/local/cuda-7.5
+# setenv CUDA_TOOLKIT_ROOT_DIR /usr/local/cuda
 # setenv GREP_COLORS   'ms=01;31:mc=01;31:sl=:cx=:fn=35:ln=32:bn=32:se=36'
 # setenv GREP_OPTIONS '--colour=auto --exclude-dir .svn --exclude-dir .deps'
 # setenv LD_LIBRARY_PATH  /usr/local/cuda/lib64
