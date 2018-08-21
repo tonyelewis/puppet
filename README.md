@@ -15,7 +15,6 @@ Ubuntu 18.04 on floppyrabbit:
 
 * Whinged about 'concat ohmyzsh .zshrc and my suffix' using "${::general_desktop::home_dir}/.oh-my-zsh/templates/zshrc.zsh-template" which didn't yet exist.
 
-
 ## Notes on install
 
 On XPS 15:

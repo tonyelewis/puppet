@@ -238,15 +238,15 @@ class plasma_user {
     replace => 'no',
     mode    => '0644',
   }
-  
-  
-  
+
+
+
   # Ensure that there's a user bin directory
   file { 'create_user_bin_dir' :
     path    => "${::plasma_user::user_bin_dir}",
     ensure  => 'directory',
   }->
-  
+
   # Still need this even with oh-my-zsh's grep in order to make ` | xargs grep ` use colour
   file { 'make grep script that adds arguments whilst passing-through' :
     path    =>"${::plasma_user::user_bin_dir}/grep",
