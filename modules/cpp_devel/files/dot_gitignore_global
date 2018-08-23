@@ -11,6 +11,7 @@ build_gcc_profile
 build_gcc_release
 clang_release
 gcc_release
+misc-other-stuff
 ninja_clang
 ninja_clang_debug
 ninja_clang_debug_shared
