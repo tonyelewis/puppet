@@ -300,7 +300,9 @@ class cpp_devel {
 
   file { 'Install .gitignore_global file' :
     ensure  => 'present',
+    group  => $repos_group,
     mode    => '0644',
+    owner  => $user,
     path    => "${$repos_root_dir}/.gitignore_global",
     replace => 'yes',
     source  => 'puppet:///modules/cpp_devel/dot_gitignore_global',
