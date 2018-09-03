@@ -90,6 +90,8 @@ Mirror old home directory into a new subdirectory
 
 ## Stuff to Add
 
+* `ncdu`
+* Replace vimcat with bat
 * Had to install download of CMake 3.12 on Ubuntu 18.04 LTS on bigslide and put link in `~/bin` - but maybe future Ubuntu releases will have &ge; 3.12?
 * Consider adding the following to git config (or does this now just work with `git mergetool`?):
       [merge]
