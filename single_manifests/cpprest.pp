@@ -57,7 +57,7 @@ $compiler_and_cmake_flags_pairs.each | String $compiler, String $cmake_flags | {
     owner  => $user,
   }
   ->exec { "cmake cpprest ${compiler}":
-    command => "cmake -GNinja -B${build_dir} -H${release_dir} -DBOOST_ROOT=/opt/boost_1_67_0_${compiler}_c++14_build -DWERROR:BOOL=OFF -DCMAKE_INSTALL_RPATH_USE_LINK_PATH:BOOL=ON -DCMAKE_INSTALL_PREFIX=${install_dir} ${cmake_flags}",
+    command => "cmake -GNinja -B${build_dir} -H${release_dir} -DBOOST_ROOT=/opt/boost_1_68_0_${compiler}_c++14_build -DWERROR:BOOL=OFF -DCMAKE_INSTALL_RPATH_USE_LINK_PATH:BOOL=ON -DCMAKE_INSTALL_PREFIX=${install_dir} ${cmake_flags}",
     creates => "${build_dir}/build.ninja",
     group   => $user,
     require => Package[ 'libssl-dev' ],
