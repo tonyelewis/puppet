@@ -1,5 +1,7 @@
 #!/bin/tcsh -f
 # -f : start faster by ignoring the start-up file
 
+# Highlight bg: export GREP_COLOR='1;37;41'
+
 /bin/grep --colour=auto --exclude-dir .svn --exclude-dir .deps $argv:q
 #/bin/grep --colour=auto                                        $argv:q
