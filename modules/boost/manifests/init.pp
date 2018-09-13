@@ -18,23 +18,8 @@
 
 define boost (
   $compiler,
-#   $boost_version = '1_58_0',
-#   $boost_version = '1_59_0',
-#   $boost_version = '1_60_0_b1',
-#   $boost_version = '1_60_0',
-#   $boost_version = '1_61_0_b1',
-#   $boost_version = '1_61_0',
-#   $boost_version = '1_62_0_b1',
-#   $boost_version = '1_62_0',
-#   $boost_version = '1_63_0_b1',
-#   $boost_version = '1_63_0',
-#   $boost_version = '1_64_0_b2',
-#   $boost_version = '1_64_0',
-#   $boost_version = '1_65_1',
-#   $boost_version = '1_66_0',
-#   $boost_version = '1_67_0',
-    $boost_version = '1_68_0',
-    $cpp_standard  = 'c++03',
+  $boost_version,
+  $cpp_standard = 'c++03',
 ) {
   # TODO Lower case $compiler
   case $compiler {
@@ -185,8 +170,40 @@ define boost (
     ],
     require     => Class[ boost::packages ],
   }
+
+  # dll-path is important to put the location to find dependent libraries in each library, which is more
+  # important as `RPATH` is becoming more widely deprecated
+  #
+  # On an ELF platform (ie Linux), the loader finds the library by looking through a series of paths in this order:
+  # * The `RPATH` built into the ELF executable / shared-library
+  # * the `LD_LIBRARY_PATH`
+  # * The `RUNPATH` built into the ELF executable / shared-library
+  #
+  # `RUNPATH` was added a replacement for `RPATH` because it was thought to be a mistake to not have `LD_LIBRARY_PATH` overriding `RPATH`.
+  #
+  # However `RUNPATH` also behaves slightly differently in that the loader only uses it to find *direct* dependencies,
+  # not *transitive* dependencies (as happens with `RPATH`).
+  #
+  # As link commands are becoming more likely to use RUNPATH, it's becoming more important that shared (`.so`) libraries
+  # have a suitable `RPATH` / `RUNPATH` to locate their own dependent libraries.
+  #
+  #
+  # Some useful notes...
+  #
+  # To tell the linker to write `RPATH`, not `RUNPATH`, use `-Wl,--disable-new-dtags`
+  #
+  # To post-hoc fix a bunch of Boost shared libraries, use a command like
+  # ~~~
+  # find . -type f -name '*.so*' | xargs -I VAR patchelf --set-rpath /opt/boost_1_68_0_gcc_c++14_build/lib VAR
+  # ~~~
+  #
+  # There's a helpful explanation (particularly comment #5) [here](https://bugs.launchpad.net/ubuntu/+source/eglibc/+bug/1253638)
+  #
+  # Commands that can help to diagnose these issues:
+  # * `LD_DEBUG=libs ldd the_binary`
+  # * `readelf -d the_binary`
   ->boost::boost_b2 { "build debug boost ${unique_string}" :
-    command     => "b2 -j2         ${b2_compiler_flags} --layout=tagged variant=debug   define=_GLIBCXX_DEBUG",
+    command     => "b2 -j2         ${b2_compiler_flags} --layout=tagged variant=debug   dll-path=${build_dir}/lib define=_GLIBCXX_DEBUG ",
     working_dir => $working_dir,
     creates     => [
       "${working_dir}/stage/lib/libboost_wave-mt-d.a",
@@ -194,7 +211,7 @@ define boost (
     ],
   }
   ->boost::boost_b2 { "build release boost ${unique_string}" :
-    command     => "b2 -j2         ${b2_compiler_flags} --layout=tagged variant=release",
+    command     => "b2 -j2         ${b2_compiler_flags} --layout=tagged variant=release dll-path=${build_dir}/lib ",
     working_dir => $working_dir,
     creates     => [
       "${working_dir}/stage/lib/libboost_wave-mt.a",
@@ -202,7 +219,7 @@ define boost (
     ],
   }
   ->boost::boost_b2 { "install debug boost ${unique_string}" :
-    command     => "b2 -j2 install ${b2_compiler_flags} --layout=tagged variant=debug   define=_GLIBCXX_DEBUG",
+    command     => "b2 -j2 install ${b2_compiler_flags} --layout=tagged variant=debug   dll-path=${build_dir}/lib define=_GLIBCXX_DEBUG ",
     working_dir => $working_dir,
     creates     => [
       "${build_dir}/lib/libboost_wave-mt-d.a",
@@ -210,7 +227,7 @@ define boost (
     ],
   }
   ->boost::boost_b2 { "install release boost ${unique_string}" :
-    command     => "b2 -j2 install ${b2_compiler_flags} --layout=tagged variant=release",
+    command     => "b2 -j2 install ${b2_compiler_flags} --layout=tagged variant=release dll-path=${build_dir}/lib ",
     working_dir => $working_dir,
     creates     => [
       "${build_dir}/lib/libboost_wave-mt.a",
