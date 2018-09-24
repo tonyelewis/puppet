@@ -24,7 +24,7 @@
 class cpp_devel {
   include git
 
-  $clang_version  = '6.0.0'
+  $clang_version  = '7.0.0'
   $repos_root_dir = '/home/lewis'
   $repos_user     = 'lewis'
   $repos_group    = 'lewis'
@@ -116,9 +116,11 @@ class cpp_devel {
     #  * echo | /usr/bin/g++-7 -xc++ -v -fsyntax-only -
   }
 
-  $clang_tar_base = "clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-14.04.tar.xz"
-  $clang_tar_file = "/opt/${clang_tar_base}"
-  $clang_dir      = "/opt/clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-14.04"
+  # $clang_base_stem = "clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-14.04"
+  $clang_base_stem = "clang+llvm-${clang_version}-x86_64-linux-sles12.3"
+  $clang_tar_base  = "${clang_base_stem}.tar.xz"
+  $clang_tar_file  = "/opt/${clang_tar_base}"
+  $clang_dir       = "/opt/${clang_base_stem}"
   file { 'Download prebuilt Clang archive':
     ensure  => file,
     mode    => 'a+r',
@@ -138,7 +140,7 @@ class cpp_devel {
 
   $clang_bins = [ 'clang', 'clang++', 'clang-format', 'clang-include-fixer', 'clang-tidy', 'lldb', 'llvm-symbolizer', 'scan-build' ]
   $clang_bins.each | String $clang_bin | {
-    alternative_entry { "/opt/clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-14.04/bin/${clang_bin}" :
+    alternative_entry { "/opt/${clang_base_stem}/bin/${clang_bin}" :
       ensure   => present,
       altlink  => "/usr/bin/${clang_bin}",
       altname  => $clang_bin,
@@ -146,6 +148,14 @@ class cpp_devel {
       require  => Exec[ 'Untar prebuilt Clang archive' ],
     }
   }
+
+# sudo update-alternatives --set clang++             /opt/clang+llvm-7.0.0-x86_64-linux-sles12.3/bin/clang++
+# sudo update-alternatives --set clang-format        /opt/clang+llvm-7.0.0-x86_64-linux-sles12.3/bin/clang-format
+# sudo update-alternatives --set clang-include-fixer /opt/clang+llvm-7.0.0-x86_64-linux-sles12.3/bin/clang-include-fixer
+# sudo update-alternatives --set clang-tidy          /opt/clang+llvm-7.0.0-x86_64-linux-sles12.3/bin/clang-tidy
+# sudo update-alternatives --set clang               /opt/clang+llvm-7.0.0-x86_64-linux-sles12.3/bin/clang
+# sudo update-alternatives --set llvm-symbolizer     /opt/clang+llvm-7.0.0-x86_64-linux-sles12.3/bin/llvm-symbolizer
+# sudo update-alternatives --set scan-build          /opt/clang+llvm-7.0.0-x86_64-linux-sles12.3/bin/scan-build
 
   $libcpp_libs = [
     'libc++.a',    'libc++.so',    'libc++.so.1',    'libc++.so.1.0',
@@ -158,7 +168,7 @@ class cpp_devel {
       path    => "/usr/lib/x86_64-linux-gnu/${libcpp_lib}",
       replace => false,
       require => Exec[ 'Untar prebuilt Clang archive' ],
-      source  => "/opt/clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-14.04/lib/${libcpp_lib}",
+      source  => "/opt/${clang_base_stem}/lib/${libcpp_lib}",
     }
   }
 
@@ -167,7 +177,7 @@ class cpp_devel {
     file{ "Link to lib ${libclang_lib} in system lib directory" :
       ensure => 'link',
       path   =>  "/usr/lib/${libclang_lib}",
-      target => "/opt/clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-14.04/lib/${libclang_lib}",
+      target => "/opt/${clang_base_stem}/lib/${libclang_lib}",
     }
   }
 
