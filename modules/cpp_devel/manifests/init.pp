@@ -24,17 +24,19 @@
 class cpp_devel {
   include git
 
-  $clang_version  = '7.0.0'
-  $repos_root_dir = '/home/lewis'
-  $repos_user     = 'lewis'
-  $repos_group    = 'lewis'
-  # $repos_root_dir = '/cath/homes2/ucbctnl'
-  # $repos_user     = 'ucbctnl'
-  # $repos_group    = 'users'
-  $cath_tools_url   = 'git@github.com:UCLOrengoGroup/cath-tools.git'
-  $tell_url         = 'git@github.com:tonyelewis/tell.git'
+  $clang_major_version  = '7'
+  $clang_version        = "${$clang_major_version}.0.0"
+  $repos_root_dir       = '/home/lewis'
+  $repos_user           = 'lewis'
+  $repos_group          = 'lewis'
+  $user                 = 'lewis'
+  # $repos_root_dir       = '/cath/homes2/ucbctnl'
+  # $repos_user           = 'ucbctnl'
+  # $repos_group          = 'users'
+  $cath_tools_url         = 'git@github.com:UCLOrengoGroup/cath-tools.git'
+  $tell_url               = 'git@github.com:tonyelewis/tell.git'
 
-  $desktop_files_dir = '/usr/share/applications'
+  $desktop_files_dir       = '/usr/share/applications'
 
   File {
     owner => 'root',
@@ -110,6 +112,9 @@ class cpp_devel {
       }
     }
 
+    # sudo update-alternatives --set gcc /usr/bin/gcc-8
+    # sudo update-alternatives --set g++ /usr/bin/g++-8
+
     # You can check include directories with:
     #  * echo | /usr/bin/g++   -xc++ -v -fsyntax-only -
     #  * echo | /usr/bin/g++-8 -xc++ -v -fsyntax-only -
@@ -172,7 +177,7 @@ class cpp_devel {
     }
   }
 
-  $libclang_libs = [ 'libclang.so', 'libclang.so.6', 'libclang.so.6.0' ]
+  $libclang_libs = [ 'libclang.so', "libclang.so.${clang_major_version}", "libclang.so.${clang_major_version}.0" ]
   $libclang_libs.each | String $libclang_lib | {
     file{ "Link to lib ${libclang_lib} in system lib directory" :
       ensure => 'link',
