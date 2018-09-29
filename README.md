@@ -126,14 +126,16 @@ Mirror old home directory into a new subdirectory
   * Write the following to the new file /etc/udev/rules.d/70-tony-nvidia-uvm.rules :
      KERNEL=="nvidia_uvm", RUN+="/bin/bash -c '/bin/mknod -m 666 /dev/nvidia-uvm c 247 0; /bin/chgrp video /dev/nvidia-uvm'"
 
-## Notes on installing CUDA
+## CUDA
+
+### Notes on installing CUDA
 
 After a wasted day and lots of frustration, I still sddm to work with the drive installed by the CUDA 8 .deb file (and it flashed really annoyingly until I turned sddm off).
 I then gave up when I found that the new nvcc wasn't compiling an example PTX file any faster than the old one, based on this benchmark:
 
 Before, `/usr/bin/time nvcc --fmad=false --cubin -arch sm_30 --output-directory /tmp ~/compile_kernel.ptxtocubin.139960666117888.ptx` took about 1.14s user time
 
-## Installing CUDA on bigslide
+### Installing CUDA on bigslide
 
 * Use the additional drivers that pops up to install nvidia-XXX (Recommended driver)
 * Download the &hellip;`.run` file for a CUDA Toolkit (check the Toolkit/driver compatibility chart [here](https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html) to match the driver that Ubuntu has installed)
@@ -160,5 +162,21 @@ Please make sure that
  -   LD_LIBRARY_PATH includes /usr/local/cuda-9.1/lib64, or, add /usr/local/cuda-9.1/lib64 to /etc/ld.so.conf and run ldconfig as root
 
 To uninstall the CUDA Toolkit, run the uninstall script in /usr/local/cuda-9.1/bin
+~~~
+
+### CUDA and GCC
+
+To make CUDA play more nicely, install the version of GCC that it wants beside the main compiler and then link those binaries in its bin directory, eg:
+
+~~~no-highlight
+sudo apt-get gcc-6 g++6
+sudo ln -s /usr/bin/g++-6        /usr/local/cuda/bin/g++
+sudo ln -s /usr/bin/gcc-6        /usr/local/cuda/bin/gcc
+sudo ln -s /usr/bin/gcc-ar-6     /usr/local/cuda/bin/gcc-ar
+sudo ln -s /usr/bin/gcc-nm-6     /usr/local/cuda/bin/gcc-nm
+sudo ln -s /usr/bin/gcc-ranlib-6 /usr/local/cuda/bin/gcc-ranlib
+sudo ln -s /usr/bin/gcov-6       /usr/local/cuda/bin/gcov
+sudo ln -s /usr/bin/gcov-dump-6  /usr/local/cuda/bin/gcov-dump
+sudo ln -s /usr/bin/gcov-tool-6  /usr/local/cuda/bin/gcov-tool
 ~~~
 
