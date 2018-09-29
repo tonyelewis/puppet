@@ -155,13 +155,13 @@ class cpp_devel {
     }
   }
 
-# sudo update-alternatives --set clang++             /opt/clang+llvm-7.0.0-x86_64-linux-sles12.3/bin/clang++
-# sudo update-alternatives --set clang-format        /opt/clang+llvm-7.0.0-x86_64-linux-sles12.3/bin/clang-format
-# sudo update-alternatives --set clang-include-fixer /opt/clang+llvm-7.0.0-x86_64-linux-sles12.3/bin/clang-include-fixer
-# sudo update-alternatives --set clang-tidy          /opt/clang+llvm-7.0.0-x86_64-linux-sles12.3/bin/clang-tidy
-# sudo update-alternatives --set clang               /opt/clang+llvm-7.0.0-x86_64-linux-sles12.3/bin/clang
-# sudo update-alternatives --set llvm-symbolizer     /opt/clang+llvm-7.0.0-x86_64-linux-sles12.3/bin/llvm-symbolizer
-# sudo update-alternatives --set scan-build          /opt/clang+llvm-7.0.0-x86_64-linux-sles12.3/bin/scan-build
+# sudo update-alternatives --set clang++             /opt/clang+llvm-7.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang++
+# sudo update-alternatives --set clang-format        /opt/clang+llvm-7.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang-format
+# sudo update-alternatives --set clang-include-fixer /opt/clang+llvm-7.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang-include-fixer
+# sudo update-alternatives --set clang-tidy          /opt/clang+llvm-7.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang-tidy
+# sudo update-alternatives --set clang               /opt/clang+llvm-7.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang
+# sudo update-alternatives --set llvm-symbolizer     /opt/clang+llvm-7.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/llvm-symbolizer
+# sudo update-alternatives --set scan-build          /opt/clang+llvm-7.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/scan-build
 
   $libcpp_libs = [
     'libc++.a',    'libc++.so',    'libc++.so.1',    'libc++.so.1.0',
