@@ -336,6 +336,12 @@ class cpp_devel {
     key   => 'core.editor',
     value => 'vim',
   }
+  git::config { 'Set user Git config pager.branch to false' :
+    user  => $repos_user,
+    scope => 'global',
+    key   => 'pager.branch',
+    value => 'false', # This 'false' should be kept as a string, not changed to the Puppet value false
+  }
   git::config { 'Set user Git config pager.diff to false' :
     user  => $repos_user,
     scope => 'global',
