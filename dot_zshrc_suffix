@@ -27,6 +27,7 @@ alias       mysortpipe='sed "s/_test\./#test\./g" | env LC_ALL=C sort | tr "#" "
 
 alias             auto='libtoolize --force;aclocal;autoconf;touch NEWS AUTHORS README ChangeLog;automake --add-missing'
 alias        datestamp='date +%Y%m%d'
+alias              gwl='git worktree list'
 alias         lsbigmov='find . \( -name "*.mp4" -o -name "*.wmv" -o -name "*.mp*g" -o -name "*.avi" -o -name "*.mov" -o -name "*.flv" -o -name "*.asf" \) -a -size +30M'
 alias              lsc='find . \( -iname "*.pl" -o -iname "*.pm" -o -iname "*.t" -o -name "*.c" -o -name "*.cpp" -o -name "*.cu" -o -name "*.cuh" -o -name "*.cxx" -o -name "*.h" -o -name "*.hpp" -o -name "*.tex" \) -print | grep -vP "\/\.backup\." | grep -vP "\/\.kate-backup" | sed "s/^\.\///g"                                                                                  | mysortpipe '
 alias              msc='find . \( -iname "*.pl" -o -iname "*.pm" -o -iname "*.t" -o -name "*.c" -o -name "*.cpp" -o -name "*.cu" -o -name "*.cuh" -o -name "*.cxx" -o -name "*.h" -o -name "*.hpp" -o -name "*.tex" \) -print | grep -vw temp_experimental_code | grep -vP "\/\.backup\." | grep -vP "\/\.kate-backup" | sed "s/^\.\///g" | grep -vP "^(juce|build_|ninja_|3rdparty|autogen|other_stuff|build-deps-graph)" | mysortpipe '
