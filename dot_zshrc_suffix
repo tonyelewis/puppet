@@ -27,7 +27,6 @@ alias       mysortpipe='sed "s/_test\./#test\./g" | env LC_ALL=C sort | tr "#" "
 
 alias             auto='libtoolize --force;aclocal;autoconf;touch NEWS AUTHORS README ChangeLog;automake --add-missing'
 alias        datestamp='date +%Y%m%d'
-alias              lgt='( git --no-pager log --color --all --decorate --oneline --graph --format=format:"%C(auto)%h%C(reset)%C(auto)%d%C(reset) %C(white)%s%C(reset)   %C(blue)%an, %ar%C(reset)" && echo ) | tac | perl -pe '\''s/(\w+)\\([^[:print:]])/\1#\2/g; s/(\w+)\/([^[:print:]])/\1\\\2/g; s/(\w+)#([^[:print:]])/\1\/\2/g;'\'' '
 alias         lsbigmov='find . \( -name "*.mp4" -o -name "*.wmv" -o -name "*.mp*g" -o -name "*.avi" -o -name "*.mov" -o -name "*.flv" -o -name "*.asf" \) -a -size +30M'
 alias              lsc='find . \( -iname "*.pl" -o -iname "*.pm" -o -iname "*.t" -o -name "*.c" -o -name "*.cpp" -o -name "*.cu" -o -name "*.cuh" -o -name "*.cxx" -o -name "*.h" -o -name "*.hpp" -o -name "*.tex" \) -print | grep -vP "\/\.backup\." | grep -vP "\/\.kate-backup" | sed "s/^\.\///g"                                                                                  | mysortpipe '
 alias              msc='find . \( -iname "*.pl" -o -iname "*.pm" -o -iname "*.t" -o -name "*.c" -o -name "*.cpp" -o -name "*.cu" -o -name "*.cuh" -o -name "*.cxx" -o -name "*.h" -o -name "*.hpp" -o -name "*.tex" \) -print | grep -vw temp_experimental_code | grep -vP "\/\.backup\." | grep -vP "\/\.kate-backup" | sed "s/^\.\///g" | grep -vP "^(juce|build_|ninja_|3rdparty|autogen|other_stuff|build-deps-graph)" | mysortpipe '
@@ -41,6 +40,9 @@ alias             lx62='cd / ; ssh bsmlx62'
 alias        timestamp='date +%Y%m%d-%H%M%S'
 alias             wget='wget -U Firefox --content-disposition'
 
+function lgt {
+	( git --no-pager log --color --all --decorate --oneline --graph --format=format:"%C(auto)%h%C(reset)%C(auto)%d%C(reset) %C(white)%s%C(reset)   %C(blue)%an, %ar%C(reset)" $@ && echo ) | tac | perl -pe 's/(\w+)\\([^[:print:]])/\1#\2/g; s/(\w+)\/([^[:print:]])/\1\\\2/g; s/(\w+)#([^[:print:]])/\1\/\2/g;'
+}
 function cmake_all_ninjas() {
 	rm    -rf ninja_clang_debug_shared ninja_clang_release ninja_clang_relwithdebinfo ninja_gcc_debug_shared ninja_gcc_release ninja_gcc_relwithdebinfo
 	mkdir -p  ninja_clang_debug_shared ninja_clang_release ninja_clang_relwithdebinfo ninja_gcc_debug_shared ninja_gcc_release ninja_gcc_relwithdebinfo
