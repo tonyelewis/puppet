@@ -17,4 +17,4 @@
 # git clone https://git.llvm.org/git/libcxxabi.git/                  ~/source/llvm-master/projects/libcxxabi
 # mkdir ~/source/llvm{,-build}
 # cmake -B`ls -1d ~/source/llvm-build` -H`ls -1d ~/source/llvm-master` -GNinja -DCMAKE_INSTALL_PREFIX=`ls -1d ~/source/llvm` -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_ASSERTIONS=OFF
-# ninja -C ~/source/llvm-build -k 0 -k 4
+# ninja -C ~/source/llvm-build -k 0 -j 4
