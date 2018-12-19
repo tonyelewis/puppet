@@ -55,6 +55,14 @@ function cmake_all_ninjas() {
 	(cd ninja_gcc_release          && cmake -GNinja -DCMAKE_BUILD_TYPE=RELEASE                               -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_68_0_gcc_c++14_build                                                                                                              .. )
 	(cd ninja_gcc_relwithdebinfo   && cmake -GNinja -DCMAKE_BUILD_TYPE=RELWITHDEBINFO                        -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_68_0_gcc_c++14_build                                                                                                              .. )
 }
+function xar {
+	if [[ "${BUILDTYPE}" =~ "clang" ]]; then
+		export QML2_IMPORT_PATH=/home/lewis/source/QtAV-clang/qml
+	else
+		export QML2_IMPORT_PATH=/home/lewis/source/QtAV-gcc/qml
+	fi
+	ninja -C ${BUILDTYPE} -k 0 $@ && limit coredumpsize unlimited && ${BUILDTYPE}/bin/$1
+}
 function xlomp {
 	echo "\033[1;34mClang compiling $@\033[0m"
 	clang++ -x c++ -I autogen/mxx_pro_git_version -isystem /usr/include/x86_64-linux-gnu -isystem /mxx-pro/autogen/api -isystem /home/lewis/source/cpprestsdk-clang/include -isystem /mxx-pro/3rdparty -I annotation/impl_annotation -I annotation/lib_annotation -I arrange/lib_arrange -I arrange/lib_editor -I audio/impl_audio -I audio/lib_audio -I desktop -I mixer/lib_mixer -I time/lib_time -I utility/lib_utility -isystem /opt/boost_1_68_0_clang_c++14_build/include -isystem /home/lewis/source/Qt/5.11.1/gcc_64/include -isystem /home/lewis/source/Qt/5.11.1/gcc_64/include/QtConcurrent -isystem /home/lewis/source/Qt/5.11.1/gcc_64/include/QtCore -isystem /home/lewis/source/Qt/5.11.1/gcc_64/include/QtGui -isystem /home/lewis/source/Qt/5.11.1/gcc_64/include/QtNetwork -isystem /home/lewis/source/Qt/5.11.1/gcc_64/include/QtQml -isystem /home/lewis/source/Qt/5.11.1/gcc_64/include/QtQuick -isystem /home/lewis/source/Qt/5.11.1/gcc_64/include/QtWidgets -isystem /home/lewis/source/Qt/5.11.1/gcc_64/mkspecs/linux-g++ -isystem /home/lewis/source/QtAV-clang/include -isystem /home/lewis/source/Qt/5.11.1/gcc_64/include -stdlib=libc++ -fPIC -fcolor-diagnostics -W -Wall -Werror -Wextra -Wcast-qual -Wconversion -Wformat=2 -Wnon-virtual-dtor -Wshadow -Wsign-compare -Wsign-conversion -pedantic -ftabstop=2 -std=c++17 -o /tmp/.xlomp.dummy.o -c $@
