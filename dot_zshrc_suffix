@@ -61,7 +61,7 @@ function xar {
 	else
 		export QML2_IMPORT_PATH=/home/lewis/source/QtAV-gcc/qml
 	fi
-	ninja -C ${BUILDTYPE} -k 0 $@ && limit coredumpsize unlimited && ${BUILDTYPE}/bin/$1
+	ninja -C ${BUILDTYPE} -k 0 $1 && limit coredumpsize unlimited && ${BUILDTYPE}/bin/$@
 }
 function xlomp {
 	echo "\033[1;34mClang compiling $@\033[0m"
