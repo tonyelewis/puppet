@@ -53,6 +53,12 @@ file { "Source dir ${user_src_dir}":
   submodules => true,
   user       => $user,
 }
+->file_line { 'disable use or portaudio in qtav' :
+  ensure => present,
+  line   => '# Disabled check for portaudio here',
+  match  => 'check_library_exists\(portaudio',
+  path   => "${qtav_root}/src/CMakeLists.txt",
+}
 
 
 $compiler_and_cmake_flags_pairs = {
@@ -68,7 +74,7 @@ $compiler_and_cmake_flags_pairs.each | String $compiler, String $cmake_flags | {
     ensure  => 'directory',
     group   => $user,
     owner   => $user,
-    require => Vcsrepo[ 'clone qtav into source dir' ],
+    require => File_line[ 'disable use or portaudio in qtav' ],
   }
   ->file { $install_dir:
     ensure => 'directory',
