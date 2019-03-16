@@ -63,13 +63,36 @@ function xar {
 	fi
 	ninja -C ${BUILDTYPE} -k 0 $1 && limit coredumpsize unlimited && ${BUILDTYPE}/bin/$@
 }
+
+export       MXX_BASE_COMPILE_ARGS="-x c++ -std=c++17 -fPIC -ftemplate-backtrace-limit=0 -DBOOST_ALL_DYN_LINK -DBOOST_ASIO_HAS_STD_STRING_VIEW -DBOOST_LOG_DYN_LINK -DCPPREST_FORCE_HTTP_CLIENT_ASIO -DCPPREST_FORCE_HTTP_LISTENER_ASIO -DCPPREST_NO_SSL_LEAK_SUPPRESS -DQT_CONCURRENT_LIB -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_QML_LIB -DQT_QUICK_LIB -DQT_WIDGETS_LIB -I annotation/impl_annotation -I annotation/lib_annotation -I arrange/lib_arrange -I arrange/lib_dpe -I arrange/lib_editor -I audio/impl_audio -I audio/lib_audio -I desktop/Sparkle -I desktop/lib_desktop -I mixer/lib_mixer -I serialization_format/lib_serialization_format -I time/lib_time -I utility/lib_utility -isystem /opt/Qt/this-version/gcc_64/include -isystem /opt/Qt/this-version/gcc_64/include/QtConcurrent -isystem /opt/Qt/this-version/gcc_64/include/QtCore -isystem /opt/Qt/this-version/gcc_64/include/QtGui -isystem /opt/Qt/this-version/gcc_64/include/QtNetwork -isystem /opt/Qt/this-version/gcc_64/include/QtQml -isystem /opt/Qt/this-version/gcc_64/include/QtQuick -isystem /opt/Qt/this-version/gcc_64/include/QtWidgets -isystem /opt/Qt/this-version/gcc_64/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu -isystem 3rdparty -isystem 3rdparty/catch2/include -isystem 3rdparty/fmt/include -isystem autogen/api"
+export MXX_BASE_CLANG_COMPILE_ARGS="${MXX_BASE_COMPILE_ARGS} -fcolor-diagnostics -I ninja_clang_debug/autogen/mxx_pro_git_version -isystem /home/lewis/source/QtAV-clang/include -isystem /home/lewis/source/QtAV-clang/include/QtAV -isystem /home/lewis/source/cpprestsdk-clang/include -isystem /opt/boost_1_68_0_clang_c++14_build/include"
+export   MXX_BASE_GCC_COMPILE_ARGS="${MXX_BASE_COMPILE_ARGS} -fdiagnostics-color -I ninja_gcc_debug/autogen/mxx_pro_git_version   -isystem /home/lewis/source/QtAV-gcc/include   -isystem /home/lewis/source/QtAV-gcc/include/QtAV   -isystem /home/lewis/source/cpprestsdk-gcc/include   -isystem /opt/boost_1_68_0_gcc_c++14_build/include"
+export        MXX_COMPILE_WARNINGS="-ftabstop=2 -W -Wall -Werror -Wextra -Wcast-qual -Wconversion -Wformat=2 -Wnon-virtual-dtor -Wshadow -Wsign-compare -Wsign-conversion -pedantic"
+
 function xlomp {
 	echo "\033[1;34mClang compiling $@\033[0m"
-	clang++ -x c++ -DBOOST_ALL_DYN_LINK -DBOOST_LOG_DYN_LINK -DCPPREST_FORCE_HTTP_CLIENT_ASIO -DCPPREST_FORCE_HTTP_LISTENER_ASIO -DCPPREST_NO_SSL_LEAK_SUPPRESS -DQT_CONCURRENT_LIB -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_QML_LIB -DQT_QUICK_LIB -DQT_WIDGETS_LIB -DBOOST_ASIO_HAS_STD_STRING_VIEW -DBOOST_ASIO_HAS_STD_STRING_VIEW -ftemplate-backtrace-limit=0 -I annotation/impl_annotation -I annotation/lib_annotation -I arrange/lib_arrange -I arrange/lib_dpe -I arrange/lib_editor -I audio/impl_audio -I audio/lib_audio -I desktop/Sparkle -I desktop/lib_desktop -I mixer/lib_mixer -I ninja_clang_debug/autogen/mxx_pro_git_version -I serialization_format/lib_serialization_format -I time/lib_time -I utility/lib_utility -isystem /home/lewis/source/QtAV-clang/include -isystem /home/lewis/source/QtAV-clang/include -isystem /home/lewis/source/QtAV-clang/include/QtAV -isystem /home/lewis/source/cpprestsdk-clang/include -isystem /opt/Qt/this-version/gcc_64/include -isystem /opt/Qt/this-version/gcc_64/include/QtConcurrent -isystem /opt/Qt/this-version/gcc_64/include/QtCore -isystem /opt/Qt/this-version/gcc_64/include/QtGui -isystem /opt/Qt/this-version/gcc_64/include/QtNetwork -isystem /opt/Qt/this-version/gcc_64/include/QtQml -isystem /opt/Qt/this-version/gcc_64/include/QtQuick -isystem /opt/Qt/this-version/gcc_64/include/QtWidgets -isystem /opt/Qt/this-version/gcc_64/mkspecs/linux-g++ -isystem /opt/boost_1_68_0_clang_c++14_build/include -isystem /usr/include/x86_64-linux-gnu -isystem 3rdparty -isystem 3rdparty/catch2/include -isystem autogen/api -stdlib=libc++ -fPIC -fcolor-diagnostics -W -Wall -Werror -Wextra -Wcast-qual -Wconversion -Wformat=2 -Wnon-virtual-dtor -Wshadow -Wsign-compare -Wsign-conversion -pedantic -ftabstop=2 -std=c++17 -o /tmp/.xlomp.dummy.o -c $@
+	clang++ -stdlib=libc++ -S ${=MXX_BASE_CLANG_COMPILE_ARGS} ${=MXX_COMPILE_WARNINGS} -o /tmp/.xlomp.dummy.o -c $@
 }
 function xomp {
 	echo "\033[1;34mGCC compiling $@\033[0m"
-	g++     -x c++ -DBOOST_ALL_DYN_LINK -DBOOST_LOG_DYN_LINK -DCPPREST_FORCE_HTTP_CLIENT_ASIO -DCPPREST_FORCE_HTTP_LISTENER_ASIO -DCPPREST_NO_SSL_LEAK_SUPPRESS -DQT_CONCURRENT_LIB -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_QML_LIB -DQT_QUICK_LIB -DQT_WIDGETS_LIB -DBOOST_ASIO_HAS_STD_STRING_VIEW -DBOOST_ASIO_HAS_STD_STRING_VIEW -ftemplate-backtrace-limit=0 -I annotation/impl_annotation -I annotation/lib_annotation -I arrange/lib_arrange -I arrange/lib_dpe -I arrange/lib_editor -I audio/impl_audio -I audio/lib_audio -I desktop/Sparkle -I desktop/lib_desktop -I mixer/lib_mixer -I ninja_clang_debug/autogen/mxx_pro_git_version -I serialization_format/lib_serialization_format -I time/lib_time -I utility/lib_utility -isystem /home/lewis/source/QtAV-gcc/include   -isystem /home/lewis/source/QtAV-gcc/include   -isystem /home/lewis/source/QtAV-gcc/include/QtAV   -isystem /home/lewis/source/cpprestsdk-gcc/include   -isystem /opt/Qt/this-version/gcc_64/include -isystem /opt/Qt/this-version/gcc_64/include/QtConcurrent -isystem /opt/Qt/this-version/gcc_64/include/QtCore -isystem /opt/Qt/this-version/gcc_64/include/QtGui -isystem /opt/Qt/this-version/gcc_64/include/QtNetwork -isystem /opt/Qt/this-version/gcc_64/include/QtQml -isystem /opt/Qt/this-version/gcc_64/include/QtQuick -isystem /opt/Qt/this-version/gcc_64/include/QtWidgets -isystem /opt/Qt/this-version/gcc_64/mkspecs/linux-g++ -isystem /opt/boost_1_68_0_clang_c++14_build/include -isystem /usr/include/x86_64-linux-gnu -isystem 3rdparty -isystem 3rdparty/catch2/include -isystem autogen/api                -fPIC -fdiagnostics-color -W -Wall -Werror -Wextra -Wcast-qual -Wconversion -Wformat=2 -Wnon-virtual-dtor -Wshadow -Wsign-compare -Wsign-conversion -pedantic -ftabstop=2 -std=c++17 -o /tmp/.xomp.dummy.o  -c $@
+	g++                    -S ${=MXX_BASE_GCC_COMPILE_ARGS}   ${=MXX_COMPILE_WARNINGS} -o /tmp/.xomp.dummy.o  -c $@
+}
+function xlentr {
+	echo "\033[1;34mWatching clang-compiling $@\033[0m"
+	msc | entr -cs 'clang++ -stdlib=libc++ -S ${=MXX_BASE_CLANG_COMPILE_ARGS} ${=MXX_COMPILE_WARNINGS} -o /tmp/.xlentr.dummy.o -c '$@' |& head -n 30'
+}
+function xentr {
+	echo "\033[1;34mWatching GCC-compiling $@\033[0m"
+	msc | entr -cs 'g++                    -S ${=MXX_BASE_GCC_COMPILE_ARGS}    ${=MXX_COMPILE_WARNINGS} -o /tmp/.xentr.dummy.o -c '$@' |& head -n 30'
+}
+function xtidy {
+	echo "\033[1;34mRunning clang-tidy $@\033[0m"
+	~/source/llvm/bin/clang-tidy '-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-readability-named-parameter' "$1" -- "${@:2}" ${=MXX_BASE_CLANG_COMPILE_ARGS} ${=MXX_COMPILE_WARNINGS}
+}
+# unbuffer is in the 'expect' package and it tricks clang-tidy into thinking it's outputting to a terminal
+function xtidyentr {
+	echo "\033[1;34mWatching clang-tidy $@\033[0m"
+	msc | entr -cs 'unbuffer /opt/clang+llvm-7.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang-tidy '\''-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-readability-named-parameter'\'' '"$1"' -- '"${@:2}"' ${=MXX_BASE_CLANG_COMPILE_ARGS} ${=MXX_COMPILE_WARNINGS} |& head -n 30'
 }
 function clomp() {
 	echo "\033[1;34mClang compiling $@\033[0m"
