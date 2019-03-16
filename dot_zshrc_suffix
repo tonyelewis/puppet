@@ -92,7 +92,7 @@ function xtidy {
 # unbuffer is in the 'expect' package and it tricks clang-tidy into thinking it's outputting to a terminal
 function xtidyentr {
 	echo "\033[1;34mWatching clang-tidy $@\033[0m"
-	msc | entr -cs 'unbuffer /opt/clang+llvm-7.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang-tidy '\''-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-readability-named-parameter'\'' '"$1"' -- '"${@:2}"' ${=MXX_BASE_CLANG_COMPILE_ARGS} ${=MXX_COMPILE_WARNINGS} |& head -n 30'
+	msc | entr -cs 'unbuffer ~/source/llvm/bin/clang-tidy '\''-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-readability-named-parameter'\'' '"$1"' -- '"${@:2}"' ${=MXX_BASE_CLANG_COMPILE_ARGS} ${=MXX_COMPILE_WARNINGS} |& head -n 30'
 }
 function clomp() {
 	echo "\033[1;34mClang compiling $@\033[0m"
