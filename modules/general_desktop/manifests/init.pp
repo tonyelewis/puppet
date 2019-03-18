@@ -60,6 +60,7 @@ class general_desktop {
       #                                   # encountering problems with entering   username at login
       'augeas-tools',
       'entr',
+      'expect',                          # Contains unbuffer which is useful for tricking clang-tidy into thinking it's talking directly to a tty
       'gconf2',                          # For Atom
       'gnuplot',
       'graphviz',
