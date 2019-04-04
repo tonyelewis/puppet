@@ -30,8 +30,8 @@ alias             auto='libtoolize --force;aclocal;autoconf;touch NEWS AUTHORS R
 alias        datestamp='date +%Y%m%d'
 alias              gwl='git worktree list'
 alias         lsbigmov='find . \( -name "*.mp4" -o -name "*.wmv" -o -name "*.mp*g" -o -name "*.avi" -o -name "*.mov" -o -name "*.flv" -o -name "*.asf" \) -a -size +30M'
-alias              lsc='find . \( -iname "*.pl" -o -iname "*.pm" -o -iname "*.t" -o -name "*.c" -o -name "*.cpp" -o -name "*.cu" -o -name "*.cuh" -o -name "*.cxx" -o -name "*.h" -o -name "*.hpp" -o -name "*.tex" \) -print | grep -vP "\/\.backup\." | grep -vP "\/\.kate-backup" | sed "s/^\.\///g"                                                                                  | mysortpipe '
-alias              msc='find . \( -iname "*.pl" -o -iname "*.pm" -o -iname "*.t" -o -name "*.c" -o -name "*.cpp" -o -name "*.cu" -o -name "*.cuh" -o -name "*.cxx" -o -name "*.h" -o -name "*.hpp" -o -name "*.tex" \) -print | grep -vw temp_experimental_code | grep -vP "\/\.backup\." | grep -vP "\/\.kate-backup" | sed "s/^\.\///g" | grep -vP "^(juce|build_|ninja_|3rdparty|autogen|other_stuff|build-deps-graph)" | mysortpipe '
+alias              lsc='find . \( -name "*.c" -o -name "*.cpp" -o -name "*.cu" -o -name "*.cuh" -o -name "*.cxx" -o -name "*.h" -o -name "*.hpp" -o -name "*.tex" \) -print                                   | grep -vP "\/\.backup\." | grep -vP "\/\.kate-backup" | sed "s/^\.\///g" | grep -vP "^(cpp-external-lib|misc/deprecated_code|ninja_|range-v3|third-party-code)" | mysortpipe '
+alias              msc='find . \( -name "*.c" -o -name "*.cpp" -o -name "*.cu" -o -name "*.cuh" -o -name "*.cxx" -o -name "*.h" -o -name "*.hpp" -o -name "*.tex" \) -print | grep -vw temp_experimental_code | grep -vP "\/\.backup\." | grep -vP "\/\.kate-backup" | sed "s/^\.\///g" | grep -vP "^(ninja_|3rdparty|autogen|other_stuff|build-deps-graph)"                   | mysortpipe '
 alias            lscol='ls --color=always '
 alias            lsmov='find . -name "*.mp4" -o -name "*.wmv" -o -name "*.mp*g" -o -name "*.avi" -o -name "*.mov" -o -name "*.flv" -o -name "*.asf"'
 alias              lsp='find script lib t -iname "*.pm" -o -iname "*.pl" -o -name "*.t" | mysortpipe '
@@ -94,47 +94,62 @@ function xtidyentr {
 	echo "\033[1;34mWatching clang-tidy $@\033[0m"
 	msc | entr -cs 'unbuffer ~/source/llvm/bin/clang-tidy '\''-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-readability-named-parameter'\'' '"$1"' -- '"${@:2}"' ${=MXX_BASE_CLANG_COMPILE_ARGS} ${=MXX_COMPILE_WARNINGS} |& head -n 30'
 }
-function clomp() {
+
+export       TEL_BASE_COMPILE_ARGS="-x c++ -std=c++17 -ftemplate-backtrace-limit=0 -DBOOST_LOG -I /usr/local/cuda/include -I cpp-source/dsesp -I source/src_clustagglom -I source/src_common -I source/src_test -I source/uni -isystem /opt/include -isystem cpp-external-lib/range-v3/include -isystem cpp-external-lib/rapidjson/include -isystem cpp-external-lib/boost-pool-detail-singleton -isystem cpp-external-lib/gnuplot-iostream -isystem cpp-external-lib/catch2/include -isystem cpp-external-lib/fmt/include -isystem cpp-external-lib/json/include"
+export TEL_BASE_CLANG_COMPILE_ARGS="${TEL_BASE_COMPILE_ARGS} -fcolor-diagnostics -ftemplate-depth=400 -isystem /opt/boost_1_68_0_clang_c++14_build/include"
+export   TEL_BASE_GCC_COMPILE_ARGS="${TEL_BASE_COMPILE_ARGS} -fdiagnostics-color                      -isystem /opt/boost_1_68_0_gcc_c++14_build/include"
+export        TEL_COMPILE_WARNINGS="-ftabstop=2 -W -Wall -Werror -Wextra -Wcast-qual -Wconversion -Wformat=2 -Wno-unused-local-typedef -Wnon-virtual-dtor -Wshadow -Wsign-compare -Wsign-conversion -pedantic"
+
+function clomp {
 	echo "\033[1;34mClang compiling $@\033[0m"
-	clang++ -DBOOST_LOG -std=c++17 -stdlib=libc++ -fcolor-diagnostics -ftemplate-depth=400 -W -Wall -Werror -Wextra -Wno-unused-local-typedef -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0             -S        -o /tmp/.comp_clang.dummy.o -isystem /opt/include -isystem range-v3/include -isystem third-party-code/boost-pool-detail-singleton -isystem third-party-code/gnuplot-iostream -isystem rapidjson/include -I /usr/local/cuda/include -I source/uni -I source/src_clustagglom -I source/src_common -I source/src_test -I source $@ |& sed 's/source\///g'
+	clang++ -stdlib=libc++ -S ${=TEL_BASE_CLANG_COMPILE_ARGS} ${=TEL_COMPILE_WARNINGS} -o /tmp/.xlomp.dummy.o -c $@
 }
-function comp() {
+function comp {
 	echo "\033[1;34mGCC compiling $@\033[0m"
-	g++     -DBOOST_LOG -std=c++17                -fdiagnostics-color                      -W -Wall -Werror -Wextra                           -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0 -ftabstop=2 -S -x c++ -o /tmp/.comp_gcc.dummy.o   -isystem /opt/include -isystem range-v3/include -isystem third-party-code/boost-pool-detail-singleton -isystem third-party-code/gnuplot-iostream -isystem rapidjson/include -I /usr/local/cuda/include -I source/uni -I source/src_clustagglom -I source/src_common -I source/src_test -I source $@ |& head -n 800 |& ~/puppet/perl/tools/makeoutputparser.pl
+	g++                    -S ${=TEL_BASE_GCC_COMPILE_ARGS}   ${=TEL_COMPILE_WARNINGS} -o /tmp/.xomp.dummy.o  -c $@
 }
-function makeall() {
-	ls -1d build_* | xargs -I VAR make -C VAR -k $@
+function clentr {
+	echo "\033[1;34mWatching clang-compiling $@\033[0m"
+	lsc | entr -cs 'clang++ -stdlib=libc++ -S ${=TEL_BASE_CLANG_COMPILE_ARGS} ${=TEL_COMPILE_WARNINGS} -o /tmp/.xlentr.dummy.o -c '$@' |& head -n 30'
 }
-function makec() {
-	make $@ |& ~/puppet/perl/tools/makeoutputparser.pl
+function centr {
+	echo "\033[1;34mWatching GCC-compiling $@\033[0m"
+	lsc | entr -cs 'g++                    -S ${=TEL_BASE_GCC_COMPILE_ARGS}    ${=TEL_COMPILE_WARNINGS} -o /tmp/.xentr.dummy.o -c '$@' |& head -n 30'
 }
+function ctidy {
+	echo "\033[1;34mRunning clang-tidy $@\033[0m"
+	~/source/llvm/bin/clang-tidy '-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-readability-named-parameter' "$1" -- "${@:2}" ${=TEL_BASE_CLANG_COMPILE_ARGS} ${=TEL_COMPILE_WARNINGS}
+}
+# unbuffer is in the 'expect' package and it tricks clang-tidy into thinking it's outputting to a terminal
+function ctidyentr {
+	echo "\033[1;34mWatching clang-tidy $@\033[0m"
+	lsc | entr -cs 'unbuffer ~/source/llvm/bin/clang-tidy '\''-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-readability-named-parameter'\'' '"$1"' -- '"${@:2}"' ${=TEL_BASE_CLANG_COMPILE_ARGS} ${=TEL_COMPILE_WARNINGS} |& head -n 30'
+}
+
+#function makeall() {
+#	ls -1d build_* | xargs -I VAR make -C VAR -k $@
+#}
+#function makec() {
+#	make $@ |& ~/puppet/perl/tools/makeoutputparser.pl
+#}
+
 function nar() {
-	ninja         $1 -k 0    -C $BUILDTYPE                                          &&            $BUILDTYPE/$1 $@[2,-1]
+	ninja -C ${BUILDTYPE} -k 0 $1                                            &&            ${BUILDTYPE}/bin/$1 $@[2,-1]
 }
 function nar-debug() {
-	ninja         $1 -k 0    -C $BUILDTYPE                                          && gdb --args $BUILDTYPE/$1 $@[2,-1]
+	ninja -C ${BUILDTYPE} -k 0 $1                                            && gdb --args ${BUILDTYPE}/bin/$1 $@[2,-1]
 }
 function narc() {
-	ninja         $1 -k 0    -C $BUILDTYPE |& ~/puppet/perl/tools/makeoutputparser.pl &&            $BUILDTYPE/$1 $@[2,-1]
+	ninja -C ${BUILDTYPE} -k 0 $1 |& ~/puppet/perl/tools/makeoutputparser.pl &&            ${BUILDTYPE}/bin/$1 $@[2,-1]
 }
 function narc-debug() {
-	ninja         $1 -k 0    -C $BUILDTYPE |& ~/puppet/perl/tools/makeoutputparser.pl && gdb --args $BUILDTYPE/$1 $@[2,-1]
+	ninja -C ${BUILDTYPE} -k 0 $1 |& ~/puppet/perl/tools/makeoutputparser.pl && gdb --args ${BUILDTYPE}/bin/$1 $@[2,-1]
 }
 function ninjaall() {
 	ls -1d ninja_* | xargs -I VAR ninja -C VAR -k 0 $@
 }
 function ninjac() {
 	ninja $@ | ~/puppet/perl/tools/makeoutputparser.pl
-}
-function qmake_all_makes() {
-	rm    -rf build_clang_debug build_clang_release build_clang_profile build_gcc_debug build_gcc_release build_gcc_profile
-	mkdir -p  build_clang_debug build_clang_release build_clang_profile build_gcc_debug build_gcc_release build_gcc_profile
-	(cd build_clang_debug   &&/opt/Qt/this-version/gcc_64/bin/qmake CONFIG+=debug   'QMAKE_CXXFLAGS += -isystem /opt/boost_1_66_0_clang_c++14_build/include -isystem /home/lewis/source/cpprestsdk-clang-build/include' 'LIBS=-Wl,-rpath=/opt/boost_1_66_0_clang_c++14_build/lib -L/opt/boost_1_66_0_clang_c++14_build/lib -Wl,-rpath=/home/lewis/source/cpprestsdk-clang-build/lib -L/home/lewis/source/cpprestsdk-clang-build/lib ' -spec linux-clang-libc++ .. )
-	(cd build_clang_release &&/opt/Qt/this-version/gcc_64/bin/qmake CONFIG+=release 'QMAKE_CXXFLAGS += -isystem /opt/boost_1_66_0_clang_c++14_build/include -isystem /home/lewis/source/cpprestsdk-clang-build/include' 'LIBS=-Wl,-rpath=/opt/boost_1_66_0_clang_c++14_build/lib -L/opt/boost_1_66_0_clang_c++14_build/lib -Wl,-rpath=/home/lewis/source/cpprestsdk-clang-build/lib -L/home/lewis/source/cpprestsdk-clang-build/lib ' -spec linux-clang-libc++ .. )
-	(cd build_clang_profile &&/opt/Qt/this-version/gcc_64/bin/qmake CONFIG+=profile 'QMAKE_CXXFLAGS += -isystem /opt/boost_1_66_0_clang_c++14_build/include -isystem /home/lewis/source/cpprestsdk-clang-build/include' 'LIBS=-Wl,-rpath=/opt/boost_1_66_0_clang_c++14_build/lib -L/opt/boost_1_66_0_clang_c++14_build/lib -Wl,-rpath=/home/lewis/source/cpprestsdk-clang-build/lib -L/home/lewis/source/cpprestsdk-clang-build/lib ' -spec linux-clang-libc++ .. )
-	(cd build_gcc_debug     &&/opt/Qt/this-version/gcc_64/bin/qmake CONFIG+=debug   'QMAKE_CXXFLAGS += -isystem /opt/boost_1_66_0_gcc_c++14_build/include   -isystem /home/lewis/source/cpprestsdk-gcc-build/include'   'LIBS=-Wl,-rpath=/opt/boost_1_66_0_gcc_c++14_build/lib   -L/opt/boost_1_66_0_gcc_c++14_build/lib   -Wl,-rpath=/home/lewis/source/cpprestsdk-gcc-build/lib   -L/home/lewis/source/cpprestsdk-gcc-build/lib   '                          .. )
-	(cd build_gcc_release   &&/opt/Qt/this-version/gcc_64/bin/qmake CONFIG+=release 'QMAKE_CXXFLAGS += -isystem /opt/boost_1_66_0_gcc_c++14_build/include   -isystem /home/lewis/source/cpprestsdk-gcc-build/include'   'LIBS=-Wl,-rpath=/opt/boost_1_66_0_gcc_c++14_build/lib   -L/opt/boost_1_66_0_gcc_c++14_build/lib   -Wl,-rpath=/home/lewis/source/cpprestsdk-gcc-build/lib   -L/home/lewis/source/cpprestsdk-gcc-build/lib   '                          .. )
-	(cd build_gcc_profile   &&/opt/Qt/this-version/gcc_64/bin/qmake CONFIG+=profile 'QMAKE_CXXFLAGS += -isystem /opt/boost_1_66_0_gcc_c++14_build/include   -isystem /home/lewis/source/cpprestsdk-gcc-build/include'   'LIBS=-Wl,-rpath=/opt/boost_1_66_0_gcc_c++14_build/lib   -L/opt/boost_1_66_0_gcc_c++14_build/lib   -Wl,-rpath=/home/lewis/source/cpprestsdk-gcc-build/lib   -L/home/lewis/source/cpprestsdk-gcc-build/lib   '                          .. )
 }
 
 unsetopt share_history
@@ -173,7 +188,7 @@ unsetopt share_history
 # #alias grepcol                  'grep --color=always '
 # #alias kate                     'kate -u '
 # #alias katec                    /bin/ls *.{cpp,h,c,cxx,hpp} | xargs kate'
-# #alias mar                      /usr/bin/make \!:1 -k -j 3 -C $BUILDTYPE |& ~/puppet/perl/tools/makeoutputparser.pl && $BUILDTYPE/\!:1 \!:2*'
+# #alias mar                      /usr/bin/make \!:1 -k -j 3 -C ${BUILDTYPE} |& ~/puppet/perl/tools/makeoutputparser.pl && ${BUILDTYPE}/\!:1 \!:2*'
 # alias ack                       'ack-grep --nogroup'
 # alias anyquestions              'mplayer -vo null -ao pcm:file=AnyQuestions.20100129.wav -playlist "http://www.iplayerconverter.co.uk/pid/b00q4430/stream.aspx"; lame -V2 -h AnyQuestions.20100129.wav AnyQuestions.20100129.mp3; rm -f AnyQuestions.20100129.wav'
 # alias buildall                  'echo clang_debug,clang_release,clang_relwithdebinfo,gcc_debug,gcc_release,gcc_relwithdebinfo | tr "," "\n" | sort | uniq | xargs -I VAR make -C VAR -k \!*'
