@@ -17,8 +17,10 @@ ninja_clang_debug
 ninja_clang_debug_shared
 ninja_clang_release
 ninja_clang_relwithdebinfo
+ninja_clang_sanitize
 ninja_gcc
 ninja_gcc_debug
 ninja_gcc_debug_shared
 ninja_gcc_release
 ninja_gcc_relwithdebinfo
+ninja_gcc_sanitize
