@@ -317,18 +317,19 @@ class general_desktop {
   }
 
   general_desktop::download_file { 'Download of cppreference archive (.tar.gz) file' :
-    uri    => 'http://upload.cppreference.com/mwiki/images/c/cb/cppreference-doc-20180311.tar.xz',
+    uri    => 'http://upload.cppreference.com/mwiki/images/c/ca/cppreference-doc-20181028.tar.xz',
+    #uri    => 'http://upload.cppreference.com/mwiki/images/c/cb/cppreference-doc-20180311.tar.xz',
     #uri    => 'http://upload.cppreference.com/mwiki/images/b/bd/cppreference-doc-20170409.tar.gz',
     #uri    => 'http://upload.cppreference.com/mwiki/images/0/0d/cppreference-doc-20170214.tar.gz',
     #uri    => 'http://upload.cppreference.com/mwiki/images/d/d9/cppreference-doc-20161029.tar.gz',
     #uri    => 'http://upload.cppreference.com/mwiki/images/6/60/cppreference-doc-20151129.tar.gz',
-    target => '/opt/cppreference-doc-20180311.tar.xz',
+    target => '/opt/cppreference-doc-20181028.tar.xz',
   }
-  ->file { '/opt/cppreference-doc-20180311' :
+  ->file { '/opt/cppreference-doc-20181028' :
     ensure  => 'directory'
   }
   ->exec { 'untar cppreference archive' :
-    command => 'tar -axvf /opt/cppreference-doc-20180311.tar.xz --directory /opt/cppreference-doc-20180311 --strip-components=1',
-    creates => '/opt/cppreference-doc-20180311/README.md',
+    command => 'tar -axvf /opt/cppreference-doc-20181028.tar.xz --directory /opt/cppreference-doc-20181028 --strip-components=1',
+    creates => '/opt/cppreference-doc-20181028/README.md',
   }
 }
