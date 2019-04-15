@@ -408,6 +408,18 @@ class cpp_devel {
     key   => 'alias.hist',
     value => 'log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short',
   }
+  git::config { 'Set user Git remote branch color' :
+    user  => $repos_user,
+    scope => 'global',
+    key   => 'color.branch.remote',
+    value => 'red bold',
+  }
+  git::config { 'Set user Git upstream branch color' :
+    user  => $repos_user,
+    scope => 'global',
+    key   => 'color.branch.upstream',
+    value => 'blue bold',
+  }
   git::config { 'Set user Git config pull.ff to only to prevent it automatically doing non-fast-forward merges' :
     user  => $repos_user,
     scope => 'global',
