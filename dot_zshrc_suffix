@@ -88,15 +88,15 @@ function xentr {
 }
 function xtidy {
 	echo "\033[1;34mRunning clang-tidy $@\033[0m"
-	~/source/llvm/bin/clang-tidy '-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-readability-named-parameter' "$1" -- "${@:2}" ${=MXX_BASE_CLANG_COMPILE_ARGS} ${=MXX_COMPILE_WARNINGS}
+	~/source/llvm/bin/clang-tidy '-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-modernize-use-trailing-return-type,-readability-named-parameter' "$1" -- "${@:2}" ${=MXX_BASE_CLANG_COMPILE_ARGS} ${=MXX_COMPILE_WARNINGS}
 }
 # unbuffer is in the 'expect' package and it tricks clang-tidy into thinking it's outputting to a terminal
 function xtidyentr {
 	echo "\033[1;34mWatching clang-tidy $@\033[0m"
-	msc | entr -cs 'unbuffer ~/source/llvm/bin/clang-tidy '\''-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-readability-named-parameter'\'' '"$1"' -- '"${@:2}"' ${=MXX_BASE_CLANG_COMPILE_ARGS} ${=MXX_COMPILE_WARNINGS} |& head -n 30'
+	msc | entr -cs 'unbuffer ~/source/llvm/bin/clang-tidy '\''-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-modernize-use-trailing-return-type,-readability-named-parameter'\'' '"$1"' -- '"${@:2}"' ${=MXX_BASE_CLANG_COMPILE_ARGS} ${=MXX_COMPILE_WARNINGS} |& head -n 30'
 }
 
-export       TEL_BASE_COMPILE_ARGS="-x c++ -std=c++17 -ftemplate-backtrace-limit=0 -DBOOST_LOG -I /usr/local/cuda/include -I cpp-source/dsesp -I source/src_clustagglom -I source/src_common -I source/src_test -I source/uni -isystem /opt/include -isystem cpp-external-lib/gsl/include -isystem cpp-external-lib/range-v3/include -isystem cpp-external-lib/rapidjson/include -isystem cpp-external-lib/boost-pool-detail-singleton -isystem cpp-external-lib/gnuplot-iostream -isystem cpp-external-lib/catch2/include -isystem cpp-external-lib/fmt/include -isystem cpp-external-lib/json/include"
+export       TEL_BASE_COMPILE_ARGS="-x c++ -std=c++2a -ftemplate-backtrace-limit=0 -DBOOST_LOG -I /usr/local/cuda/include -I cpp-source/dsesp -I cpp-source/sfplay -I source/src_clustagglom -I source/src_common -I source/src_test -I source/uni -isystem /opt/include -isystem cpp-external-lib/gsl/include -isystem cpp-external-lib/range-v3/include -isystem cpp-external-lib/rapidjson/include -isystem cpp-external-lib/boost-pool-detail-singleton -isystem cpp-external-lib/gnuplot-iostream -isystem cpp-external-lib/catch2/include -isystem cpp-external-lib/fmt/include -isystem cpp-external-lib/json/include"
 export TEL_BASE_CLANG_COMPILE_ARGS="${TEL_BASE_COMPILE_ARGS} -fcolor-diagnostics -ftemplate-depth=400 -isystem /opt/boost_1_68_0_clang_c++14_build/include"
 export   TEL_BASE_GCC_COMPILE_ARGS="${TEL_BASE_COMPILE_ARGS} -fdiagnostics-color                      -isystem /opt/boost_1_68_0_gcc_c++14_build/include"
 export        TEL_COMPILE_WARNINGS="-ftabstop=2 -W -Wall -Werror -Wextra -Wcast-qual -Wconversion -Wformat=2 -Wno-unused-local-typedef -Wnon-virtual-dtor -Wshadow -Wsign-compare -Wsign-conversion -pedantic"
@@ -119,12 +119,12 @@ function centr {
 }
 function ctidy {
 	echo "\033[1;34mRunning clang-tidy $@\033[0m"
-	~/source/llvm/bin/clang-tidy '-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-readability-named-parameter' "$1" -- "${@:2}" ${=TEL_BASE_CLANG_COMPILE_ARGS} ${=TEL_COMPILE_WARNINGS}
+	~/source/llvm/bin/clang-tidy '-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-modernize-use-trailing-return-type,-readability-named-parameter' "$1" -- "${@:2}" ${=TEL_BASE_CLANG_COMPILE_ARGS} ${=TEL_COMPILE_WARNINGS}
 }
 # unbuffer is in the 'expect' package and it tricks clang-tidy into thinking it's outputting to a terminal
 function ctidyentr {
 	echo "\033[1;34mWatching clang-tidy $@\033[0m"
-	lsc | entr -cs 'unbuffer ~/source/llvm/bin/clang-tidy '\''-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-readability-named-parameter'\'' '"$1"' -- '"${@:2}"' ${=TEL_BASE_CLANG_COMPILE_ARGS} ${=TEL_COMPILE_WARNINGS} |& head -n 30'
+	lsc | entr -cs 'unbuffer ~/source/llvm/bin/clang-tidy '\''-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-modernize-use-trailing-return-type,-readability-named-parameter'\'' '"$1"' -- '"${@:2}"' ${=TEL_BASE_CLANG_COMPILE_ARGS} ${=TEL_COMPILE_WARNINGS} |& head -n 30'
 }
 
 #function makeall() {
