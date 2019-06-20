@@ -43,6 +43,8 @@ define boost (
     '1_66_0',
     '1_67_0',
     '1_68_0',
+    '1_69_0',
+    '1_70_0',
   ];
   if ! $boost_version in $known_boost_vns {
     fail(
@@ -79,8 +81,12 @@ define boost (
 # $boost_version_periods     = '1.66.0'
 # $boost_version_underscores = '1_67_0'
 # $boost_version_periods     = '1.67.0'
-  $boost_version_underscores = '1_68_0'
-  $boost_version_periods     = '1.68.0'
+# $boost_version_underscores = '1_68_0'
+# $boost_version_periods     = '1.68.0'
+# $boost_version_underscores = '1_69_0'
+# $boost_version_periods     = '1.69_0'
+  $boost_version_underscores = '1_70_0'
+  $boost_version_periods     = '1.70.0'
   $root_dir                  = '/opt'
   $archive_file              = "${root_dir}/boost_${boost_version_underscores}.tar.gz"
   $working_dir               = "${root_dir}/boost_${boost_version_underscores}_${compiler}_${cpp_standard}"

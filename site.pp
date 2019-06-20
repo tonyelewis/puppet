@@ -11,15 +11,15 @@ class base {
   # (_LIBCPP_DEBUG documented here: https://libcxx.llvm.org/docs/DesignDocs/DebugMode.html
   # ...has been around for a while - see https://releases.llvm.org/5.0.0/projects/libcxx/docs/DesignDocs/DebugMode.html)
 
-  boost { 'boost__clang__1_68_0__c++14':
+  boost { 'boost__clang__1_70_0__c++14':
     compiler      => 'clang',
-    boost_version => '1_68_0',
+    boost_version => '1_70_0',
     cpp_standard  => 'c++14',
   }
 
-  boost { 'boost__gcc__1_68_0__c++14':
+  boost { 'boost__gcc__1_70_0__c++14':
     compiler      => 'gcc',
-    boost_version => '1_68_0',
+    boost_version => '1_70_0',
     cpp_standard  => 'c++14',
   }
 }
