@@ -72,19 +72,19 @@ export        MXX_COMPILE_WARNINGS="-ftabstop=2 -W -Wall -Werror -Wextra -Wcast-
 
 function xlomp {
 	echo "\033[1;34mClang compiling $@\033[0m"
-	clang++ -stdlib=libc++ -S ${=MXX_BASE_CLANG_COMPILE_ARGS} ${=MXX_COMPILE_WARNINGS} -o /tmp/.xlomp.dummy.o -c $@
+	clang++              -stdlib=libc++ -S ${=MXX_BASE_CLANG_COMPILE_ARGS} ${=MXX_COMPILE_WARNINGS} -o /tmp/.xlomp.dummy.o -c $@
 }
 function xomp {
 	echo "\033[1;34mGCC compiling $@\033[0m"
-	g++                    -S ${=MXX_BASE_GCC_COMPILE_ARGS}   ${=MXX_COMPILE_WARNINGS} -o /tmp/.xomp.dummy.o  -c $@
+	~/source/gcc/bin/g++                -S ${=MXX_BASE_GCC_COMPILE_ARGS}   ${=MXX_COMPILE_WARNINGS} -o /tmp/.xomp.dummy.o  -c $@
 }
 function xlentr {
 	echo "\033[1;34mWatching clang-compiling $@\033[0m"
-	msc | entr -cs 'clang++ -stdlib=libc++ -S ${=MXX_BASE_CLANG_COMPILE_ARGS} ${=MXX_COMPILE_WARNINGS} -o /tmp/.xlentr.dummy.o -c '$@' |& head -n 30'
+	msc | entr -cs 'clang++              -stdlib=libc++ -S ${=MXX_BASE_CLANG_COMPILE_ARGS} ${=MXX_COMPILE_WARNINGS} -o /tmp/.xlentr.dummy.o -c '$@' |& head -n 30'
 }
 function xentr {
 	echo "\033[1;34mWatching GCC-compiling $@\033[0m"
-	msc | entr -cs 'g++                    -S ${=MXX_BASE_GCC_COMPILE_ARGS}    ${=MXX_COMPILE_WARNINGS} -o /tmp/.xentr.dummy.o -c '$@' |& head -n 30'
+	msc | entr -cs '~/source/gcc/bin/g++                -S ${=MXX_BASE_GCC_COMPILE_ARGS}    ${=MXX_COMPILE_WARNINGS} -o /tmp/.xentr.dummy.o -c '$@' |& head -n 30'
 }
 function xtidy {
 	echo "\033[1;34mRunning clang-tidy $@\033[0m"
@@ -103,19 +103,19 @@ export        TEL_COMPILE_WARNINGS="-ftabstop=2 -W -Wall -Werror -Wextra -Wcast-
 
 function clomp {
 	echo "\033[1;34mClang compiling $@\033[0m"
-	clang++ -stdlib=libc++ -S ${=TEL_BASE_CLANG_COMPILE_ARGS} ${=TEL_COMPILE_WARNINGS} -o /tmp/.xlomp.dummy.o -c $@
+	clang++              -stdlib=libc++ -S ${=TEL_BASE_CLANG_COMPILE_ARGS} ${=TEL_COMPILE_WARNINGS} -o /tmp/.xlomp.dummy.o -c $@
 }
 function comp {
 	echo "\033[1;34mGCC compiling $@\033[0m"
-	g++                    -S ${=TEL_BASE_GCC_COMPILE_ARGS}   ${=TEL_COMPILE_WARNINGS} -o /tmp/.xomp.dummy.o  -c $@
+	~/source/gcc/bin/g++                -S ${=TEL_BASE_GCC_COMPILE_ARGS}   ${=TEL_COMPILE_WARNINGS} -o /tmp/.xomp.dummy.o  -c $@
 }
 function clentr {
 	echo "\033[1;34mWatching clang-compiling $@\033[0m"
-	lsc | entr -cs 'clang++ -stdlib=libc++ -S ${=TEL_BASE_CLANG_COMPILE_ARGS} ${=TEL_COMPILE_WARNINGS} -o /tmp/.xlentr.dummy.o -c '$@' |& head -n 30'
+	lsc | entr -cs 'clang++              -stdlib=libc++ -S ${=TEL_BASE_CLANG_COMPILE_ARGS} ${=TEL_COMPILE_WARNINGS} -o /tmp/.xlentr.dummy.o -c '$@' |& head -n 30'
 }
 function centr {
 	echo "\033[1;34mWatching GCC-compiling $@\033[0m"
-	lsc | entr -cs 'g++                    -S ${=TEL_BASE_GCC_COMPILE_ARGS}    ${=TEL_COMPILE_WARNINGS} -o /tmp/.xentr.dummy.o -c '$@' |& head -n 30'
+	lsc | entr -cs '~/source/gcc/bin/g++                -S ${=TEL_BASE_GCC_COMPILE_ARGS}    ${=TEL_COMPILE_WARNINGS} -o /tmp/.xentr.dummy.o -c '$@' |& head -n 30'
 }
 function ctidy {
 	echo "\033[1;34mRunning clang-tidy $@\033[0m"
