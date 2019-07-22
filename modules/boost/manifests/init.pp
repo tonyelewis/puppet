@@ -58,11 +58,12 @@ define boost ( $boost_version, $cpp_standard ) {
 		]
 	}
 
-	$boost_version_underscores = $boost_version
-	$boost_version_periods_raw = regsubst( $boost_version_underscores, '_',  '.',      'G' )
-	$boost_version_periods     = regsubst( $boost_version_periods_raw, '_b', '.beta.', 'G' )
-	$root_dir                  = '/opt'
-	$archive_file              = "${root_dir}/boost_${boost_version_underscores}.tar.gz"
+	$boost_version_underscores       = $boost_version
+	$boost_version_underscores_short = $boost_version[0,-3]
+	$boost_version_periods_raw       = regsubst( $boost_version_underscores, '_',  '.',      'G' )
+	$boost_version_periods           = regsubst( $boost_version_periods_raw, '_b', '.beta.', 'G' )
+	$root_dir                        = '/opt'
+	$archive_file                    = "${root_dir}/boost_${boost_version_underscores}.tar.gz"
 
 	$build_type_tag_sets = [
 		[ 'dbgstd' ],
@@ -249,7 +250,7 @@ define boost ( $boost_version, $cpp_standard ) {
 			file { "/opt/include ${unique_string}" :
 				ensure => 'link',
 				path   => '/opt/include',
-				target => "${build_name}/include",
+				target => "${build_name}/include/boost-${boost_version_underscores_short}",
 				owner  => 'root',
 				group  => 'root',
 			}
