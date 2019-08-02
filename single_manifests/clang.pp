@@ -32,7 +32,9 @@
 #
 # cmake -B`ls -1d ~/source/msan-libcxx-build` -H`ls -1d ~/source/msan-libcxx-llvm-master` -GNinja -DCMAKE_INSTALL_PREFIX=`ls -1d ~/source/msan-libcxx` -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_SANITIZER=Memory -DCMAKE_C_COMPILER=`ls -1d ~/source/llvm/bin/clang` -DCMAKE_CXX_COMPILER=`ls -1d ~/source/llvm/bin/clang++`
 # ninja -C ~/source/msan-libcxx-build -k 0 -j 4 cxx
+# ninja -C ~/source/msan-libcxx-build -k 0 -j 4 cxxabi
 # ninja -C ~/source/msan-libcxx-build -k 0 -j 4 install-cxx
+# ninja -C ~/source/msan-libcxx-build -k 0 -j 4 install-cxxabi
 #
 # Use like:
 # ~/source/llvm/bin/clang++ -fsanitize=memory                                 -fPIE -pie -fno-omit-frame-pointer -g -O2 -std=c++17 -stdlib=libc++ -nostdinc++ -I$(ls -1d ~/source/msan-libcxx)/include/c++/v1 -L$(ls -1d ~/source/msan-libcxx)/lib -Wl,-rpath,$(ls -1d ~/source/msan-libcxx)/lib test.cpp -o test.clang_bin
