@@ -17,6 +17,7 @@
 # git clone https://git.llvm.org/git/libcxx.git/                     ~/source/llvm-master/projects/libcxx
 # git clone https://git.llvm.org/git/libcxxabi.git/                  ~/source/llvm-master/projects/libcxxabi
 # cmake -B`ls -1d ~/source/llvm-build` -H`ls -1d ~/source/llvm-master` -GNinja -DCMAKE_INSTALL_PREFIX=`ls -1d ~/source/llvm` -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_ASSERTIONS=OFF
+# # Wan to also build lldb by adding '-DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra;libcxx;libcxxabi;lldb' but that insists on sibling directory structure rather than nested
 # ninja -C ~/source/llvm-build -k 0 -j 4
 
 
