@@ -10,6 +10,7 @@ export                   BOOST_TEST_LOG_LEVEL=message
 export                BOOST_TEST_REPORT_LEVEL=short
 export              BUILD_EXTRA_CATH_BINARIES=1
 export                              BUILDTYPE=ninja_clang_rwdi
+export                        CMAKE_GENERATOR=Ninja
 export                CTEST_OUTPUT_ON_FAILURE=1
 export MXX_ALWAYS_THROW_ON_CONTRACT_VIOLATION=1
 export                     MXX_DEVELOPER_MODE=1
