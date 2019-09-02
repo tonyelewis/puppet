@@ -420,6 +420,30 @@ class cpp_devel {
     key   => 'color.branch.upstream',
     value => 'blue bold',
   }
+  git::config { 'Set user Git added status color' :
+    user  => $repos_user,
+    scope => 'global',
+    key   => 'color.status.added',
+    value => 'green bold',
+  }
+  git::config { 'Set user Git changed status color' :
+    user  => $repos_user,
+    scope => 'global',
+    key   => 'color.status.changed',
+    value => 'red bold',
+  }
+  git::config { 'Set user Git nobranch status color' :
+    user  => $repos_user,
+    scope => 'global',
+    key   => 'color.status.nobranch',
+    value => 'red bold',
+  }
+  git::config { 'Set user Git untracked status color' :
+    user  => $repos_user,
+    scope => 'global',
+    key   => 'color.status.untracked',
+    value => 'red bold',
+  }
   git::config { 'Set user Git config pull.ff to only to prevent it automatically doing non-fast-forward merges' :
     user  => $repos_user,
     scope => 'global',
