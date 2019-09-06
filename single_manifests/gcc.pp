@@ -2,8 +2,8 @@
 
 # sudo apt-get install build-essential libgmp-dev libmpfr-dev libmpc-dev
 #
-# export BUILD_GCC_VERSION=9.1.0
-# export BUILD_GCC_VERSION_SHORT=9.1
+# export BUILD_GCC_VERSION=9.2.0
+# export BUILD_GCC_VERSION_SHORT=9.2
 # export BUILD_GCC_ROOT_DIR=$( echo ~/source )
 # export BUILD_GCC_SOURCE_DIR=${BUILD_GCC_ROOT_DIR}/gcc-${BUILD_GCC_VERSION}-source
 # export BUILD_GCC_BUILD_DIR=${BUILD_GCC_ROOT_DIR}/gcc-${BUILD_GCC_VERSION}-build
@@ -23,7 +23,7 @@
 # tar --directory=${BUILD_GCC_SOURCE_DIR} --strip-components=1 -zxvf ${BUILD_GCC_ROOT_DIR}/gcc-${BUILD_GCC_VERSION}.tar.gz
 #
 # cd ${BUILD_GCC_BUILD_DIR}
-# ${BUILD_GCC_SOURCE_DIR}/configure -v --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --prefix=${BUILD_GCC_INSTALL_DIR} --enable-checking=release --enable-languages=c,c++,fortran --disable-multilib --program-suffix=-9.1
+# ${BUILD_GCC_SOURCE_DIR}/configure -v --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --prefix=${BUILD_GCC_INSTALL_DIR} --enable-checking=release --enable-languages=c,c++,fortran --disable-multilib --program-suffix=-${BUILD_GCC_VERSION_SHORT}
 # make -j 4
 # make -j 4 install-strip
 #
