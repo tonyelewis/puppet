@@ -4,3 +4,5 @@ set( CMAKE_PREFIX_PATH  "/opt/Qt/this-version/gcc_64;$ENV{HOME}/source/cpprestsd
 set( CMAKE_C_COMPILER   "$ENV{HOME}/source/gcc/bin/gcc"                                                                                        )
 set( CMAKE_CXX_COMPILER "$ENV{HOME}/source/gcc/bin/g++"                                                                                        )
 set( CMAKE_CXX_FLAGS    " -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer -DBOOST_ASIO_HAS_STD_STRING_VIEW ${CMAKE_CXX_FLAGS}" )
+
+include( "${CMAKE_CURRENT_LIST_DIR}/fix-rpath-for-built-gcc.cmake" )
