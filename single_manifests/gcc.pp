@@ -27,6 +27,7 @@
 # make -j 4
 # make -j 4 install-strip
 #
+# rm -f                                ${BUILD_GCC_ROOT_DIR}/gcc
 # ln -s ${BUILD_GCC_INSTALL_BASENAME}  ${BUILD_GCC_ROOT_DIR}/gcc
 # ln -s g++-${BUILD_GCC_VERSION_SHORT} ${BUILD_GCC_INSTALL_DIR}/bin/g++
 # ln -s gcc-${BUILD_GCC_VERSION_SHORT} ${BUILD_GCC_INSTALL_DIR}/bin/gcc
