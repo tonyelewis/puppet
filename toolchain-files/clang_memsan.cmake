@@ -6,3 +6,5 @@ set( CMAKE_CXX_COMPILER          "$ENV{HOME}/source/llvm/bin/clang++"           
 # set( CMAKE_CXX_FLAGS_INIT        "  -fPIE -fPIC -I$ENV{HOME}/source/msan-libcxx/include/c++/v1 -DBOOST_ASIO_HAS_STD_STRING_VIEW " )
 set( CMAKE_CXX_FLAGS_INIT        " -fsanitize=memory -fsanitize-memory-track-origins -fPIE -fPIC -fno-omit-frame-pointer -nostdinc++ -I$ENV{HOME}/source/msan-libcxx/include/c++/v1 -DBOOST_ASIO_HAS_STD_STRING_VIEW " )
 set( CMAKE_EXE_LINKER_FLAGS_INIT " -fsanitize=memory -fpie -stdlib=libc++ -Wno-unused-command-line-argument -L$ENV{HOME}/source/msan-libcxx/lib -Wl,-rpath,$ENV{HOME}/source/msan-libcxx/lib -lc++abi -lc++" )
+
+include( "${CMAKE_CURRENT_LIST_DIR}/misc.cmake" )
