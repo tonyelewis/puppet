@@ -3,6 +3,7 @@
 .project
 .settings
 .vscode
+__pycache__
 build_clang_debug
 build_clang_profile
 build_clang_release
