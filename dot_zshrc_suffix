@@ -15,6 +15,7 @@ export                CTEST_OUTPUT_ON_FAILURE=1
 export MXX_ALWAYS_THROW_ON_CONTRACT_VIOLATION=1
 export                     MXX_DEVELOPER_MODE=1
 export                   MXX_DISABLE_BREAKPAD=1
+export       MXX_TRACKLOOPER_DJANGO_DEVELMODE=1
 export                          UBSAN_OPTIONS="print_stacktrace=1 suppressions=ubsan-suppressions.txt"
 export                                   PATH=~/.local/bin:~/bin:~/puppet/perl/tools:$PATH:/usr/local/cuda/bin
 
