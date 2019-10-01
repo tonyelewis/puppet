@@ -1,6 +1,7 @@
 .cproject
 .gdbinit
 .project
+.sass-cache
 .settings
 .vscode
 __pycache__
