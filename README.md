@@ -67,6 +67,8 @@ Mirror old home directory into a new subdirectory
 
 ## Manual Post-Puppet Steps
 
+* In `~/.config/kglobalshortcutsrc`, change `Hibernate=Hibernate,Hibernate,Hibernate` to `Hibernate=none,Hibernate,Hibernate`
+* In `~/.config/kglobalshortcutsrc`, change `Sleep=Sleep,Sleep,Suspend`               to `Sleep=none,Sleep,Suspend`
 * For HiDPI XPS 15: "systemsettings &rarr; "Hardware" &rarr; "Display and Monitor" &rarr; "Scale Display" &rarr; 1.5
 * "systemsettings" &rarr; "Search" &rarr; "File Search" &rarr; Deselect "Enable File Search" &rarr; "Apply"
 * "systemsettings" &rarr; "Power Management" &rarr; make some decisions
