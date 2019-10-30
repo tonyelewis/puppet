@@ -10,16 +10,16 @@ export                   BOOST_TEST_LOG_LEVEL=message
 export                BOOST_TEST_REPORT_LEVEL=short
 export              BUILD_EXTRA_CATH_BINARIES=1
 export                              BUILDTYPE=ninja_clang_rwdi
+export          CMAKE_EXTRACTED_COMPILE_FLAGS=' --you-have-not-yet-extracted-valid-compile-flags '
 export                        CMAKE_GENERATOR=Ninja
 export                CTEST_OUTPUT_ON_FAILURE=1
 export MXX_ALWAYS_THROW_ON_CONTRACT_VIOLATION=1
+export          MXX_ANNOTATE_DJANGO_DEVELMODE=1
 export                     MXX_DEVELOPER_MODE=1
 export                   MXX_DISABLE_BREAKPAD=1
-export          MXX_ANNOTATE_DJANGO_DEVELMODE=1
 export       MXX_TRACKLOOPER_DJANGO_DEVELMODE=1
 export                          UBSAN_OPTIONS="print_stacktrace=1 suppressions=ubsan-suppressions.txt"
 export                                   PATH=~/.local/bin:~/bin:~/puppet/perl/tools:$PATH:/usr/local/cuda/bin
-
 # ~/.local/bin is for Conan
 
 # export                DBIC_TRACE_PROFILE=console
@@ -30,37 +30,79 @@ export                                   PATH=~/.local/bin:~/bin:~/puppet/perl/t
 # Use like `find -iname '*.cpp' | mysortpipe`
 #
 # This appears before the other aliases so they can use it
-alias       mysortpipe='sed "s/_test\./#test\./g" | env LC_ALL=C sort | tr "#" "_" '
-
-alias             auto='libtoolize --force;aclocal;autoconf;touch NEWS AUTHORS README ChangeLog;automake --add-missing'
-alias        datestamp='date +%Y%m%d'
 alias              gwl='git worktree list'
-alias         lsbigmov='find . \( -name "*.mp4" -o -name "*.wmv" -o -name "*.mp*g" -o -name "*.avi" -o -name "*.mov" -o -name "*.flv" -o -name "*.asf" \) -a -size +30M'
 alias              lsc='find . \( -name "*.c" -o -name "*.cpp" -o -name "*.cu" -o -name "*.cuh" -o -name "*.cxx" -o -name "*.h" -o -name "*.hpp" -o -name "*.tex" \) -print                                   | grep -vP "\/\.backup\." | grep -vP "\/\.kate-backup" | sed "s/^\.\///g" | grep -vP "^(cpp-external-lib|misc/deprecated_code|ninja_|range-v3|third-party-code)" | mysortpipe '
-alias              msc='find . \( -name "*.c" -o -name "*.cpp" -o -name "*.cu" -o -name "*.cuh" -o -name "*.cxx" -o -name "*.h" -o -name "*.hpp" -o -name "*.tex" \) -print | grep -vw temp_experimental_code | grep -vP "\/\.backup\." | grep -vP "\/\.kate-backup" | sed "s/^\.\///g" | grep -vP "^(ninja_|3rdparty|autogen|other_stuff|build-deps-graph)"                   | mysortpipe '
-alias            lscol='ls --color=always '
-alias            lsmov='find . -name "*.mp4" -o -name "*.wmv" -o -name "*.mp*g" -o -name "*.avi" -o -name "*.mov" -o -name "*.flv" -o -name "*.asf"'
 alias              lsp='find script lib t -iname "*.pm" -o -iname "*.pl" -o -name "*.t" | mysortpipe '
 alias              lsq='find . -iname "*.qml" | mysortpipe '
 alias              lsy='find . -iname "*.py" | mysortpipe '
+alias              msc='find . \( -name "*.c" -o -name "*.cpp" -o -name "*.cu" -o -name "*.cuh" -o -name "*.cxx" -o -name "*.h" -o -name "*.hpp" -o -name "*.tex" \) -print | grep -vw temp_experimental_code | grep -vP "\/\.backup\." | grep -vP "\/\.kate-backup" | sed "s/^\.\///g" | grep -vP "^(ninja_|3rdparty|autogen|other_stuff|build-deps-graph)"                   | mysortpipe '
+alias             auto='libtoolize --force;aclocal;autoconf;touch NEWS AUTHORS README ChangeLog;automake --add-missing'
 alias             lx53='cd / ; ssh bsmlx53'
 alias             lx62='cd / ; ssh bsmlx62'
-alias        timestamp='date +%Y%m%d-%H%M%S'
 alias             wget='wget -U Firefox --content-disposition'
+alias            lscol='ls --color=always '
+alias            lsmov='find . -name "*.mp4" -o -name "*.wmv" -o -name "*.mp*g" -o -name "*.avi" -o -name "*.mov" -o -name "*.flv" -o -name "*.asf"'
+alias         lsbigmov='find . \( -name "*.mp4" -o -name "*.wmv" -o -name "*.mp*g" -o -name "*.avi" -o -name "*.mov" -o -name "*.flv" -o -name "*.asf" \) -a -size +30M'
+alias        datestamp='date +%Y%m%d'
+alias        timestamp='date +%Y%m%d-%H%M%S'
+alias       mysortpipe='sed "s/_test\./#test\./g" | env LC_ALL=C sort | tr "#" "_" '
+alias      recmake-all='cmake-all-of $( present-profiles )'
+alias present-profiles='find . -maxdepth 1 -type d -name "ninja_*" -printf "%f\n" | sed "s/^ninja_//g" | sort | tr "\n" " " '
 
 function lgt {
 	( git --no-pager log --color --all --decorate --oneline --graph --format=format:"%C(auto)%h%C(reset)%C(auto)%d%C(reset) %C(white)%s%C(reset)   %C(blue)%an, %ar%C(reset)" $@ && echo ) | tac | perl -pe 's/(\w+)\\([^[:print:]])/\1#\2/g; s/(\w+)\/([^[:print:]])/\1\\\2/g; s/(\w+)#([^[:print:]])/\1\/\2/g;'
 }
-function cmake_all_ninjas() {
-	rm    -rf ninja_clang_debug_shared ninja_clang_release ninja_clang_rwdi ninja_gcc_debug_shared ninja_gcc_release ninja_gcc_rwdi
-	mkdir -p  ninja_clang_debug_shared ninja_clang_release ninja_clang_rwdi ninja_gcc_debug_shared ninja_gcc_release ninja_gcc_rwdi
-	(cd ninja_clang_debug_shared && cmake -GNinja -DCMAKE_BUILD_TYPE=DEBUG          -DBUILD_SHARED_LIBS=ON -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_70_0_clang_c++14_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" .. )
-	(cd ninja_clang_release      && cmake -GNinja -DCMAKE_BUILD_TYPE=RELEASE                               -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_70_0_clang_c++14_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" .. )
-	(cd ninja_clang_rwdi         && cmake -GNinja -DCMAKE_BUILD_TYPE=RELWITHDEBINFO                        -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_70_0_clang_c++14_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" .. )
-	(cd ninja_gcc_debug_shared   && cmake -GNinja -DCMAKE_BUILD_TYPE=DEBUG          -DBUILD_SHARED_LIBS=ON -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_70_0_gcc_c++14_build                                                                                                              .. )
-	(cd ninja_gcc_release        && cmake -GNinja -DCMAKE_BUILD_TYPE=RELEASE                               -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_70_0_gcc_c++14_build                                                                                                              .. )
-	(cd ninja_gcc_rwdi           && cmake -GNinja -DCMAKE_BUILD_TYPE=RELWITHDEBINFO                        -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_70_0_gcc_c++14_build                                                                                                              .. )
-}
+
+#function cmake_all_ninjas() {
+#	rm    -rf ninja_clang_debug_shared ninja_clang_release ninja_clang_rwdi ninja_gcc_debug_shared ninja_gcc_release ninja_gcc_rwdi
+#	mkdir -p  ninja_clang_debug_shared ninja_clang_release ninja_clang_rwdi ninja_gcc_debug_shared ninja_gcc_release ninja_gcc_rwdi
+#	(cd ninja_clang_debug_shared && cmake -GNinja -DCMAKE_BUILD_TYPE=DEBUG          -DBUILD_SHARED_LIBS=ON -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_70_0_clang_c++14_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" .. )
+#	(cd ninja_clang_release      && cmake -GNinja -DCMAKE_BUILD_TYPE=RELEASE                               -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_70_0_clang_c++14_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" .. )
+#	(cd ninja_clang_rwdi         && cmake -GNinja -DCMAKE_BUILD_TYPE=RELWITHDEBINFO                        -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_70_0_clang_c++14_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" .. )
+#	(cd ninja_gcc_debug_shared   && cmake -GNinja -DCMAKE_BUILD_TYPE=DEBUG          -DBUILD_SHARED_LIBS=ON -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_70_0_gcc_c++14_build                                                                                                              .. )
+#	(cd ninja_gcc_release        && cmake -GNinja -DCMAKE_BUILD_TYPE=RELEASE                               -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_70_0_gcc_c++14_build                                                                                                              .. )
+#	(cd ninja_gcc_rwdi           && cmake -GNinja -DCMAKE_BUILD_TYPE=RELWITHDEBINFO                        -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_70_0_gcc_c++14_build                                                                                                              .. )
+#}
+
+function cmake-all-of() {(
+	# Stop as soon as anything fails
+	set -e
+
+	# Check each profile has an associated Conan profile file and a CMake toolchain file
+	for PROFILE_NAME in "$@" ; do
+		REQUIRED_FILES=( "${HOME}/puppet/toolchain-files/${PROFILE_NAME}.cmake" "${HOME}/puppet/conan-profiles/${PROFILE_NAME}" )
+		for REQUIRED_FILE in $REQUIRED_FILES ; do
+			if [[ ! -f ${REQUIRED_FILE} ]]; then
+				echo "File ${REQUIRED_FILE} required for profile ${PROFILE_NAME} does not exist (or isn't a file)"
+				return
+			fi
+		done
+		echo ${PROFILE_NAME}
+	done
+
+	# For each profile:
+	#  * wipe any previous build directory and reac
+	#  * create a fresh build directory
+	#  * Run Conan in the buld directory for the correct profile
+	#  * Run CMake in the buld directory for the correct profile
+	for PROFILE_NAME in "$@"
+	do
+		CONAN_PROFILE_FILE="${HOME}/puppet/conan-profiles/${PROFILE_NAME}"
+		CMAKE_TOOLCHAIN_FILE="${HOME}/puppet/toolchain-files/${PROFILE_NAME}.cmake"
+		NINJA_VERSION_OF_FOLDER="ninja_${PROFILE_NAME}"
+
+		set -x
+		rm -rf "${NINJA_VERSION_OF_FOLDER}"
+		mkdir -p "${NINJA_VERSION_OF_FOLDER}"
+		conan install --build missing --install-folder "${NINJA_VERSION_OF_FOLDER}"   . --profile "${CONAN_PROFILE_FILE}"
+		cmake "-B${NINJA_VERSION_OF_FOLDER}"    -H. "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}"
+		set +x
+	done
+
+	# Confirm completion
+	echo "$funcstack[1]: Done."
+)}
+
 function xar {
 	if [[ "${BUILDTYPE}" =~ "clang" ]]; then
 		export QML2_IMPORT_PATH=/home/lewis/source/QtAV-clang/qml
@@ -70,74 +112,83 @@ function xar {
 	ninja -C ${BUILDTYPE} -k 0 $1 && limit coredumpsize unlimited && unbuffer ${BUILDTYPE}/bin/$@
 }
 
-export       MXX_BASE_COMPILE_ARGS="-x c++ -std=c++17 -fPIC -ftemplate-backtrace-limit=0 -DBOOST_ALL_DYN_LINK -DBOOST_ASIO_HAS_STD_STRING_VIEW -DBOOST_LOG_DYN_LINK -DCPPREST_FORCE_HTTP_CLIENT_ASIO -DCPPREST_FORCE_HTTP_LISTENER_ASIO -DCPPREST_NO_SSL_LEAK_SUPPRESS -DMXX_CATALOGUE=EPIDEMIC -DQT_CONCURRENT_LIB -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_QML_LIB -DQT_QUICK_LIB -DQT_WIDGETS_LIB -I annotation/impl_annotation -I annotation/lib_annotation -I arrange/lib_arrange -I arrange/lib_dpe -I arrange/lib_editor -I arrange/lib_score -I audio/impl_audio -I audio/lib_audio -I desktop/Sparkle -I desktop/lib_desktop -I mixer/lib_mixer -I serialization_format/lib_serialization_format -I time/lib_time -I utility/lib_utility -I video/lib_video -isystem /opt/Qt/this-version/gcc_64/include -isystem /opt/Qt/this-version/gcc_64/include/QtConcurrent -isystem /opt/Qt/this-version/gcc_64/include/QtCore -isystem /opt/Qt/this-version/gcc_64/include/QtGui -isystem /opt/Qt/this-version/gcc_64/include/QtNetwork -isystem /opt/Qt/this-version/gcc_64/include/QtQml -isystem /opt/Qt/this-version/gcc_64/include/QtQuick -isystem /opt/Qt/this-version/gcc_64/include/QtWidgets -isystem /opt/Qt/this-version/gcc_64/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu -isystem 3rdparty -isystem 3rdparty/catch2/include -isystem 3rdparty/fmt/include -isystem autogen/api"
-export MXX_BASE_CLANG_COMPILE_ARGS="${MXX_BASE_COMPILE_ARGS} -fcolor-diagnostics -I ninja_clang_debug/autogen/mxx_pro_git_version -isystem /home/lewis/source/QtAV-clang/include -isystem /home/lewis/source/QtAV-clang/include/QtAV -isystem /home/lewis/source/vlc-qt-clang/include -isystem /home/lewis/source/cpprestsdk-clang/include -isystem /opt/boost_1_70_0_normal_c++17/include/boost-1_70"
-export   MXX_BASE_GCC_COMPILE_ARGS="${MXX_BASE_COMPILE_ARGS} -fdiagnostics-color -I ninja_gcc_debug/autogen/mxx_pro_git_version   -isystem /home/lewis/source/QtAV-gcc/include   -isystem /home/lewis/source/QtAV-gcc/include/QtAV   -isystem /home/lewis/source/vlc-qt-gcc/include   -isystem /home/lewis/source/cpprestsdk-gcc/include   -isystem /opt/boost_1_70_0_normal_c++17/include/boost-1_70"
-export        MXX_COMPILE_WARNINGS="-ftabstop=2 -W -Wall -Werror -Wextra -Wcast-qual -Wconversion -Wformat=2 -Wnon-virtual-dtor -Wshadow -Wsign-compare -Wsign-conversion -pedantic"
+# export       MXX_BASE_COMPILE_ARGS="-x c++ -std=c++17 -fPIC -ftemplate-backtrace-limit=0 -DBOOST_ALL_DYN_LINK -DBOOST_ASIO_HAS_STD_STRING_VIEW -DBOOST_LOG_DYN_LINK -DCPPREST_FORCE_HTTP_CLIENT_ASIO -DCPPREST_FORCE_HTTP_LISTENER_ASIO -DCPPREST_NO_SSL_LEAK_SUPPRESS -DMXX_CATALOGUE=EPIDEMIC -DQT_CONCURRENT_LIB -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_QML_LIB -DQT_QUICK_LIB -DQT_WIDGETS_LIB -I annotation/impl_annotation -I annotation/lib_annotation -I arrange/lib_arrange -I arrange/lib_dpe -I arrange/lib_editor -I arrange/lib_score -I audio/impl_audio -I audio/lib_audio -I desktop/Sparkle -I desktop/lib_desktop -I mixer/lib_mixer -I serialization_format/lib_serialization_format -I time/lib_time -I utility/lib_utility -I video/lib_video -isystem /opt/Qt/this-version/gcc_64/include -isystem /opt/Qt/this-version/gcc_64/include/QtConcurrent -isystem /opt/Qt/this-version/gcc_64/include/QtCore -isystem /opt/Qt/this-version/gcc_64/include/QtGui -isystem /opt/Qt/this-version/gcc_64/include/QtNetwork -isystem /opt/Qt/this-version/gcc_64/include/QtQml -isystem /opt/Qt/this-version/gcc_64/include/QtQuick -isystem /opt/Qt/this-version/gcc_64/include/QtWidgets -isystem /opt/Qt/this-version/gcc_64/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu -isystem 3rdparty -isystem 3rdparty/catch2/include -isystem 3rdparty/fmt/include -isystem autogen/api"
+# export MXX_BASE_CLANG_COMPILE_ARGS="${MXX_BASE_COMPILE_ARGS} -fcolor-diagnostics -I ninja_clang_debug/autogen/mxx_pro_git_version -isystem /home/lewis/source/QtAV-clang/include -isystem /home/lewis/source/QtAV-clang/include/QtAV -isystem /home/lewis/source/vlc-qt-clang/include -isystem /home/lewis/source/cpprestsdk-clang/include -isystem /opt/boost_1_70_0_normal_c++17/include/boost-1_70"
+# export   MXX_BASE_GCC_COMPILE_ARGS="${MXX_BASE_COMPILE_ARGS} -fdiagnostics-color -I ninja_gcc_debug/autogen/mxx_pro_git_version   -isystem /home/lewis/source/QtAV-gcc/include   -isystem /home/lewis/source/QtAV-gcc/include/QtAV   -isystem /home/lewis/source/vlc-qt-gcc/include   -isystem /home/lewis/source/cpprestsdk-gcc/include   -isystem /opt/boost_1_70_0_normal_c++17/include/boost-1_70"
+# export        COMPILE_WARNINGS="-ftabstop=2 -W -Wall -Werror -Wextra -Wcast-qual -Wconversion -Wformat=2 -Wnon-virtual-dtor -Wshadow -Wsign-compare -Wsign-conversion -pedantic"
+
+# export       TEL_BASE_COMPILE_ARGS="-x c++ -std=c++2a -ftemplate-backtrace-limit=0 -DBOOST_LOG -I /usr/local/cuda/include -I cpp-source/dsesp -I cpp-source/sfplay -I source/src_clustagglom -I source/src_common -I source/src_test -I source/uni -isystem /opt/include -isystem cpp-external-lib/gsl/include -isystem cpp-external-lib/range-v3/include -isystem cpp-external-lib/rapidjson/include -isystem cpp-external-lib/boost-pool-detail-singleton -isystem cpp-external-lib/gnuplot-iostream -isystem cpp-external-lib/catch2/include -isystem cpp-external-lib/fmt/include -isystem cpp-external-lib/json/include"
+# export TEL_BASE_CLANG_COMPILE_ARGS="${TEL_BASE_COMPILE_ARGS} -fcolor-diagnostics -isystem /opt/boost_1_70_0_normal_c++17/include/boost-1_70"
+# export   TEL_BASE_GCC_COMPILE_ARGS="${TEL_BASE_COMPILE_ARGS} -fdiagnostics-color -isystem /opt/boost_1_70_0_normal_c++17/include/boost-1_70"
+# export        COMPILE_WARNINGS="-ftabstop=2 -W -Wall -Werror -Wextra -Wcast-qual -Wconversion -Wformat=2 -Wno-unused-local-typedef -Wnon-virtual-dtor -Wshadow -Wsign-compare -Wsign-conversion -pedantic"
+
+export       MXX_BASE_COMPILE_ARGS='-x c++ -std=c++17 -fPIC -ftemplate-backtrace-limit=0'
+export MXX_BASE_CLANG_COMPILE_ARGS="${MXX_BASE_COMPILE_ARGS} -fcolor-diagnostics"
+export   MXX_BASE_GCC_COMPILE_ARGS="${MXX_BASE_COMPILE_ARGS} -fdiagnostics-color"
+
+export       TEL_BASE_COMPILE_ARGS='-x c++ -std=c++2a       -ftemplate-backtrace-limit=0'
+export TEL_BASE_CLANG_COMPILE_ARGS="${TEL_BASE_COMPILE_ARGS} -fcolor-diagnostics"
+export   TEL_BASE_GCC_COMPILE_ARGS="${TEL_BASE_COMPILE_ARGS} -fdiagnostics-color"
+
+export            COMPILE_WARNINGS='-ftabstop=2 -W -Wall -Werror -Wextra -Wcast-qual -Wconversion -Wformat=2 -Wno-unused-local-typedef -Wnon-virtual-dtor -Wshadow -Wsign-compare -Wsign-conversion -pedantic'
 
 function xlomp {
 	echo "\033[1;34mClang compiling $@\033[0m"
-	clang++              -stdlib=libc++ -S ${=MXX_BASE_CLANG_COMPILE_ARGS} ${=MXX_COMPILE_WARNINGS} -o /tmp/.xlomp.dummy.o -c $@
+	clang++              -stdlib=libc++ -S ${=CMAKE_EXTRACTED_COMPILE_FLAGS} ${=MXX_BASE_CLANG_COMPILE_ARGS} ${=COMPILE_WARNINGS} -o /tmp/.xlomp.dummy.o -c $@
 }
 function xomp {
 	echo "\033[1;34mGCC compiling $@\033[0m"
-	~/source/gcc/bin/g++                -S ${=MXX_BASE_GCC_COMPILE_ARGS}   ${=MXX_COMPILE_WARNINGS} -o /tmp/.xomp.dummy.o  -c $@
+	~/source/gcc/bin/g++                -S ${=CMAKE_EXTRACTED_COMPILE_FLAGS} ${=MXX_BASE_GCC_COMPILE_ARGS}   ${=COMPILE_WARNINGS} -o /tmp/.xomp.dummy.o  -c $@
 }
 function xlentr {
 	echo "\033[1;34mWatching clang-compiling $@\033[0m"
-	msc | entr -cs 'clang++              -stdlib=libc++ -S ${=MXX_BASE_CLANG_COMPILE_ARGS} ${=MXX_COMPILE_WARNINGS} -o /tmp/.xlentr.dummy.o -c '$@' |& head -n 30'
+	msc | entr -cs 'clang++              -stdlib=libc++ -S ${=CMAKE_EXTRACTED_COMPILE_FLAGS} ${=MXX_BASE_CLANG_COMPILE_ARGS} ${=COMPILE_WARNINGS} -o /tmp/.xlentr.dummy.o -c '$@' |& head -n 30'
 }
 function xentr {
 	echo "\033[1;34mWatching GCC-compiling $@\033[0m"
-	msc | entr -cs '~/source/gcc/bin/g++                -S ${=MXX_BASE_GCC_COMPILE_ARGS}    ${=MXX_COMPILE_WARNINGS} -o /tmp/.xentr.dummy.o -c '$@' |& head -n 30'
+	msc | entr -cs '~/source/gcc/bin/g++                -S ${=CMAKE_EXTRACTED_COMPILE_FLAGS} ${=MXX_BASE_GCC_COMPILE_ARGS}    ${=COMPILE_WARNINGS} -o /tmp/.xentr.dummy.o -c '$@' |& head -n 30'
 }
 function xtidy {
 	echo "\033[1;34mRunning clang-tidy $@\033[0m"
-	~/source/llvm/bin/clang-tidy '-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-modernize-use-trailing-return-type,-readability-named-parameter' "$1" -- "${@:2}" ${=MXX_BASE_CLANG_COMPILE_ARGS} ${=MXX_COMPILE_WARNINGS}
+	~/source/llvm/bin/clang-tidy '-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-modernize-use-trailing-return-type,-readability-named-parameter' "$1" -- "${@:2}" ${=CMAKE_EXTRACTED_COMPILE_FLAGS} ${=MXX_BASE_CLANG_COMPILE_ARGS} ${=COMPILE_WARNINGS}
 }
 # unbuffer is in the 'expect' package and it tricks clang-tidy into thinking it's outputting to a terminal
 function xtidyentr {
 	echo "\033[1;34mWatching clang-tidy $@\033[0m"
-	msc | entr -cs 'unbuffer ~/source/llvm/bin/clang-tidy '\''-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-modernize-use-trailing-return-type,-readability-named-parameter'\'' '"$1"' -- '"${@:2}"' ${=MXX_BASE_CLANG_COMPILE_ARGS} ${=MXX_COMPILE_WARNINGS} |& head -n 30'
+	msc | entr -cs 'unbuffer ~/source/llvm/bin/clang-tidy '\''-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-modernize-use-trailing-return-type,-readability-named-parameter'\'' '"$1"' -- '"${@:2}"' ${=CMAKE_EXTRACTED_COMPILE_FLAGS} ${=MXX_BASE_CLANG_COMPILE_ARGS} ${=COMPILE_WARNINGS} |& head -n 30'
 }
 
-export       TEL_BASE_COMPILE_ARGS="-x c++ -std=c++2a -ftemplate-backtrace-limit=0 -DBOOST_LOG -I /usr/local/cuda/include -I cpp-source/dsesp -I cpp-source/sfplay -I source/src_clustagglom -I source/src_common -I source/src_test -I source/uni -isystem /opt/include -isystem cpp-external-lib/gsl/include -isystem cpp-external-lib/range-v3/include -isystem cpp-external-lib/rapidjson/include -isystem cpp-external-lib/boost-pool-detail-singleton -isystem cpp-external-lib/gnuplot-iostream -isystem cpp-external-lib/catch2/include -isystem cpp-external-lib/fmt/include -isystem cpp-external-lib/json/include"
-export TEL_BASE_CLANG_COMPILE_ARGS="${TEL_BASE_COMPILE_ARGS} -fcolor-diagnostics -ftemplate-depth=400 -isystem /opt/boost_1_70_0_normal_c++17/include/boost-1_70"
-export   TEL_BASE_GCC_COMPILE_ARGS="${TEL_BASE_COMPILE_ARGS} -fdiagnostics-color                      -isystem /opt/boost_1_70_0_normal_c++17/include/boost-1_70"
-export        TEL_COMPILE_WARNINGS="-ftabstop=2 -W -Wall -Werror -Wextra -Wcast-qual -Wconversion -Wformat=2 -Wno-unused-local-typedef -Wnon-virtual-dtor -Wshadow -Wsign-compare -Wsign-conversion -pedantic"
+
+
+
 
 function clomp {
 	echo "\033[1;34mClang compiling $@\033[0m"
-	clang++              -stdlib=libc++ -S ${=TEL_BASE_CLANG_COMPILE_ARGS} ${=TEL_COMPILE_WARNINGS} -o /tmp/.xlomp.dummy.o -c $@
+
+	clang++              -stdlib=libc++ -S ${=CMAKE_EXTRACTED_COMPILE_FLAGS} ${=TEL_BASE_CLANG_COMPILE_ARGS} ${=COMPILE_WARNINGS} -o /tmp/.xlomp.dummy.o -c $@
 }
 function comp {
 	echo "\033[1;34mGCC compiling $@\033[0m"
-	~/source/gcc/bin/g++                -S ${=TEL_BASE_GCC_COMPILE_ARGS}   ${=TEL_COMPILE_WARNINGS} -o /tmp/.xomp.dummy.o  -c $@
+	~/source/gcc/bin/g++                -S ${=CMAKE_EXTRACTED_COMPILE_FLAGS} ${=TEL_BASE_GCC_COMPILE_ARGS}   ${=COMPILE_WARNINGS} -o /tmp/.xomp.dummy.o  -c $@
 }
 function clentr {
 	echo "\033[1;34mWatching clang-compiling $@\033[0m"
-	lsc | entr -cs 'clang++              -stdlib=libc++ -S ${=TEL_BASE_CLANG_COMPILE_ARGS} ${=TEL_COMPILE_WARNINGS} -o /tmp/.xlentr.dummy.o -c '$@' |& head -n 30'
+	lsc | entr -cs 'clang++              -stdlib=libc++ -S ${=CMAKE_EXTRACTED_COMPILE_FLAGS} ${=TEL_BASE_CLANG_COMPILE_ARGS} ${=COMPILE_WARNINGS} -o /tmp/.xlentr.dummy.o -c '$@' |& head -n 30'
 }
 function centr {
 	echo "\033[1;34mWatching GCC-compiling $@\033[0m"
-	lsc | entr -cs '~/source/gcc/bin/g++                -S ${=TEL_BASE_GCC_COMPILE_ARGS}    ${=TEL_COMPILE_WARNINGS} -o /tmp/.xentr.dummy.o -c '$@' |& head -n 30'
+	lsc | entr -cs '~/source/gcc/bin/g++                -S ${=CMAKE_EXTRACTED_COMPILE_FLAGS} ${=TEL_BASE_GCC_COMPILE_ARGS}    ${=COMPILE_WARNINGS} -o /tmp/.xentr.dummy.o -c '$@' |& head -n 30'
 }
 function ctidy {
 	echo "\033[1;34mRunning clang-tidy $@\033[0m"
-	~/source/llvm/bin/clang-tidy '-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-modernize-use-trailing-return-type,-readability-named-parameter' "$1" -- "${@:2}" ${=TEL_BASE_CLANG_COMPILE_ARGS} ${=TEL_COMPILE_WARNINGS}
+	~/source/llvm/bin/clang-tidy '-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-modernize-use-trailing-return-type,-readability-named-parameter' "$1" -- "${@:2}" ${=CMAKE_EXTRACTED_COMPILE_FLAGS} ${=TEL_BASE_CLANG_COMPILE_ARGS} ${=COMPILE_WARNINGS}
 }
+
 # unbuffer is in the 'expect' package and it tricks clang-tidy into thinking it's outputting to a terminal
 function ctidyentr {
 	echo "\033[1;34mWatching clang-tidy $@\033[0m"
-	lsc | entr -cs 'unbuffer ~/source/llvm/bin/clang-tidy '\''-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-modernize-use-trailing-return-type,-readability-named-parameter'\'' '"$1"' -- '"${@:2}"' ${=TEL_BASE_CLANG_COMPILE_ARGS} ${=TEL_COMPILE_WARNINGS} |& head -n 30'
+	lsc | entr -cs 'unbuffer ~/source/llvm/bin/clang-tidy '\''-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-modernize-use-trailing-return-type,-readability-named-parameter'\'' '"$1"' -- '"${@:2}"' ${=CMAKE_EXTRACTED_COMPILE_FLAGS} ${=TEL_BASE_CLANG_COMPILE_ARGS} ${=COMPILE_WARNINGS} |& head -n 30'
 }
-
-#function makeall() {
-#	ls -1d build_* | xargs -I VAR make -C VAR -k $@
-#}
-#function makec() {
-#	make $@ |& ~/puppet/perl/tools/makeoutputparser.pl
-#}
 
 function nar() {
 	ninja -C ${BUILDTYPE} -k 0 $1                                            &&            ${BUILDTYPE}/bin/$1 $@[2,-1]
@@ -156,6 +207,13 @@ function ninjaall() {
 }
 function ninjac() {
 	ninja $@ | ~/puppet/perl/tools/makeoutputparser.pl
+}
+
+function extract-flags {
+	TEMP_EXTRACT_PROFILE_TYPE=${BUILDTYPE#"ninja_"}
+	NEW_ARGS=$( extract-cmake-flags.py --conan-profile-file $(ls -1d ~/puppet/conan-profiles/${TEMP_EXTRACT_PROFILE_TYPE}) -- -DCMAKE_TOOLCHAIN_FILE=$( ls -1d ~/puppet/toolchain-files/${TEMP_EXTRACT_PROFILE_TYPE}.cmake ) 2> /dev/null )
+	export CMAKE_EXTRACTED_COMPILE_FLAGS=" $NEW_ARGS "
+	echo "Updated CMAKE_EXTRACTED_COMPILE_FLAGS to : '$CMAKE_EXTRACTED_COMPILE_FLAGS'"
 }
 
 unsetopt share_history
@@ -186,45 +244,28 @@ unsetopt share_history
 # nbsp=$'\u00A0'
 # bindkey -s $nbsp '^u'
 
-# # alias cmake_all_ninjas        'rm -rf ninja_clang_debug_shared ninja_clang_release ninja_clang_rwdi ninja_gcc_debug_shared ninja_gcc_release ninja_gcc_rwdi; mkdir -p ninja_clang_debug_shared ninja_clang_release ninja_clang_rwdi ninja_gcc_debug_shared ninja_gcc_release ninja_gcc_rwdi; (cd ninja_clang_debug_shared   && cmake -GNinja -DCMAKE_BUILD_TYPE=DEBUG          -DBUILD_SHARED_LIBS=ON -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" .. ) ; (cd ninja_clang_release        && cmake -GNinja -DCMAKE_BUILD_TYPE=RELEASE                               -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" .. ) ; (cd ninja_clang_rwdi && cmake -GNinja -DCMAKE_BUILD_TYPE=RELWITHDEBINFO                        -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_58_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" .. ) ; (cd ninja_gcc_debug_shared     && cmake -GNinja -DCMAKE_BUILD_TYPE=DEBUG          -DBUILD_SHARED_LIBS=ON -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_58_0_gcc_build                                                                                                              .. ) ; (cd ninja_gcc_release          && cmake -GNinja -DCMAKE_BUILD_TYPE=RELEASE                               -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_58_0_gcc_build                                                                                                              .. ) ; (cd ninja_gcc_rwdi   && cmake -GNinja -DCMAKE_BUILD_TYPE=RELWITHDEBINFO                        -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_58_0_gcc_build                                                                                                              .. ) ; '
-# # alias cmake_all_ninjas        'rm -rf ninja_clang_debug_shared ninja_clang_release ninja_clang_rwdi ninja_gcc_debug_shared ninja_gcc_release ninja_gcc_rwdi; mkdir -p ninja_clang_debug_shared ninja_clang_release ninja_clang_rwdi ninja_gcc_debug_shared ninja_gcc_release ninja_gcc_rwdi; (cd ninja_clang_debug_shared   && cmake -GNinja -DCMAKE_BUILD_TYPE=DEBUG          -DBUILD_SHARED_LIBS=ON -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_60_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" .. ) ; (cd ninja_clang_release        && cmake -GNinja -DCMAKE_BUILD_TYPE=RELEASE                               -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_60_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" .. ) ; (cd ninja_clang_rwdi && cmake -GNinja -DCMAKE_BUILD_TYPE=RELWITHDEBINFO                        -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_60_0_clang_build -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" .. ) ; (cd ninja_gcc_debug_shared     && cmake -GNinja -DCMAKE_BUILD_TYPE=DEBUG          -DBUILD_SHARED_LIBS=ON -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_60_0_gcc_build                                                                                                              .. ) ; (cd ninja_gcc_release          && cmake -GNinja -DCMAKE_BUILD_TYPE=RELEASE                               -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_60_0_gcc_build                                                                                                              .. ) ; (cd ninja_gcc_rwdi   && cmake -GNinja -DCMAKE_BUILD_TYPE=RELWITHDEBINFO                        -DBUILD_EXTRA_CATH_TOOLS=ON -DBUILD_EXTRA_CATH_TESTS=ON -DBOOST_ROOT=/opt/boost_1_60_0_gcc_build                                                                                                              .. ) ; '
-# #alias clomp                    'echo "\033[1;34mClang compiling \!:1\033[0m" ; clang++ -DBOOST_LOG -std=c++17 -stdlib=libc++ -fcolor-diagnostics -ftemplate-depth=400 -W -Wall -Werror -Wextra -Wno-unused-local-typedef -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0             -S        -o /tmp/.comp_clang.dummy.o -isystem /opt/include -isystem range-v3/include -isystem third-party-code/boost-pool-detail-singleton -isystem third-party-code/gnuplot-iostream -isystem rapidjson/include -I /usr/local/cuda/include -I source \!* |& sed '\''s/source\///g'\'' ; '
-# #alias comp                     'echo "\033[1;34mGCC compiling \!:1\033[0m"   ; g++     -DBOOST_LOG -std=c++17                                                         -W -Wall -Werror -Wextra                           -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0 -ftabstop=2 -S -x c++ -o /tmp/.comp_gcc.dummy.o   -isystem /opt/include -isystem range-v3/include -isystem third-party-code/boost-pool-detail-singleton -isystem third-party-code/gnuplot-iostream -isystem rapidjson/include -I /usr/local/cuda/include -I source \!* |& head -n 800 |& ~/puppet/perl/tools/makeoutputparser.pl '
+# #alias clomp                    'echo "\033[1;34mClang compiling \!:1\033[0m" ; clang++ -DBOOST_LOG -std=c++17 -stdlib=libc++ -fcolor-diagnostics -W -Wall -Werror -Wextra -Wno-unused-local-typedef -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0             -S        -o /tmp/.comp_clang.dummy.o -isystem /opt/include -isystem range-v3/include -isystem third-party-code/boost-pool-detail-singleton -isystem third-party-code/gnuplot-iostream -isystem rapidjson/include -I /usr/local/cuda/include -I source \!* |& sed '\''s/source\///g'\'' ; '
+# #alias comp                     'echo "\033[1;34mGCC compiling \!:1\033[0m"   ; g++     -DBOOST_LOG -std=c++17                                    -W -Wall -Werror -Wextra                           -Wsign-compare -Wcast-qual -Wconversion -Wnon-virtual-dtor -pedantic -ftemplate-backtrace-limit=0 -ftabstop=2 -S -x c++ -o /tmp/.comp_gcc.dummy.o   -isystem /opt/include -isystem range-v3/include -isystem third-party-code/boost-pool-detail-singleton -isystem third-party-code/gnuplot-iostream -isystem rapidjson/include -I /usr/local/cuda/include -I source \!* |& head -n 800 |& ~/puppet/perl/tools/makeoutputparser.pl '
 # #alias grep                     'grep --color=auto '
 # #alias grepcol                  'grep --color=always '
 # #alias kate                     'kate -u '
-# #alias katec                    /bin/ls *.{cpp,h,c,cxx,hpp} | xargs kate'
 # #alias mar                      /usr/bin/make \!:1 -k -j 3 -C ${BUILDTYPE} |& ~/puppet/perl/tools/makeoutputparser.pl && ${BUILDTYPE}/\!:1 \!:2*'
 # alias ack                       'ack-grep --nogroup'
-# alias buildall                  'echo clang_debug,clang_release,clang_relwithdebinfo,gcc_debug,gcc_release,gcc_relwithdebinfo | tr "," "\n" | sort | uniq | xargs -I VAR make -C VAR -k \!*'
 # alias cd                        'cd \!*;set prompt="`whoami`@`hostname` $cwd\/ \: "'
-# alias cha                       'cd /; ssh -X ucbctnl@bsmcha1.smb.ucl.ac.uk'
-# alias fixhead                   'echo "\033[1;34mFixing header \!:1\033[0m"   ; clang-tidy -fix -checks=llvm-header-guard,llvm-namespace-comment \!* -- -x c++ -std=c++17 -isystem /opt/include -isystem range-v3/include -isystem third-party-code/boost-pool-detail-singleton -isystem third-party-code/gnuplot-iostream -I source'
-# alias gate                      'cd /; ssh -X ucbctnl@bsmgate1.smb.ucl.ac.uk'
-# alias katec                     'lsc | xargs kate -u'
 # alias ls                        'ls --color=auto '
 # alias lsbigmov                  'find . \( -name "*.mp4" -o -name "*.wmv" -o -name "*.mp*g" -o -name "*.avi" -o -name "*.mov" -o -name "*.flv" -o -name "*.asf" \) -a -size +30M'
 # alias lsmov                     'find . -name "*.mp4" -o -name "*.wmv" -o -name "*.mp*g" -o -name "*.avi" -o -name "*.mov" -o -name "*.flv" -o -name "*.asf"'
 # alias mplayer                   'mplayer -fs -zoom'
-# alias rm                        'rm -I'
-# alias rmkatebackups             'find . -iname ".kate-backup*" -exec rm -f {} \;'
-# alias scsis                     'ssh tony@hermes.dcs.bbk.ac.uk' # ssh tony@193.61.44.27 # ssh tony@193.61.44.31# ssh tony@193.61.44.18
 # alias sourcesnontest            'lsc | grep -P "\.cpp" | grep -vP "test\.cpp"'
 # alias sourcestest               'lsc | grep -P "test\.cpp" | grep -vP "^test\.cpp"'
 # alias speedtest                 'wget "http://www.mirrorservice.org/sites/mirror.centos.org/5.4/isos/i386/CentOS-5.4-i386-bin-4of6.iso"'
-# alias sticksync                 'rsync -avu /media/disk/backups/ /usbstickmirrorsource/backups/; rsync -avu /usbstickmirrorsource/podcasts/ /oldpodcasts/ ; rsync -avu --delete /usbstickmirrorsource/ /media/disk/'
 # alias summarise                 'exiftool * | grep -P "File Name.*|Title|Lyrics|Comment"'
 # alias unlimit                   'limit vmemoryuse unlimited ; limit memoryuse unlimited ; '
 
 # # setenv LD_LIBRARY_PATH  /usr/local/cuda/lib64
 # # setenv LD_LIBRARY_PATH  /usr/local/cuda/lib64
 # setenv BOOST_TEST_CATCH_SYSTEM_ERRORS no
-# setenv BOOST_TEST_RANDOM        1
 # setenv BOOST_TEST_SHOW_PROGRESS yes
-# setenv BOOST_TESTS_TO_RUN AddRangeTestSuite,AminoAcidTestSuite,BisectorTestSuite,CloneablePtrTestSuite,CoordTestSuite,CrossoverTestSuite,CudaAdapterTestSuite,CudaDeviceMemoryTestSuite,CudaKernelNamerTestSuite,CudaModuleCorrectnessTestSuite,CudaModuleLoadFileRemovalTestSuite,CudaResourceSetDealerTestSuite,CudaResourceSetTestSuite,CudaResourceSetThreadGroupTestSuite,DemeTestSuite,DemeTransferBestReplacesRandomUpdateTestSuite,DemeTransferGenerationTrackerTestSuite,DemeTransferLayoutPolicyTestSuite,DemeTransferLoopLayoutTestSuite,DemeTransferManagerTestSuite,DemeTransferTorusLayoutTestSuite,DemeUpdateRemnantGenerationStoreTestSuite,DemeUpdateRemnantStoreTestSuite,EvaluatorDataTestSuite,EvaluatorSubmissionHandleDealerTestSuite,EvaluatorSubmissionHandleTestSuite,ExceptionIsEquivalentTestSuite,ExtendIndividualsTestSuite,FactorsClosestToSquareRootTestSuite,FlowStageManagerTestSuite,GraphVertexSelectorTestSuite,IncrementFunctorTestSuite,IncrementRangeTestSuite,InitialisationTestSuite,IterateThreadTestSuite,JointPlacesTestSuite,NodeOperationSetTestSuite,NodeOperationTestSuite,NodePropertiesTestSuite,ParallelExecutionInGroupsTestSuite,PopulationTestSuite,ProblemTreeSystemTestSuite,ProgramPropertyTestSuite,ProgramTestSuite,RandomiseWithinJointPlacesTestSuite,RandomNumGenDealerTestSuite,ReconstructPositionsFromAnglesKernelTestSuite,RegressionProblemTestSuite,RunSpecTestSuite,SelectionSchemeTestSuite,SharedMemCalculatorTestSuite,SimpleTreeSystemTestSuite,StringNumericComparatorTestSuite,SubgraphSelectorTestSuite,TestcasePadderTestSuite,TextureBindingTestSuite,ThreadLauncherTestSuite,ThreadPolicyTestSuite,TmblDependencyManagerTestSuite,TmblIndividualWithManyDependenciesSystemTestSuite,TopologicalSortTestSuite,TournamentSelectionCalculatorTestSuite,TreeProgramStringTestSuite,TroublesomeTmblIndividualSystemTestSuite
-# setenv BUILD_EXTRA_CATH_TESTS
-# setenv BUILD_EXTRA_CATH_TOOLS
-# setenv CATH_TOOLS_BIN_DIR /cath-tools/ninja_gcc_release
 # setenv CUDA_TOOLKIT_ROOT_DIR /usr/local/cuda
 # setenv GREP_COLORS   'ms=01;31:mc=01;31:sl=:cx=:fn=35:ln=32:bn=32:se=36'
 # setenv GREP_OPTIONS '--colour=auto --exclude-dir .svn --exclude-dir .deps'
