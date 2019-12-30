@@ -75,6 +75,7 @@ Mirror old home directory into a new subdirectory
 * "systemsettings" &rarr; "Startup and Shutdown" &rarr; "Login Screen (SDDM)" &rarr; "Background" &rarr; "
 * "Configure Desktop" &rarr; "Wallpaper" &rarr; "Wallpaper Type" : Hunyango
 * "Configure Desktop" &rarr; "Location" &rarr; "Specify a folder" : `/opt/empty_directory`
+* Chrome settings: "Advanced" -> "Allow Chrome sign-in" -> false
 * Chrome settings: "On start-up" -> "Continue where you left off"; "Download location" -> "/tmp"; "Ask where to save each file before downloading" -> true
 * Chrome bookmarks from `~/puppet/browser_bookmarks.html`
 * Firefox settings: "When Firefox starts" -> "Show my windows and tabs from last time"
