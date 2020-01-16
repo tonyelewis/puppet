@@ -51,6 +51,10 @@ alias      recmake-all='cmake-all-of $( present-profiles )'
 alias        timestamp='date +%Y%m%d-%H%M%S'
 alias             wget='wget -U Firefox --content-disposition'
 
+function bpn {
+	bat --paging=never $@
+}
+
 function lgt {
 	( git --no-pager log --color --all --decorate --oneline --graph --format=format:"%C(auto)%h%C(reset)%C(auto)%d%C(reset) %C(white)%s%C(reset)   %C(blue)%an, %ar%C(reset)" $@ && echo ) | tac | perl -pe 's/(\w+)\\([^[:print:]])/\1#\2/g; s/(\w+)\/([^[:print:]])/\1\\\2/g; s/(\w+)#([^[:print:]])/\1\/\2/g;'
 }
