@@ -3,6 +3,7 @@
 .project
 .sass-cache
 .settings
+.venv/
 .vscode
 __pycache__
 build_clang_debug
