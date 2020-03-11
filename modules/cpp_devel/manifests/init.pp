@@ -24,7 +24,7 @@
 class cpp_devel {
   include git
 
-  $clang_major_version  = '7'
+  $clang_major_version  = '9'
   $clang_version        = "${$clang_major_version}.0.0"
   $repos_root_dir       = '/home/lewis'
   $repos_user           = 'lewis'
@@ -122,7 +122,8 @@ class cpp_devel {
   }
 
   # $clang_base_stem = "clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-14.04"
-  $clang_base_stem = "clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-16.04"
+  # $clang_base_stem = "clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-16.04"
+  $clang_base_stem = "clang+llvm-${clang_version}-x86_64-pc-linux-gnu"
   # $clang_base_stem = "clang+llvm-${clang_version}-x86_64-linux-sles12.3"
   $clang_tar_base  = "${clang_base_stem}.tar.xz"
   $clang_tar_file  = "/opt/${clang_tar_base}"
