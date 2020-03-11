@@ -42,12 +42,12 @@ class plasma_user {
     ]
   }
 
-  package { [
-      #'wget',
-      'kde-l10n-engb', # To prevent annoying pop-ups about installing additional language support
-    ] :
-    ensure => 'latest',
-  }
+  #package { [
+  #    #'wget',
+  #    #'kde-l10n-engb', # To prevent annoying pop-ups about installing additional language support
+  #  ] :
+  #  ensure => 'latest',
+  #}
 
 
 
