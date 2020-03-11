@@ -87,6 +87,7 @@ class general_desktop {
       'mesa-common-dev',                 # For MXX
       'mkdocs',
       'mkdocs-doc',
+      'ncdu',
       'nedit',
       'okular',
       'perl-doc',                        # To enable perldoc command
