@@ -59,6 +59,7 @@ class general_desktop {
       #'sddm-theme-elarun',               # Should add this for 15.04 <= Ubuntu <= 16.10 if
       #                                   # encountering problems with entering   username at login
       'augeas-tools',
+      'bat',
       'entr',
       'expect',                          # Contains unbuffer which is useful for tricking clang-tidy into thinking it's talking directly to a tty
       'gconf2',                          # For Atom
