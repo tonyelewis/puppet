@@ -64,6 +64,7 @@ class cpp_devel {
       'libgsl-dev',           # For cath-tools
       'libncurses5-dev',      # For iwyu
       'ninja-build',          #
+      'python3-pip',          #
       # 'ninja-build-doc',     # Does not seem to exist in 16.10
       # 'nvidia-cuda-toolkit', # Commented out whilst using nvidia runfile for 8.0 (~/source/cuda_8.0.44_linux.bin)
       'valgrind',             #
@@ -85,6 +86,13 @@ class cpp_devel {
   #   replace => false,
   #   source  => 'https://raw.githubusercontent.com/Kitware/CMake/master/Modules/FindBoost.cmake',
   # }
+
+  package { ['conan']:
+    ensure => present,
+    provider => pip3,
+    require => Package['python3-pip'],
+  }
+  ->
 
   exec { 'gcc_is_ready':
     command     => '/bin/true',
