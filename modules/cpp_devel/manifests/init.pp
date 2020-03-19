@@ -129,6 +129,13 @@ class cpp_devel {
     #  * echo | /usr/bin/g++-7 -xc++ -v -fsyntax-only -
   }
 
+  # As of 19th March 2020, having to hack the following to get /opt/clang+llvm-9.0.0-x86_64-pc-linux-gnu/bin/clang++ to work on Ubuntu 19.10
+  #
+  #     sudo apt-get install libz3-4
+  #     sudo ln -s libz3.so.4 /usr/lib/x86_64-linux-gnu/libz3.so.4.8
+  #
+  # Perhaps this is a good indication that it'd be better to move to building the latest release (as well as master) instead of downloading binaries
+
   # $clang_base_stem = "clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-14.04"
   # $clang_base_stem = "clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-16.04"
   $clang_base_stem = "clang+llvm-${clang_version}-x86_64-pc-linux-gnu"
@@ -153,7 +160,7 @@ class cpp_devel {
     path    => [ '/bin', '/usr/bin' ], # Needs /bin for tar and /usr/bin/ for child process xz
   }
 
-  $clang_bins = [ 'clang', 'clang++', 'clang-format', 'clang-include-fixer', 'clang-tidy', 'lldb', 'llvm-symbolizer', 'scan-build' ]
+  $clang_bins = [ 'clang', 'clang++', 'clang-format', 'clang-include-fixer', 'clang-tidy', 'llvm-symbolizer', 'scan-build' ]
   $clang_bins.each | String $clang_bin | {
     alternative_entry { "/opt/${clang_base_stem}/bin/${clang_bin}" :
       ensure   => present,
@@ -164,37 +171,41 @@ class cpp_devel {
     }
   }
 
-# sudo update-alternatives --set clang++             /opt/clang+llvm-7.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang++
-# sudo update-alternatives --set clang-format        /opt/clang+llvm-7.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang-format
-# sudo update-alternatives --set clang-include-fixer /opt/clang+llvm-7.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang-include-fixer
-# sudo update-alternatives --set clang-tidy          /opt/clang+llvm-7.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang-tidy
-# sudo update-alternatives --set clang               /opt/clang+llvm-7.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang
-# sudo update-alternatives --set llvm-symbolizer     /opt/clang+llvm-7.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/llvm-symbolizer
-# sudo update-alternatives --set scan-build          /opt/clang+llvm-7.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/scan-build
+  # sudo update-alternatives --set clang++             /opt/clang+llvm-9.0.0-x86_64-pc-linux-gnu/bin/clang++
+  # sudo update-alternatives --set clang-format        /opt/clang+llvm-9.0.0-x86_64-pc-linux-gnu/bin/clang-format
+  # sudo update-alternatives --set clang-include-fixer /opt/clang+llvm-9.0.0-x86_64-pc-linux-gnu/bin/clang-include-fixer
+  # sudo update-alternatives --set clang-tidy          /opt/clang+llvm-9.0.0-x86_64-pc-linux-gnu/bin/clang-tidy
+  # sudo update-alternatives --set clang               /opt/clang+llvm-9.0.0-x86_64-pc-linux-gnu/bin/clang
+  # sudo update-alternatives --set llvm-symbolizer     /opt/clang+llvm-9.0.0-x86_64-pc-linux-gnu/bin/llvm-symbolizer
+  # sudo update-alternatives --set scan-build          /opt/clang+llvm-9.0.0-x86_64-pc-linux-gnu/bin/scan-build
 
-  $libcpp_libs = [
-    'libc++.a',    'libc++.so',    'libc++.so.1',    'libc++.so.1.0',
-    'libc++abi.a', 'libc++abi.so', 'libc++abi.so.1', 'libc++abi.so.1.0'
-  ]
-  $libcpp_libs.each | String $libcpp_lib | {
-    file{ "Copy lib ${libcpp_lib} from clang into system lib directory" :
-      ensure  => present,
-      mode    => 'a+r',
-      path    => "/usr/lib/x86_64-linux-gnu/${libcpp_lib}",
-      replace => false,
-      require => Exec[ 'Untar prebuilt Clang archive' ],
-      source  => "/opt/${clang_base_stem}/lib/${libcpp_lib}",
-    }
-  }
-
-  $libclang_libs = [ 'libclang.so', "libclang.so.${clang_major_version}", "libclang.so.${clang_major_version}.0" ]
-  $libclang_libs.each | String $libclang_lib | {
-    file{ "Link to lib ${libclang_lib} in system lib directory" :
-      ensure => 'link',
-      path   =>  "/usr/lib/${libclang_lib}",
-      target => "/opt/${clang_base_stem}/lib/${libclang_lib}",
-    }
-  }
+  # Use to hack this by copying clang libraries into /usr/lib/x86_64-linux-gnu but that's a bad idea.
+  # It's much better to use toolchain settings that tell the compiler where to find these libraries.
+  # Eg -Wl,-rpath=/opt/clang+llvm-9.0.0-x86_64-pc-linux-gnu/lib
+  #
+  # $libcpp_libs = [
+  #   'libc++.a',    'libc++.so',    'libc++.so.1',    'libc++.so.1.0',
+  #   'libc++abi.a', 'libc++abi.so', 'libc++abi.so.1', 'libc++abi.so.1.0'
+  # ]
+  # $libcpp_libs.each | String $libcpp_lib | {
+  #   file{ "Copy lib ${libcpp_lib} from clang into system lib directory" :
+  #     ensure  => present,
+  #     mode    => 'a+r',
+  #     path    => "/usr/lib/x86_64-linux-gnu/${libcpp_lib}",
+  #     replace => false,
+  #     require => Exec[ 'Untar prebuilt Clang archive' ],
+  #     source  => "/opt/${clang_base_stem}/lib/${libcpp_lib}",
+  #   }
+  # }
+  #
+  # $libclang_libs = [ 'libclang.so', "libclang.so.${clang_major_version}", "libclang.so.${clang_major_version}.0" ]
+  # $libclang_libs.each | String $libclang_lib | {
+  #   file{ "Link to lib ${libclang_lib} in system lib directory" :
+  #     ensure => 'link',
+  #     path   =>  "/usr/lib/${libclang_lib}",
+  #     target => "/opt/${clang_base_stem}/lib/${libclang_lib}",
+  #   }
+  # }
 
   # Seems to be required for in Ubuntu 17.10 (package libc++-dev 3.9.1-3)
   # Demonstrable with : `echo '#include <locale>' | clang++ -stdlib=libc++ -c -x c++ -`
