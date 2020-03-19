@@ -34,6 +34,7 @@ class cpp_devel {
   # $repos_user           = 'ucbctnl'
   # $repos_group          = 'users'
   $cath_tools_url         = 'git@github.com:UCLOrengoGroup/cath-tools.git'
+  $gen_cmake_list_url     = 'git@github.com:tonyelewis/gen_cmake_list.git'
   $tell_url               = 'git@github.com:tonyelewis/tell.git'
 
   $desktop_files_dir       = '/usr/share/applications'
@@ -329,6 +330,25 @@ class cpp_devel {
     ensure => 'link',
     name   => '/cath-tools',
     target => "${repos_root_dir}/cath-tools",
+  }
+
+  vcsrepo { 'clone gen_cmake_list git repository' :
+    ensure   => present,
+    path     => "${repos_root_dir}/gen_cmake_list",
+    provider => git,
+    source   => $gen_cmake_list_url,
+    owner    => $repos_user,
+    group    => $repos_group,
+    user     => $repos_user,
+  }
+  $gen_cmake_list_bins = [ 'extract-cmake-flags.py', 'gen_cmake_list.py' ]
+  $gen_cmake_list_bins.each | String $gen_cmake_list_bin | {
+    file { "symlink ${repos_root_dir}/${gen_cmake_list_bin}" :
+      ensure   => 'link',
+      target   => "${repos_root_dir}/gen_cmake_list/${gen_cmake_list_bin}",
+      name     => "${repos_root_dir}/bin/${gen_cmake_list_bin}",
+      require  => [ File[ 'create_user_bin_dir' ], Vcsrepo[ 'clone gen_cmake_list git repository' ] ],
+    }
   }
 
   vcsrepo { 'clone tell git repository' :
