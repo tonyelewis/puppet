@@ -345,9 +345,11 @@ class cpp_devel {
   $gen_cmake_list_bins.each | String $gen_cmake_list_bin | {
     file { "symlink ${repos_root_dir}/${gen_cmake_list_bin}" :
       ensure   => 'link',
-      target   => "${repos_root_dir}/gen_cmake_list/${gen_cmake_list_bin}",
+      group    => $repos_group,
       name     => "${repos_root_dir}/bin/${gen_cmake_list_bin}",
+      owner    => $repos_user,
       require  => [ File[ 'create_user_bin_dir' ], Vcsrepo[ 'clone gen_cmake_list git repository' ] ],
+      target   => "${repos_root_dir}/gen_cmake_list/${gen_cmake_list_bin}",
     }
   }
 
