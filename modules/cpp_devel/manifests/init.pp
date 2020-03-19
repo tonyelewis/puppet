@@ -138,7 +138,8 @@ class cpp_devel {
 
   # $clang_base_stem = "clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-14.04"
   # $clang_base_stem = "clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-16.04"
-  $clang_base_stem = "clang+llvm-${clang_version}-x86_64-pc-linux-gnu"
+  # $clang_base_stem = "clang+llvm-${clang_version}-x86_64-pc-linux-gnu"                   # For Ubuntu 19.10
+  $clang_base_stem = "clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-18.04"         # For Ubuntu 18.04
   # $clang_base_stem = "clang+llvm-${clang_version}-x86_64-linux-sles12.3"
   $clang_tar_base  = "${clang_base_stem}.tar.xz"
   $clang_tar_file  = "/opt/${clang_tar_base}"
@@ -170,6 +171,14 @@ class cpp_devel {
       require  => Exec[ 'Untar prebuilt Clang archive' ],
     }
   }
+
+  # sudo update-alternatives --set clang++             /opt/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/clang++
+  # sudo update-alternatives --set clang-format        /opt/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/clang-format
+  # sudo update-alternatives --set clang-include-fixer /opt/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/clang-include-fixer
+  # sudo update-alternatives --set clang-tidy          /opt/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/clang-tidy
+  # sudo update-alternatives --set clang               /opt/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/clang
+  # sudo update-alternatives --set llvm-symbolizer     /opt/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/llvm-symbolizer
+  # sudo update-alternatives --set scan-build          /opt/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/scan-build
 
   # sudo update-alternatives --set clang++             /opt/clang+llvm-9.0.0-x86_64-pc-linux-gnu/bin/clang++
   # sudo update-alternatives --set clang-format        /opt/clang+llvm-9.0.0-x86_64-pc-linux-gnu/bin/clang-format
