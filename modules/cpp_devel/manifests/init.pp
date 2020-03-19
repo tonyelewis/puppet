@@ -138,9 +138,12 @@ class cpp_devel {
 
   # $clang_base_stem = "clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-14.04"
   # $clang_base_stem = "clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-16.04"
-  # $clang_base_stem = "clang+llvm-${clang_version}-x86_64-pc-linux-gnu"                   # For Ubuntu 19.10
-  $clang_base_stem = "clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-18.04"         # For Ubuntu 18.04
   # $clang_base_stem = "clang+llvm-${clang_version}-x86_64-linux-sles12.3"
+  $clang_base_stem = $::operatingsystemmajrelease ? {
+    '18.04' => "clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-18.04",
+    default => "clang+llvm-${clang_version}-x86_64-pc-linux-gnu",
+  }
+
   $clang_tar_base  = "${clang_base_stem}.tar.xz"
   $clang_tar_file  = "/opt/${clang_tar_base}"
   $clang_dir       = "/opt/${clang_base_stem}"
