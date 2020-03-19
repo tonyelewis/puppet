@@ -126,7 +126,7 @@ function xar {
 # export   MXX_BASE_GCC_COMPILE_ARGS="${MXX_BASE_COMPILE_ARGS} -fdiagnostics-color -I ninja_gcc_debug/autogen/mxx_pro_git_version   -isystem /home/lewis/source/QtAV-gcc/include   -isystem /home/lewis/source/QtAV-gcc/include/QtAV   -isystem /home/lewis/source/vlc-qt-gcc/include   -isystem /home/lewis/source/cpprestsdk-gcc/include   -isystem /opt/boost_1_70_0_normal_c++17/include/boost-1_70"
 # export        COMPILE_WARNINGS="-ftabstop=2 -W -Wall -Werror -Wextra -Wcast-qual -Wconversion -Wformat=2 -Wnon-virtual-dtor -Wshadow -Wsign-compare -Wsign-conversion -pedantic"
 
-# export       TEL_BASE_COMPILE_ARGS="-x c++ -std=c++2a -ftemplate-backtrace-limit=0 -DBOOST_LOG -I /usr/local/cuda/include -I cpp-source/dsesp -I cpp-source/sfplay -I source/src_clustagglom -I source/src_common -I source/src_test -I source/uni -isystem /opt/include -isystem cpp-external-lib/gsl/include -isystem cpp-external-lib/range-v3/include -isystem cpp-external-lib/rapidjson/include -isystem cpp-external-lib/boost-pool-detail-singleton -isystem cpp-external-lib/gnuplot-iostream -isystem cpp-external-lib/catch2/include -isystem cpp-external-lib/fmt/include -isystem cpp-external-lib/json/include"
+# export       TEL_BASE_COMPILE_ARGS="-x c++ -std=c++17 -ftemplate-backtrace-limit=0 -DBOOST_LOG -I /usr/local/cuda/include -I cpp-source/dsesp -I cpp-source/sfplay -I source/src_clustagglom -I source/src_common -I source/src_test -I source/uni -isystem /opt/include -isystem cpp-external-lib/gsl/include -isystem cpp-external-lib/range-v3/include -isystem cpp-external-lib/rapidjson/include -isystem cpp-external-lib/boost-pool-detail-singleton -isystem cpp-external-lib/gnuplot-iostream -isystem cpp-external-lib/catch2/include -isystem cpp-external-lib/fmt/include -isystem cpp-external-lib/json/include"
 # export TEL_BASE_CLANG_COMPILE_ARGS="${TEL_BASE_COMPILE_ARGS} -fcolor-diagnostics -isystem /opt/boost_1_70_0_normal_c++17/include/boost-1_70"
 # export   TEL_BASE_GCC_COMPILE_ARGS="${TEL_BASE_COMPILE_ARGS} -fdiagnostics-color -isystem /opt/boost_1_70_0_normal_c++17/include/boost-1_70"
 # export        COMPILE_WARNINGS="-ftabstop=2 -W -Wall -Werror -Wextra -Wcast-qual -Wconversion -Wformat=2 -Wno-unused-local-typedef -Wnon-virtual-dtor -Wshadow -Wsign-compare -Wsign-conversion -pedantic"
@@ -135,7 +135,7 @@ export       MXX_BASE_COMPILE_ARGS='-x c++ -std=c++17 -fPIC -ftemplate-backtrace
 export MXX_BASE_CLANG_COMPILE_ARGS="${MXX_BASE_COMPILE_ARGS} -fcolor-diagnostics"
 export   MXX_BASE_GCC_COMPILE_ARGS="${MXX_BASE_COMPILE_ARGS} -fdiagnostics-color"
 
-export       TEL_BASE_COMPILE_ARGS='-x c++ -std=c++2a       -ftemplate-backtrace-limit=0'
+export       TEL_BASE_COMPILE_ARGS='-x c++ -std=c++17       -ftemplate-backtrace-limit=0'
 export TEL_BASE_CLANG_COMPILE_ARGS="${TEL_BASE_COMPILE_ARGS} -fcolor-diagnostics"
 export   TEL_BASE_GCC_COMPILE_ARGS="${TEL_BASE_COMPILE_ARGS} -fdiagnostics-color"
 
