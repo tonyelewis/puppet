@@ -1,4 +1,4 @@
-/opt/boost_1_70_0_dbgstd_c++17/lib
+/opt/boost_1_70_0_dbgchk_c++17/lib
 /opt/boost_1_70_0_normal_c++17/lib
 /opt/boost_1_70_0_ubasan_c++17/lib
 
