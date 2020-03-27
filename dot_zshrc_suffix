@@ -103,7 +103,9 @@ function cmake-all-of() {(
 		set -x
 		rm -rf "${NINJA_VERSION_OF_FOLDER}"
 		mkdir -p "${NINJA_VERSION_OF_FOLDER}"
-		conan install --build missing --install-folder "${NINJA_VERSION_OF_FOLDER}"   . --profile "${CONAN_PROFILE_FILE}"
+		if [[ -f 'conanfile.txt' || -f 'conanfile.py' ]]; then
+			conan install --build missing --install-folder "${NINJA_VERSION_OF_FOLDER}"   . --profile "${CONAN_PROFILE_FILE}"
+		fi
 		cmake "-B${NINJA_VERSION_OF_FOLDER}"    -H. "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}"
 		set +x
 	done
