@@ -222,7 +222,11 @@ function ninjac() {
 
 function extract-flags {
 	TEMP_EXTRACT_PROFILE_TYPE=${BUILDTYPE#"ninja_"}
-	NEW_ARGS=$( extract-cmake-flags.py --conan-profile-file $(ls -1d ~/puppet/conan-profiles/${TEMP_EXTRACT_PROFILE_TYPE}) -- -DCMAKE_TOOLCHAIN_FILE=$( ls -1d ~/puppet/toolchain-files/${TEMP_EXTRACT_PROFILE_TYPE}.cmake ) 2> /dev/null )
+	CONAN_PROFILE_FILE_ARGS=" "
+	if [[ -f 'conanfile.txt' || -f 'conanfile.py' ]]; then
+		CONAN_PROFILE_FILE_ARGS="--conan-profile-file $(ls -1d ~/puppet/conan-profiles/${TEMP_EXTRACT_PROFILE_TYPE}) "
+	fi
+	NEW_ARGS=$( extract-cmake-flags.py ${=CONAN_PROFILE_FILE_ARGS} -- -DCMAKE_TOOLCHAIN_FILE=$( ls -1d ~/puppet/toolchain-files/${TEMP_EXTRACT_PROFILE_TYPE}.cmake ) 2> /dev/null )
 	export CMAKE_EXTRACTED_COMPILE_FLAGS=" $NEW_ARGS "
 	echo "Updated CMAKE_EXTRACTED_COMPILE_FLAGS to : '$CMAKE_EXTRACTED_COMPILE_FLAGS'"
 }
