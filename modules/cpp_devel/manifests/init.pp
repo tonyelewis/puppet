@@ -24,6 +24,8 @@
 class cpp_devel {
   include git
 
+  # TODO: Could upgrade this to 10 soon. Only Ubuntu binary currently listed on https://releases.llvm.org/download.html is:
+  #       https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz
   $clang_major_version  = '9'
   $clang_version        = "${$clang_major_version}.0.0"
   $repos_root_dir       = '/home/lewis'
