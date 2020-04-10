@@ -343,12 +343,15 @@ class cpp_devel {
     group    => $repos_group,
     user     => $repos_user,
   }
-  $gen_cmake_list_bins = [ 'extract-cmake-flags.py', 'gen_cmake_list.py' ]
+  $gen_cmake_list_bins = [ 'extract-cmake-flags.py', 'gen_cmake_list.py', 'select-build-type/select-build-type.py' ]
   $gen_cmake_list_bins.each | String $gen_cmake_list_bin | {
+
+    $gen_cmake_list_bin_basename = split( $gen_cmake_list_bin, /\// )[ -1 ]
+
     file { "symlink ${repos_root_dir}/${gen_cmake_list_bin}" :
       ensure   => 'link',
       group    => $repos_group,
-      name     => "${repos_root_dir}/bin/${gen_cmake_list_bin}",
+      name     => "${repos_root_dir}/bin/${gen_cmake_list_bin_basename}",
       owner    => $repos_user,
       require  => [ File[ 'create_user_bin_dir' ], Vcsrepo[ 'clone gen_cmake_list git repository' ] ],
       target   => "${repos_root_dir}/gen_cmake_list/${gen_cmake_list_bin}",

@@ -231,6 +231,17 @@ function extract-flags {
 	echo "Updated CMAKE_EXTRACTED_COMPILE_FLAGS to : '$CMAKE_EXTRACTED_COMPILE_FLAGS'"
 }
 
+function bt() {
+	OLD_BUILD_TYPE=${BUILDTYPE}
+	SELECT_BUILD_TYPE_EXE_REL=$( which select-build-type.py )
+	SELECT_BUILD_TYPE_EXE=$( realpath "${SELECT_BUILD_TYPE_EXE_REL}" )
+	SELECT_BUILD_TYPE_EXE_DIR=$(dirname -- "${SELECT_BUILD_TYPE_EXE}" )
+	OUTPUT_SCRIPT=$(mktemp -u)
+	"${SELECT_BUILD_TYPE_EXE_DIR}/.venv/bin/python" "${SELECT_BUILD_TYPE_EXE}" "${OUTPUT_SCRIPT}"
+	source "${OUTPUT_SCRIPT}"
+	echo "BUILDTYPE : ${OLD_BUILD_TYPE} -> ${BUILDTYPE}"
+}
+
 unsetopt share_history
 
 # Commands to remember to use:
