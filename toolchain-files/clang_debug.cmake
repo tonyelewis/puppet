@@ -4,6 +4,11 @@ set( CMAKE_PREFIX_PATH           "/opt/Qt/this-version/gcc_64;$ENV{HOME}/source/
 set( CMAKE_C_COMPILER            "/usr/bin/clang"                                                                                                             )
 set( CMAKE_CXX_COMPILER          "/usr/bin/clang++"                                                                                                           )
 set( CMAKE_CXX_FLAGS_INIT        " -stdlib=libc++ -DBOOST_ASIO_HAS_STD_STRING_VIEW ${CMAKE_CXX_FLAGS} "                                                       )
-set( CMAKE_EXE_LINKER_FLAGS_INIT " -Wl,-rpath=/opt/clang+llvm-9.0.0-x86_64-pc-linux-gnu/lib "                                                                 )
+
+IF ( EXISTS "/opt/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04/lib" )
+	set( CMAKE_EXE_LINKER_FLAGS_INIT " -Wl,-rpath=/opt/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04/lib "                                                       )
+ELSE()
+	set( CMAKE_EXE_LINKER_FLAGS_INIT " -Wl,-rpath=/opt/clang+llvm-9.0.0-x86_64-pc-linux-gnu/lib "                                                                 )
+ENDIF()
 
 include( "${CMAKE_CURRENT_LIST_DIR}/misc.cmake" )
