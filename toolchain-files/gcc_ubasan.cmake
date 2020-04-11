@@ -3,7 +3,7 @@ set( CMAKE_BUILD_TYPE            DEBUG                                          
 set( CMAKE_PREFIX_PATH           "/opt/Qt/this-version/gcc_64;$ENV{HOME}/source/cpprestsdk-gcc_ubasan;$ENV{HOME}/source/QtAV-gcc;$ENV{HOME}/source/vlc-qt-gcc" )
 set( CMAKE_C_COMPILER            "$ENV{HOME}/source/gcc/bin/gcc"                                                                                        )
 set( CMAKE_CXX_COMPILER          "$ENV{HOME}/source/gcc/bin/g++"                                                                                        )
-set( CMAKE_CXX_FLAGS_INIT        " -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer -DBOOST_ASIO_HAS_STD_STRING_VIEW ${CMAKE_CXX_FLAGS}" )
+set( CMAKE_CXX_FLAGS_INIT        " -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer ${CMAKE_CXX_FLAGS}"                                  )
 
 
 

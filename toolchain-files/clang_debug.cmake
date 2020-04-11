@@ -3,7 +3,7 @@ set( CMAKE_BUILD_TYPE            DEBUG                                          
 set( CMAKE_PREFIX_PATH           "/opt/Qt/this-version/gcc_64;$ENV{HOME}/source/cpprestsdk-clang_debug;$ENV{HOME}/source/QtAV-clang;$ENV{HOME}/source/vlc-qt-clang" )
 set( CMAKE_C_COMPILER            "/usr/bin/clang"                                                                                                             )
 set( CMAKE_CXX_COMPILER          "/usr/bin/clang++"                                                                                                           )
-set( CMAKE_CXX_FLAGS_INIT        " -stdlib=libc++ -DBOOST_ASIO_HAS_STD_STRING_VIEW ${CMAKE_CXX_FLAGS} "                                                       )
+set( CMAKE_CXX_FLAGS_INIT        " -stdlib=libc++ ${CMAKE_CXX_FLAGS} "                                                                                        )
 
 IF ( EXISTS "/opt/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04/lib" )
 	set( CMAKE_EXE_LINKER_FLAGS_INIT " -Wl,-rpath=/opt/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04/lib "                                                       )
