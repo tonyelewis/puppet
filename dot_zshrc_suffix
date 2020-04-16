@@ -213,8 +213,24 @@ function narc() {
 function narc-debug() {
 	ninja -C ${BUILDTYPE} -k 0 $1 |& ~/puppet/perl/tools/makeoutputparser.pl && gdb --args ${BUILDTYPE}/bin/$1 $@[2,-1]
 }
+# TODO: Get used to na and then remove ninjaall
 function ninjaall() {
 	ls -1d ninja_* | xargs -I VAR ninja -C VAR -k 0 $@
+}
+function na() {
+	ls -1d ninja_* | xargs -I VAR ninja -C VAR -k 0 $@
+}
+function nbt() {
+	ninja -C ${BUILDTYPE} -k 0 $@
+}
+function ctbt() {
+	( cd ${BUILDTYPE} ; ctest $@ )
+}
+function ca() {
+	ORIG_LOCATION=$PWD
+	for ninja_dir in $PWD/ninja_*; do
+		( cd "$ninja_dir" ; ctest $@ )
+	done
 }
 function ninjac() {
 	ninja $@ | ~/puppet/perl/tools/makeoutputparser.pl
