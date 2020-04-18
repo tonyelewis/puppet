@@ -59,7 +59,7 @@ function bpn {
 }
 
 function lgt {
-	( git --no-pager log --color --all --decorate --oneline --graph --format=format:"%C(auto)%h%C(reset)%C(auto)%d%C(reset) %C(white)%s%C(reset)   %C(blue)%an, %ar%C(reset)" $@ && echo ) | tac | perl -pe 's/(\w+)\\([^[:print:]])/\1#\2/g; s/(\w+)\/([^[:print:]])/\1\\\2/g; s/(\w+)#([^[:print:]])/\1\/\2/g;'
+	( git --no-pager log -n 1500 --color --all --decorate --oneline --graph --format=format:"%C(auto)%h%C(reset)%C(auto)%d%C(reset) %C(white)%s%C(reset)   %C(blue)%an, %ar%C(reset)" $@ && echo ) | tac | perl -pe 's/(\w+)\\([^[:print:]])/\1#\2/g; s/(\w+)\/([^[:print:]])/\1\\\2/g; s/(\w+)#([^[:print:]])/\1\/\2/g;'
 }
 
 #function cmake_all_ninjas() {
@@ -312,3 +312,4 @@ unsetopt share_history
 # setenv GREP_COLORS   'ms=01;31:mc=01;31:sl=:cx=:fn=35:ln=32:bn=32:se=36'
 # setenv GREP_OPTIONS '--colour=auto --exclude-dir .svn --exclude-dir .deps'
 # setenv LD_LIBRARY_PATH  /usr/local/cuda/lib64
+
