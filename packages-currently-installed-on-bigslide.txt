@@ -1,0 +1,55 @@
+2020-05-03
+Ubuntu 18.04.4 LTS
+
+
+ii  libnvidia-cfg1-390:amd64                        390.132-0ubuntu0.18.04.1                            amd64        NVIDIA binary OpenGL/GLX configuration library
+ii  libnvidia-common-390                            390.132-0ubuntu0.18.04.1                            all          Shared files used by the NVIDIA libraries
+ii  libnvidia-compute-390:amd64                     390.132-0ubuntu0.18.04.1                            amd64        NVIDIA libcompute package
+ii  libnvidia-compute-390:i386                      390.132-0ubuntu0.18.04.1                            i386         NVIDIA libcompute package
+ii  libnvidia-decode-390:amd64                      390.132-0ubuntu0.18.04.1                            amd64        NVIDIA Video Decoding runtime libraries
+ii  libnvidia-decode-390:i386                       390.132-0ubuntu0.18.04.1                            i386         NVIDIA Video Decoding runtime libraries
+ii  libnvidia-encode-390:amd64                      390.132-0ubuntu0.18.04.1                            amd64        NVENC Video Encoding runtime library
+ii  libnvidia-encode-390:i386                       390.132-0ubuntu0.18.04.1                            i386         NVENC Video Encoding runtime library
+ii  libnvidia-fbc1-390:amd64                        390.132-0ubuntu0.18.04.1                            amd64        NVIDIA OpenGL-based Framebuffer Capture runtime library
+ii  libnvidia-fbc1-390:i386                         390.132-0ubuntu0.18.04.1                            i386         NVIDIA OpenGL-based Framebuffer Capture runtime library
+ii  libnvidia-gl-390:amd64                          390.132-0ubuntu0.18.04.1                            amd64        NVIDIA OpenGL/GLX/EGL/GLES GLVND libraries and Vulkan ICD
+ii  libnvidia-gl-390:i386                           390.132-0ubuntu0.18.04.1                            i386         NVIDIA OpenGL/GLX/EGL/GLES GLVND libraries and Vulkan ICD
+ii  libnvidia-ifr1-390:amd64                        390.132-0ubuntu0.18.04.1                            amd64        NVIDIA OpenGL-based Inband Frame Readback runtime library
+ii  libnvidia-ifr1-390:i386                         390.132-0ubuntu0.18.04.1                            i386         NVIDIA OpenGL-based Inband Frame Readback runtime library
+ii  nvidia-compute-utils-390                        390.132-0ubuntu0.18.04.1                            amd64        NVIDIA compute utilities
+ii  nvidia-dkms-390                                 390.132-0ubuntu0.18.04.1                            amd64        NVIDIA DKMS package
+ii  nvidia-driver-390                               390.132-0ubuntu0.18.04.1                            amd64        NVIDIA driver metapackage
+ii  nvidia-kernel-common-390                        390.132-0ubuntu0.18.04.1                            amd64        Shared files used with the kernel module
+ii  nvidia-kernel-source-390                        390.132-0ubuntu0.18.04.1                            amd64        NVIDIA kernel source package
+ii  nvidia-prime                                    0.8.8.2                                             all          Tools to enable NVIDIA's Prime
+ii  nvidia-settings                                 440.44-0ubuntu0.18.04.1                             amd64        Tool for configuring the NVIDIA graphics driver
+ii  nvidia-utils-390                                390.132-0ubuntu0.18.04.1                            amd64        NVIDIA driver support binaries
+ii  xserver-xorg-video-nvidia-390                   390.132-0ubuntu0.18.04.1                            amd64        NVIDIA binary Xorg driver
+
+
+ii  libpq-dev                                       12.2-2.pgdg18.04+1                                  amd64        header files for libpq5 (PostgreSQL library)
+ii  libpq5:amd64                                    12.2-2.pgdg18.04+1                                  amd64        PostgreSQL C client library
+ii  pgdg-keyring                                    2018.2                                              all          keyring for apt.postgresql.org
+ii  postgresql-11                                   11.7-2.pgdg18.04+1                                  amd64        object-relational SQL database, version 11 server
+ii  postgresql-client                               12+213.pgdg18.04+1                                  all          front-end programs for PostgreSQL (supported version)
+ii  postgresql-client-10                            10.12-2.pgdg18.04+1                                 amd64        front-end programs for PostgreSQL 10
+ii  postgresql-client-11                            11.7-2.pgdg18.04+1                                  amd64        front-end programs for PostgreSQL 11
+ii  postgresql-client-12                            12.2-2.pgdg18.04+1                                  amd64        front-end programs for PostgreSQL 12
+ii  postgresql-client-common                        213.pgdg18.04+1                                     all          manager for multiple PostgreSQL client versions
+ii  postgresql-common                               213.pgdg18.04+1                                     all          PostgreSQL database-cluster manager
+
+
+
+
+
+ii  libcurl4:amd64                                  7.58.0-2ubuntu3.8                                   amd64        easy-to-use client-side URL transfer library (OpenSSL flavour)
+ii  libssh-4:amd64                                  0.8.0~20170825.94fa1e38-1ubuntu0.6                  amd64        tiny C SSH library (OpenSSL flavor)
+ii  libssl-dev:amd64                                1.1.1-1ubuntu2.1~18.04.5                            amd64        Secure Sockets Layer toolkit - development files
+ii  libssl1.0.0:amd64                               1.0.2n-1ubuntu5.3                                   amd64        Secure Sockets Layer toolkit - shared libraries
+ii  libssl1.1:amd64                                 1.1.1-1ubuntu2.1~18.04.5                            amd64        Secure Sockets Layer toolkit - shared libraries
+ii  openssl                                         1.1.1-1ubuntu2.1~18.04.5                            amd64        Secure Sockets Layer toolkit - cryptographic utility
+ii  ssl-cert                                        1.0.39                                              all          simple debconf wrapper for OpenSSL
+
+
+
+No npm installed
