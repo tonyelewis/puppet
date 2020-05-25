@@ -76,9 +76,12 @@ Mirror old home directory into a new subdirectory
 * "Configure Desktop" &rarr; "Wallpaper" &rarr; "Wallpaper Type" : Hunyango
 * "Configure Desktop" &rarr; "Location" &rarr; "Specify a folder" : `/opt/empty_directory`
 * Chrome settings: "Advanced" -> "Allow Chrome sign-in" -> false
+* Chrome settings: "Advanced" -> "Downloads" -> "/tmp" -> Ask
 * Chrome settings: "On start-up" -> "Continue where you left off"; "Download location" -> "/tmp"; "Ask where to save each file before downloading" -> true
 * Chrome bookmarks from `~/puppet/browser_bookmarks.html`
-* Firefox settings: "When Firefox starts" -> "Show my windows and tabs from last time"
+* Chrome settings -> Manage search engines -> Add -> google.co.uk / google.co.uk / https://www.google.co.uk/search?&q=%s
+* Firefox preferences: "When Firefox starts" -> "Show my windows and tabs from last time"
+* Firefox preferences: save files to /tmp -> "Always ask you where to save files"
 * Download VSCode settings (via "Settings Sync" extension)
 * Install "The Great Suspender" on Chrome
 * Download latest [`FindBoost.cmake`](https://raw.githubusercontent.com/Kitware/CMake/master/Modules/FindBoost.cmake) on top of relevant file (eg `/usr/share/cmake-3.10/Modules/FindBoost.cmake`)

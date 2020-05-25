@@ -133,6 +133,7 @@ class cpp_devel {
   }
 
   # As of 19th March 2020, having to hack the following to get /opt/clang+llvm-9.0.0-x86_64-pc-linux-gnu/bin/clang++ to work on Ubuntu 19.10
+  # As of 25th May 2020, having to do the same on Ubuntu 20.04
   #
   #     sudo apt-get install libz3-4
   #     sudo ln -s libz3.so.4 /usr/lib/x86_64-linux-gnu/libz3.so.4.8
