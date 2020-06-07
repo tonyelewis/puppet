@@ -17,6 +17,8 @@ Ubuntu 18.04 on floppyrabbit:
 
 ## Notes on install
 
+*BOOT THE LIVEUSB IN UEFI MODE IFF YOU WANT TO INSTALL IN UEFI MODE*
+
 On XPS 15:
 
 * To boot from Live USB, choose lower USB option not first (Legacy) one
@@ -78,6 +80,7 @@ Mirror old home directory into a new subdirectory
 * Chrome settings: "Advanced" -> "Allow Chrome sign-in" -> false
 * Chrome settings: "Advanced" -> "Downloads" -> "/tmp" -> Ask
 * Chrome settings: "On start-up" -> "Continue where you left off"; "Download location" -> "/tmp"; "Ask where to save each file before downloading" -> true
+* Chrome settings: "Privacy and security" -> "Site settings" -> "Location" -> "Blocked; "Motions sensors" -> "Blocked"
 * Chrome bookmarks from `~/puppet/browser_bookmarks.html`
 * Chrome settings -> Manage search engines -> Add -> google.co.uk / google.co.uk / https://www.google.co.uk/search?&q=%s
 * Firefox preferences: "When Firefox starts" -> "Show my windows and tabs from last time"
