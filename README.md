@@ -54,8 +54,12 @@ Prepare:
 Overwrite install
 
 For bigslide:
+
 * `sudo dpkg -i /cdrom/pool/main/d/dkms/dkms_2.2.0.3-2ubuntu6_all.deb`
 * `sudo dpkg -i /cdrom/pool/restricted/b/bcmwl/bcmwl-kernel-source_6.30.223.248+bdcom-0ubuntu7_amd64.deb`
+
+Unfortunately this actually requires manually building up a big `dpkg -i` command with all the dependencies, which can be found with commands like `find /cdrom/pool/main/ -iname '*g++*'`. A typical list might include: `b/binutils/binutils*.deb`, `b/binutils/binutils-common*.deb`, `b/binutils/binutils-x86-64-linux-gnu*.deb`, `b/binutils/libbinutils*.deb`, `b/binutils/libctf-nobfd0*.deb`, `b/binutils/libctf0*.deb`, `b/build-essential/build-essential*.deb`, `d/dkms/dkms*.deb`, `d/dpkg/dpkg-dev*.deb`, `g/gcc-*/g++-*.deb`, `g/gcc-*/gcc-*.deb`, `g/gcc-*/libasan5*.deb`, `g/gcc-*/libatomic1_10*.deb`, `g/gcc-*/libgcc-*-dev*.deb`, `g/gcc-*/libitm1_10*.deb`, `g/gcc-*/liblsan0_10*.deb`, `g/gcc-*/libquadmath0_10*.deb`, `g/gcc-*/libstdc++-*-dev*.deb`, `g/gcc-*/libtsan0_10*.deb`, `g/gcc-*/libubsan1_10*.deb`, `g/gcc-defaults/g++_*.deb`, `g/gcc-defaults/gcc_*.deb`, `g/glibc/libc-dev-bin*.deb`, `g/glibc/libc6-dev*.deb`, `l/linux/linux-libc-dev*.deb`, `libx/libxcrypt/libcrypt-dev*.deb`, `m/make-dfsg/make*.deb`.
+
 (and manually install all the dependency tree those things require :) )
 
 When installing Ubuntu 18.04 on bigslide, the installer repeatedly crashed just at the point of getting going with the install. The solution turned out to be to turn the display setting to 100% (see [this](https://bugs.launchpad.net/ubuntu/+source/ubiquity/+bug/1751252)).
