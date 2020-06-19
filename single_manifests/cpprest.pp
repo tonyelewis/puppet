@@ -18,12 +18,12 @@ Exec {
   ]
 }
 
-# package { 'libssl-dev':
-#   ensure => 'latest',
-# }
-package { 'libssl1.0-dev':
+package { 'libssl-dev':
   ensure => 'latest',
 }
+# package { 'libssl1.0-dev':
+#   ensure => 'latest',
+# }
 
 file { "Source dir ${user_src_dir}":
   ensure => 'directory',
@@ -105,7 +105,8 @@ $profile_names.each | String $profile_name | {
    ],
     creates     => "${build_dir}/build.ninja",
     group       => $user,
-    require     => Package[ 'libssl1.0-dev' ],
+    require     => Package[ 'libssl-dev' ],
+    # require     => Package[ 'libssl1.0-dev' ],
     user        => $user,
   }
   ->exec { "build cpprest ${profile_name}":
