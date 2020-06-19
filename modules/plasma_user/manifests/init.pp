@@ -192,7 +192,12 @@ class plasma_user {
     ],
   }
 
-  augeas { 'Set Konsole tabbar to top' :
+  file { 'Konsole config owned by user' :
+    ensure => 'file',
+    owner  => $user,
+    path   => "${::plasma_user::config_dir}/konsolerc",
+  }
+  ->augeas { 'Set Konsole tabbar to top' :
     lens    => 'Rsyncd.lns',
     incl    => "${::plasma_user::config_dir}/konsolerc",
     context => "/files/${::plasma_user::config_dir}/konsolerc",
