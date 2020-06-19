@@ -22,6 +22,8 @@
 # ninja -C ~/source/llvm-build -k 0
 # ninja -C ~/source/llvm-build -k 0 install
 
+# If necessary, comment out line `CHECK_SIZE_AND_OFFSET(ipc_perm, mode);` in `~/source/llvm-master/compiler-rt/lib/sanitizer_common/sanitizer_platform_limits_posix.cpp`
+
 # There may be things that are needed in LLVM_ENABLE_PROJECTS or that might be worth trying (lld?)
 #
 # List of valid LLVM_ENABLE_PROJECTS entries (from https://llvm.org/docs/CMake.html, 19th March 2020):
