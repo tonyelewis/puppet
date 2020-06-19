@@ -28,13 +28,17 @@ On XPS 15:
 
 Ensure you have puppet installed:
 
-    apt-get -y install puppet puppet-module-puppetlabs-stdlib puppet-module-puppetlabs-vcsrepo augeas-tools
+~~~sh
+apt-get -y install puppet puppet-module-puppetlabs-stdlib puppet-module-puppetlabs-vcsrepo augeas-tools
+~~~
 
 ...and that puppet has the puppetlabs-vcsrepo and puppetlabs-git modules installed:
 
-    puppet module install acme/ohmyzsh
-    puppet module install puppet-alternatives
-    puppet module install puppetlabs-git
+~~~sh
+puppet module install acme/ohmyzsh
+puppet module install puppet-alternatives
+puppet module install puppetlabs-git
+~~~
 
 (Pre Ubuntu 16.04, the puppet-module-puppetlabs-vcsrepo didn't exist so that has to be installed with `puppet module install puppetlabs-vcsrepo` instead)
 
@@ -103,6 +107,7 @@ Mirror old home directory into a new subdirectory
 
 ## Stuff to Add
 
+* Possibly `azcopy` into `~/bin`?
 * Conan settings.yml (need to run a conan command to create it and then need to add flavours)
 * Conan bincrafters (`conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan`)
 * Had to install download of CMake 3.12 on Ubuntu 18.04 LTS on bigslide and put link in `~/bin` - but maybe future Ubuntu releases will have &ge; 3.12?
