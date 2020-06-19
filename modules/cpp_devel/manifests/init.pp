@@ -251,27 +251,27 @@ class cpp_devel {
 #  }
 #
 
-  vcsrepo { 'clone ltfg git repository' :
-    ensure   => present,
-    path     => "${repos_root_dir}/ltfg",
-    provider => git,
-    source   => 'ssh://gituser@192.168.178.4/volume1/homes/gituser/ltfg.git',
-    owner    => $repos_user,
-    user     => $repos_user,
-    group    => $repos_group,
-  }
-  ->file { 'put symlink to ltfg in the root directory' :
-    ensure => 'link',
-    name   => '/ltfg',
-    target => "${repos_root_dir}/ltfg",
-  }
-  ->file { 'Install ltfg_konsole.desktop shortcut' :
-    ensure  => 'present',
-    path    => "${desktop_files_dir}/ltfg_konsole.desktop",
-    source  => 'puppet:///modules/cpp_devel/ltfg_konsole.desktop',
-    replace => 'yes',
-    mode    => '0644',
-  }
+#   vcsrepo { 'clone ltfg git repository' :
+#     ensure   => present,
+#     path     => "${repos_root_dir}/ltfg",
+#     provider => git,
+#     source   => 'ssh://gituser@192.168.178.4/volume1/homes/gituser/ltfg.git',
+#     owner    => $repos_user,
+#     user     => $repos_user,
+#     group    => $repos_group,
+#   }
+#   ->file { 'put symlink to ltfg in the root directory' :
+#     ensure => 'link',
+#     name   => '/ltfg',
+#     target => "${repos_root_dir}/ltfg",
+#   }
+#   ->file { 'Install ltfg_konsole.desktop shortcut' :
+#     ensure  => 'present',
+#     path    => "${desktop_files_dir}/ltfg_konsole.desktop",
+#     source  => 'puppet:///modules/cpp_devel/ltfg_konsole.desktop',
+#     replace => 'yes',
+#     mode    => '0644',
+#   }
 
 #  vcsrepo { 'Checkout immediates of svn repo' :
 #    ensure   => present,
