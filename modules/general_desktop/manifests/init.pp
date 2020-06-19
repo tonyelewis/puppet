@@ -236,6 +236,14 @@ class general_desktop {
     require  => Package[ 'libappindicator1', 'libindicator7' ],
   }
 
+  file { 'put symlink to /usr/bin/batcat as ~/bin/bat' :
+    ensure => 'link',
+    name   => "${home_dir}/bin/bat",
+    target => "/usr/bin/batcat",
+    owner  => $user,
+    require => Package[ 'bat' ],
+  }
+
   ## $java_version_major = '8';
   ## $java_version_minor = ;
   ## $java_version_point = ;
