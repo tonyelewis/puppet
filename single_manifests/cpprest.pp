@@ -101,6 +101,7 @@ $profile_names.each | String $profile_name | {
     command     => "cmake -GNinja -B${build_dir} -H${release_dir} -DCMAKE_TOOLCHAIN_FILE=${toolchain_file} -DWERROR:BOOL=OFF -DCMAKE_INSTALL_RPATH_USE_LINK_PATH:BOOL=ON -DCMAKE_INSTALL_PREFIX=${install_dir} ",
     environment => [
         "DO_NOT_SET_BOOST_ASIO_HAS_STD_STRING_VIEW=1",
+        "DISABLE_MY_STANDARD_CXX_WARNINGS=1",
         "HOME=${home_dir}",
    ],
     creates     => "${build_dir}/build.ninja",
