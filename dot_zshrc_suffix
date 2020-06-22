@@ -272,6 +272,7 @@ function email-for-git() {
 unsetopt share_history
 
 # Commands to remember to use:
+#   bc      An arbitrary precision calculator language
 #   cloc    Count Lines Of Code
 #   column  Form input into aligned columns
 #   combine Like comm but more general (and/not/or/xor; files needn't be pre-sorted) (in Ubuntu package 'moreutils')
