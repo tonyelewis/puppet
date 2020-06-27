@@ -283,6 +283,7 @@ unsetopt share_history
 #   paste   Horizontally join files
 #   pee     Pipe input to multiple commands (a la tee) (in Ubuntu package 'moreutils')
 #   pv      Quantify amount of data going through a pipe ("pipe viewer") (in Ubuntu package 'pv')
+#   rename  Perl extension for renaming multiple files
 #   strings Print all the strings in a binary
 #   ts      Prepend a timestamp before each line of stdin (in Ubuntu package 'moreutils')
 #   vipe    Run a text-editor to tweak data as it's passed through a pipe (in Ubuntu package 'moreutils')
