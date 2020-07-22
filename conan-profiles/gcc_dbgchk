@@ -17,4 +17,4 @@ build_type=Debug
 [env]
 CC=/home/lewis/source/gcc/bin/gcc
 CXX=/home/lewis/source/gcc/bin/g++
-CXXFLAGS=" -D_GLIBCXX_DEBUG "
+CXXFLAGS=" -D_GLIBCXX_DEBUG -DRANGES_NO_STD_FORWARD_DECLARATIONS "
