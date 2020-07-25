@@ -158,14 +158,14 @@ class general_desktop {
   #   source  => 'https://go.microsoft.com/fwlink/?LinkID=760868',
   # }
   general_desktop::download_file { 'download VSCode .deb file' :
-    target => '/opt/code_1.39.2.amd64.deb',
-    uri    => 'https://update.code.visualstudio.com/1.39.2/linux-deb-x64/stable',
+    target => '/opt/vscode_amd64.deb',
+    uri    => 'https://go.microsoft.com/fwlink/?LinkID=760868',
   }
   ->package { 'Install VSCode package':
-    ensure   => 'held',
+    ensure   => installed,
     name     => 'code',
     provider => dpkg,
-    source   => '/opt/code_1.39.2.amd64.deb',
+    source   => '/opt/vscode_amd64.deb',
   }
   ->file { 'VSCode projects directory' :
     ensure => 'directory',
