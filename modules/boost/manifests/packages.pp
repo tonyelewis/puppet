@@ -21,18 +21,20 @@ class boost::packages {
     ensure => 'latest',
   }
   
-  package { 'the-python-devel-package' :
-    name   =>
-      # 'python-devel', # For Boost (CentOS)
-      'python-dev',   # For Boost (Ubuntu)
-    ensure => 'latest',
-  }
-  
-  package {
-    [
-      'python', # For Boost
-    ] :
-    ensure => 'latest',
-  }
+  # Are these needed any more? I've found them purged on a system that I'd previously Puppeted,
+  # suggesting I'd had reasons for getting rid of them
+  # package { 'the-python-devel-package' :
+  #   name   =>
+  #     # 'python-devel', # For Boost (CentOS)
+  #     'python-dev',   # For Boost (Ubuntu)
+  #   ensure => 'latest',
+  # }
+  #
+  # package {
+  #   [
+  #     'python', # For Boost
+  #   ] :
+  #   ensure => 'latest',
+  # }
 
 }
