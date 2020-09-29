@@ -269,6 +269,10 @@ function email-for-git() {
 	"${SELECT_BUILD_TYPE_EXE_DIR}/.venv/bin/python" "${SELECT_BUILD_TYPE_EXE}"
 }
 
+function pymol-pdb() {
+	/usr/bin/pymol -d "load $1, format=pdb; show_as cartoon, polymer; bg_color white; util.cbc;"
+}
+
 unsetopt share_history
 
 # Commands to remember to use:
