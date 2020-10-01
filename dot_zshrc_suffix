@@ -4,26 +4,26 @@ setopt NO_CHECK_JOBS
 
 limit coredumpsize unlimited
 
-export                  BOOST_TEST_BUILD_INFO=yes
-export                BOOST_TEST_COLOR_OUTPUT=yes
-export                   BOOST_TEST_LOG_LEVEL=message
-export                BOOST_TEST_REPORT_LEVEL=short
-export              BUILD_EXTRA_CATH_BINARIES=1
-export                 BUILD_EXTRA_CATH_TESTS=ON
-export                 BUILD_EXTRA_CATH_TOOLS=ON
-export                              BUILDTYPE=ninja_clang_rwdi
-export          CMAKE_EXTRACTED_COMPILE_FLAGS=' --you-have-not-yet-extracted-valid-compile-flags '
-export                        CMAKE_GENERATOR=Ninja
-export                CTEST_OUTPUT_ON_FAILURE=1
-export MXX_ALWAYS_THROW_ON_CONTRACT_VIOLATION=1
-export          MXX_ANNOTATE_DJANGO_DEVELMODE=1
-export                     MXX_DEVELOPER_MODE=1
-export                   MXX_DISABLE_BREAKPAD=1
-export       MXX_TRACKLOOPER_DJANGO_DEVELMODE=1
+export                  BOOST_TEST_BUILD_INFO="${BOOST_TEST_BUILD_INFO:-yes}"
+export                BOOST_TEST_COLOR_OUTPUT="${BOOST_TEST_COLOR_OUTPUT:-yes}"
+export                   BOOST_TEST_LOG_LEVEL="${BOOST_TEST_LOG_LEVEL:-message}"
+export                BOOST_TEST_REPORT_LEVEL="${BOOST_TEST_REPORT_LEVEL:-short}"
+export                              BUILDTYPE="${BUILDTYPE:-ninja_clang_rwdi}"
+export                 BUILD_EXTRA_CATH_TESTS="${BUILD_EXTRA_CATH_TESTS:-ON}"
+export                 BUILD_EXTRA_CATH_TOOLS="${BUILD_EXTRA_CATH_TOOLS:-ON}"
+export          CMAKE_EXTRACTED_COMPILE_FLAGS="${CMAKE_EXTRACTED_COMPILE_FLAGS:- --you-have-not-yet-extracted-valid-compile-flags }"
+export                        CMAKE_GENERATOR="${CMAKE_GENERATOR:-Ninja}"
+export                CTEST_OUTPUT_ON_FAILURE="${CTEST_OUTPUT_ON_FAILURE:-1}"
+export MXX_ALWAYS_THROW_ON_CONTRACT_VIOLATION="${MXX_ALWAYS_THROW_ON_CONTRACT_VIOLATION:-1}"
+export          MXX_ANNOTATE_DJANGO_DEVELMODE="${MXX_ANNOTATE_DJANGO_DEVELMODE:-1}"
+export                     MXX_DEVELOPER_MODE="${MXX_DEVELOPER_MODE:-1}"
+export                   MXX_DISABLE_BREAKPAD="${MXX_DISABLE_BREAKPAD:-1}"
+export       MXX_TRACKLOOPER_DJANGO_DEVELMODE="${MXX_TRACKLOOPER_DJANGO_DEVELMODE:-1}"
+export    TRILLER_ANNOTATION_DJANGO_DEVELMODE="${TRILLER_ANNOTATION_DJANGO_DEVELMODE:-1}"
+export                          UBSAN_OPTIONS="${UBSAN_OPTIONS:- print_stacktrace=1 }"
+# export                          UBSAN_OPTIONS="${UBSAN_OPTIONS:- print_stacktrace=1 suppressions=ubsan-suppressions.txt }"
+
 export                                   PATH=~/.local/bin:~/bin:~/puppet/perl/tools:$PATH:/usr/local/cuda/bin
-export    TRILLER_ANNOTATION_DJANGO_DEVELMODE=1
-export                          UBSAN_OPTIONS="print_stacktrace=1"
-#export                          UBSAN_OPTIONS="print_stacktrace=1 suppressions=ubsan-suppressions.txt"
 # ~/.local/bin is for Conan
 
 # export                DBIC_TRACE_PROFILE=console
