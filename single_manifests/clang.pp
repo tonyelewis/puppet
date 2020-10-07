@@ -7,14 +7,7 @@
 # sudo apt-get install build-essential subversion swig python2.7-dev libedit-dev libncurses5-dev
 
 # mkdir -p  ~/source/llvm{,-build,-master}
-# git clone https://git.llvm.org/git/llvm.git/                       ~/source/llvm-master/llvm
-# git clone https://git.llvm.org/git/lldb.git/                       ~/source/llvm-master/lldb
-# git clone https://git.llvm.org/git/clang.git/                      ~/source/llvm-master/clang
-# git clone https://git.llvm.org/git/clang-tools-extra.git/          ~/source/llvm-master/clang-tools-extra
-# git clone https://git.llvm.org/git/compiler-rt.git/                ~/source/llvm-master/compiler-rt
-# git clone https://git.llvm.org/git/libcxx.git/                     ~/source/llvm-master/libcxx
-# git clone https://git.llvm.org/git/libcxxabi.git/                  ~/source/llvm-master/libcxxabi
-# ls -1d ~/source/llvm-master/* | tr '\n' '\0' | xargs -0 -P 7 -I VAR git -C VAR pull
+# git clone --depth 100  https://github.com/llvm/llvm-project.git ~/source/llvm-master
 # cmake -B$( ls -1d ~/source/llvm-build ) -H$( ls -1d ~/source/llvm-master/llvm ) -GNinja -DCMAKE_INSTALL_PREFIX=$( ls -1d ~/source/llvm ) -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_ASSERTIONS=OFF '-DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra;compiler-rt;libcxx;libcxxabi;lldb'
 # ninja -C ~/source/llvm-build -k 0
 # ninja -C ~/source/llvm-build -k 0 install
@@ -43,10 +36,13 @@
 
 # # Buid an msan libc++
 #
+#
+# # To clean up previous version:
+# mkdir ~/source/msan-libcxx-llvm.stopped.$( datestamp )
+# mv ~/source/msan-libcxx{,-build,-llvm-master} ~/source/msan-libcxx-llvm.stopped.$( datestamp )
+#
 # mkdir -p ~/source/msan-libcxx{,-build,-llvm-master}
-# git clone https://git.llvm.org/git/llvm.git/                       ~/source/msan-libcxx-llvm-master/llvm
-# git clone https://git.llvm.org/git/libcxx.git/                     ~/source/msan-libcxx-llvm-master/libcxx
-# git clone https://git.llvm.org/git/libcxxabi.git/                  ~/source/msan-libcxx-llvm-master/libcxxabi
+# git clone --depth 100  https://github.com/llvm/llvm-project.git ~/source/msan-libcxx-llvm-master
 #
 # unset UBSAN_OPTIONS
 #
