@@ -105,6 +105,15 @@ Mirror old home directory into a new subdirectory
  chrome  | calculator      | sublime-text | VSCode/cath-tools
  konsole | system settings | synaptic     | update manager
 
+For fans on XPS 15, follow https://medium.com/@kasunsiyambalapitiya/fixing-constantly-running-fans-on-dell-laptops-running-ubuntu-16-04-8cf6595381d9 with settings like:
+
+~~~no-highlight
+set config(0)   {{0 0}  -1  55  -1  60}
+set config(1)   {{1 1}  55  65  55  70}
+set config(2)   {{2 1}  75  75  65  80}
+set config(3)   {{2 2}  75 128  75 128}
+~~~
+
 ## Stuff to Add
 
 * Possibly `azcopy` into `~/bin`?
