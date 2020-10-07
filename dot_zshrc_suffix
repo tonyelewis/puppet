@@ -83,6 +83,10 @@ function cmake-all-of() {(
 	# Stop as soon as anything fails
 	set -e
 
+	setopt extendedglob
+
+	ORIG_LOCATION=$PWD
+
 	# Check each profile has an associated Conan profile file and a CMake toolchain file
 	for PROFILE_NAME in "$@" ; do
 		REQUIRED_FILES=( "${HOME}/puppet/toolchain-files/${PROFILE_NAME}.cmake" "${HOME}/puppet/conan-profiles/${PROFILE_NAME}" )
@@ -96,13 +100,21 @@ function cmake-all-of() {(
 	done
 
 	# For each profile:
-	#  * wipe any previous build directory and reac
+	#  * wipe any previous build directory
 	#  * create a fresh build directory
 	#  * Run Conan in the buld directory for the correct profile
 	#  * Run CMake in the buld directory for the correct profile
+	#
+	#############################
+	#
+	# CAN THIS EAILY BE MADE TO PARALLELISE?
+	# MAYBE WITH COMMAND & AND WAIT?
+	#
+	#############################
 	for PROFILE_NAME in "$@"
 	do
-		CONAN_PROFILE_FILE="${HOME}/puppet/conan-profiles/${PROFILE_NAME}"
+		CONAN_PROFILE_DIR="${HOME}/puppet/conan-profiles"
+		CONAN_PROFILE_FILE="${CONAN_PROFILE_DIR}/${PROFILE_NAME}"
 		CMAKE_TOOLCHAIN_FILE="${HOME}/puppet/toolchain-files/${PROFILE_NAME}.cmake"
 		NINJA_VERSION_OF_FOLDER="ninja_${PROFILE_NAME}"
 
@@ -110,7 +122,16 @@ function cmake-all-of() {(
 		rm -rf "${NINJA_VERSION_OF_FOLDER}"
 		mkdir -p "${NINJA_VERSION_OF_FOLDER}"
 		if [[ -f 'conanfile.txt' || -f 'conanfile.py' ]]; then
-			conan install --build missing --install-folder "${NINJA_VERSION_OF_FOLDER}"   . --profile "${CONAN_PROFILE_FILE}"
+			mkdir -p "${NINJA_VERSION_OF_FOLDER}"
+
+			PROJECT_SOURCE_DIR_NAME=$( realpath "${ORIG_LOCATION}" | xargs -I VAR basename VAR )
+			PROJECT_SOURCE_DIR_NAME_STRIPPED=${PROJECT_SOURCE_DIR_NAME%%\-[[:digit:]]##}
+
+			# echo "PROJECT_SOURCE_DIR_NAME_STRIPPED is ${PROJECT_SOURCE_DIR_NAME_STRIPPED}"
+			PROJECT_SPECIFIC_PROFILE="${CONAN_PROFILE_DIR}/project/${PROJECT_SOURCE_DIR_NAME_STRIPPED}"
+			# echo "PROJECT_SPECIFIC_PROFILE is ${PROJECT_SPECIFIC_PROFILE}"
+
+			conan install --build missing --install-folder "${NINJA_VERSION_OF_FOLDER}" . --profile "${CONAN_PROFILE_FILE}" --profile ${PROJECT_SPECIFIC_PROFILE}
 		fi
 		cmake "-B${NINJA_VERSION_OF_FOLDER}"    -H. "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}"
 		set +x
