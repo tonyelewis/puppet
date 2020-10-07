@@ -2,8 +2,8 @@
 
 # sudo apt-get install build-essential libgmp-dev libmpfr-dev libmpc-dev
 #
-# export BUILD_GCC_VERSION=10.1.0
-# export BUILD_GCC_VERSION_SHORT=10.1
+# export BUILD_GCC_VERSION=10.2.0
+# export BUILD_GCC_VERSION_SHORT=10.2
 # export BUILD_GCC_ROOT_DIR=$( echo ~/source )
 # export BUILD_GCC_SOURCE_DIR=${BUILD_GCC_ROOT_DIR}/gcc-${BUILD_GCC_VERSION}-source
 # export BUILD_GCC_BUILD_DIR=${BUILD_GCC_ROOT_DIR}/gcc-${BUILD_GCC_VERSION}-build
