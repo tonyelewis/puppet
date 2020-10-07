@@ -193,12 +193,12 @@ function xentr {
 }
 function xtidy {
 	echo "\033[1;34mRunning clang-tidy $@\033[0m"
-	~/source/llvm/bin/clang-tidy '-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-modernize-use-trailing-return-type,-readability-named-parameter' "$1" -- "${@:2}" ${=CMAKE_EXTRACTED_COMPILE_FLAGS} ${=MXX_BASE_CLANG_COMPILE_ARGS} ${=COMPILE_WARNINGS}
+	~/source/llvm/bin/clang-tidy '-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-llvmlibc*,-modernize-use-trailing-return-type,-readability-named-parameter' "$1" -- "${@:2}" ${=CMAKE_EXTRACTED_COMPILE_FLAGS} ${=MXX_BASE_CLANG_COMPILE_ARGS} ${=COMPILE_WARNINGS}
 }
 # unbuffer is in the 'expect' package and it tricks clang-tidy into thinking it's outputting to a terminal
 function xtidyentr {
 	echo "\033[1;34mWatching clang-tidy $@\033[0m"
-	msc | entr -cs 'unbuffer ~/source/llvm/bin/clang-tidy '\''-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-modernize-use-trailing-return-type,-readability-named-parameter'\'' '"$1"' -- '"${@:2}"' ${=CMAKE_EXTRACTED_COMPILE_FLAGS} ${=MXX_BASE_CLANG_COMPILE_ARGS} ${=COMPILE_WARNINGS} |& head -n 30'
+	msc | entr -cs 'unbuffer ~/source/llvm/bin/clang-tidy '\''-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-llvmlibc*,-modernize-use-trailing-return-type,-readability-named-parameter'\'' '"$1"' -- '"${@:2}"' ${=CMAKE_EXTRACTED_COMPILE_FLAGS} ${=MXX_BASE_CLANG_COMPILE_ARGS} ${=COMPILE_WARNINGS} |& head -n 30'
 }
 
 
@@ -224,13 +224,13 @@ function centr {
 }
 function ctidy {
 	echo "\033[1;34mRunning clang-tidy $@\033[0m"
-	~/source/llvm/bin/clang-tidy '-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-modernize-use-trailing-return-type,-readability-named-parameter' "$1" -- "${@:2}" ${=TEL_BASE_CLANG_COMPILE_ARGS} ${=CMAKE_EXTRACTED_COMPILE_FLAGS} ${=COMPILE_WARNINGS}
+	~/source/llvm/bin/clang-tidy '-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-llvmlibc*,-modernize-use-trailing-return-type,-readability-named-parameter' "$1" -- "${@:2}" ${=TEL_BASE_CLANG_COMPILE_ARGS} ${=CMAKE_EXTRACTED_COMPILE_FLAGS} ${=COMPILE_WARNINGS}
 }
 
 # unbuffer is in the 'expect' package and it tricks clang-tidy into thinking it's outputting to a terminal
 function ctidyentr {
 	echo "\033[1;34mWatching clang-tidy $@\033[0m"
-	lsc | entr -cs 'unbuffer ~/source/llvm/bin/clang-tidy '\''-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-modernize-use-trailing-return-type,-readability-named-parameter'\'' '"$1"' -- '"${@:2}"' ${=TEL_BASE_CLANG_COMPILE_ARGS} ${=CMAKE_EXTRACTED_COMPILE_FLAGS} ${=COMPILE_WARNINGS} |& head -n 30'
+	lsc | entr -cs 'unbuffer ~/source/llvm/bin/clang-tidy '\''-checks=*,-fuchsia*,-google-build-using-namespace,-google-runtime-references,-llvmlibc*,-modernize-use-trailing-return-type,-readability-named-parameter'\'' '"$1"' -- '"${@:2}"' ${=TEL_BASE_CLANG_COMPILE_ARGS} ${=CMAKE_EXTRACTED_COMPILE_FLAGS} ${=COMPILE_WARNINGS} |& head -n 30'
 }
 
 function nar() {
