@@ -10,5 +10,4 @@ IF ( EXISTS "/opt/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04/lib" )
 ELSE()
 	set( CMAKE_EXE_LINKER_FLAGS_INIT " -Wl,-rpath=/opt/clang+llvm-9.0.0-x86_64-pc-linux-gnu/lib "                                                                 )
 ENDIF()
-
 include( "${CMAKE_CURRENT_LIST_DIR}/misc.cmake" )

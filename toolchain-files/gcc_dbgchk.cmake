@@ -10,5 +10,4 @@ set( CMAKE_CXX_FLAGS_INIT        " -D_GLIBCXX_DEBUG ${CMAKE_CXX_FLAGS} -DRANGES_
 
 
 
-include( "${CMAKE_CURRENT_LIST_DIR}/fix-rpath-for-built-gcc.cmake" )
 include( "${CMAKE_CURRENT_LIST_DIR}/misc.cmake" )
