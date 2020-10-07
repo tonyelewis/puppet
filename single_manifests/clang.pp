@@ -1,12 +1,8 @@
 # https://llvm.org/docs/GettingStarted.html
 
-
-
-# svn co    http://llvm.org/svn/llvm-project/llvm/trunk              ~/source/llvm-master
-# svn co    http://llvm.org/svn/llvm-project/cfe/trunk               ~/source/llvm-master/tools/clang
-# svn co    http://llvm.org/svn/llvm-project/clang-tools-extra/trunk ~/source/llvm-master/tools/clang/tools/extra
-# svn co    http://llvm.org/svn/llvm-project/compiler-rt/trunk       ~/source/llvm-master/projects/compiler-rt
-# svn co    http://llvm.org/svn/llvm-project/libcxx/trunk            ~/source/llvm-master/projects/libcxx
+# # To clean up previous version:
+# mkdir ~/source/llvm.stopped.$( datestamp )
+# mv ~/source/llvm{,-build,-master} ~/source/llvm.stopped.$( datestamp )
 
 # sudo apt-get install build-essential subversion swig python2.7-dev libedit-dev libncurses5-dev
 
@@ -18,6 +14,7 @@
 # git clone https://git.llvm.org/git/compiler-rt.git/                ~/source/llvm-master/compiler-rt
 # git clone https://git.llvm.org/git/libcxx.git/                     ~/source/llvm-master/libcxx
 # git clone https://git.llvm.org/git/libcxxabi.git/                  ~/source/llvm-master/libcxxabi
+# ls -1d ~/source/llvm-master/* | tr '\n' '\0' | xargs -0 -P 7 -I VAR git -C VAR pull
 # cmake -B$( ls -1d ~/source/llvm-build ) -H$( ls -1d ~/source/llvm-master/llvm ) -GNinja -DCMAKE_INSTALL_PREFIX=$( ls -1d ~/source/llvm ) -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_ASSERTIONS=OFF '-DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra;compiler-rt;libcxx;libcxxabi;lldb'
 # ninja -C ~/source/llvm-build -k 0
 # ninja -C ~/source/llvm-build -k 0 install
@@ -60,3 +57,11 @@
 # Use like:
 # ~/source/llvm/bin/clang++ -fsanitize=memory                                 -fPIE -pie -fno-omit-frame-pointer -g -O2 -std=c++17 -stdlib=libc++ -nostdinc++ -I$(ls -1d ~/source/msan-libcxx)/include/c++/v1 -L$(ls -1d ~/source/msan-libcxx)/lib -Wl,-rpath,$(ls -1d ~/source/msan-libcxx)/lib test.cpp -o test.clang_bin
 # ~/source/llvm/bin/clang++ -fsanitize=memory -fsanitize-memory-track-origins -fPIE -pie -fno-omit-frame-pointer -g -O2 -std=c++17 -stdlib=libc++ -nostdinc++ -I$(ls -1d ~/source/msan-libcxx)/include/c++/v1 -L$(ls -1d ~/source/msan-libcxx)/lib -Wl,-rpath,$(ls -1d ~/source/msan-libcxx)/lib test.cpp -o test.clang_bin
+
+
+# # # Old within-tree approach:
+# # svn co    http://llvm.org/svn/llvm-project/llvm/trunk              ~/source/llvm-master
+# # svn co    http://llvm.org/svn/llvm-project/cfe/trunk               ~/source/llvm-master/tools/clang
+# # svn co    http://llvm.org/svn/llvm-project/clang-tools-extra/trunk ~/source/llvm-master/tools/clang/tools/extra
+# # svn co    http://llvm.org/svn/llvm-project/compiler-rt/trunk       ~/source/llvm-master/projects/compiler-rt
+# # svn co    http://llvm.org/svn/llvm-project/libcxx/trunk            ~/source/llvm-master/projects/libcxx
