@@ -12,7 +12,9 @@
 # ninja -C ~/source/llvm-build -k 0
 # ninja -C ~/source/llvm-build -k 0 install
 
-# If necessary, comment out line `CHECK_SIZE_AND_OFFSET(ipc_perm, mode);` in `~/source/llvm-master/compiler-rt/lib/sanitizer_common/sanitizer_platform_limits_posix.cpp`
+# # You may consider cloning the whole respository (ie remove `--depth 100`) and then checking-out a tag (eg `llvmorg-11.0.0-rc6`)
+
+# # If necessary, comment out line `CHECK_SIZE_AND_OFFSET(ipc_perm, mode);` in `~/source/llvm-master/compiler-rt/lib/sanitizer_common/sanitizer_platform_limits_posix.cpp`
 
 # There may be things that are needed in LLVM_ENABLE_PROJECTS or that might be worth trying (lld?)
 #
@@ -53,6 +55,9 @@
 # Use like:
 # ~/source/llvm/bin/clang++ -fsanitize=memory                                 -fPIE -pie -fno-omit-frame-pointer -g -O2 -std=c++17 -stdlib=libc++ -nostdinc++ -I$(ls -1d ~/source/msan-libcxx)/include/c++/v1 -L$(ls -1d ~/source/msan-libcxx)/lib -Wl,-rpath,$(ls -1d ~/source/msan-libcxx)/lib test.cpp -o test.clang_bin
 # ~/source/llvm/bin/clang++ -fsanitize=memory -fsanitize-memory-track-origins -fPIE -pie -fno-omit-frame-pointer -g -O2 -std=c++17 -stdlib=libc++ -nostdinc++ -I$(ls -1d ~/source/msan-libcxx)/include/c++/v1 -L$(ls -1d ~/source/msan-libcxx)/lib -Wl,-rpath,$(ls -1d ~/source/msan-libcxx)/lib test.cpp -o test.clang_bin
+
+# # You may consider cloning the whole respository (ie remove `--depth 100`) and then checking-out a tag (eg `llvmorg-11.0.0-rc6`)
+
 
 
 # # # Old within-tree approach:
