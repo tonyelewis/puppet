@@ -82,6 +82,7 @@ function lgt {
 function cmake-all-of() {(
 	# Stop as soon as anything fails
 	set -e
+	setopt no_unset
 
 	setopt extendedglob
 
@@ -96,7 +97,6 @@ function cmake-all-of() {(
 				return
 			fi
 		done
-		echo ${PROFILE_NAME}
 	done
 
 	# For each profile:
@@ -136,7 +136,7 @@ function cmake-all-of() {(
 				return 1
 			fi
 
-			conan install --build missing --install-folder "${NINJA_VERSION_OF_FOLDER}" . --profile "${CONAN_PROFILE_FILE}" --profile ${PROJECT_SPECIFIC_PROFILE}
+			conan install --build missing --install-folder "${NINJA_VERSION_OF_FOLDER}" . --profile "${CONAN_PROFILE_FILE}" --profile "${PROJECT_SPECIFIC_PROFILE}"
 		fi
 		cmake "-B${NINJA_VERSION_OF_FOLDER}"    -H. "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}"
 		set +x
@@ -152,7 +152,7 @@ function xar {
 	else
 		export QML2_IMPORT_PATH=/home/lewis/source/QtAV-gcc/qml
 	fi
-	ninja -C ${BUILDTYPE} -k 0 $1 && limit coredumpsize unlimited && unbuffer ${BUILDTYPE}/bin/$@
+	ninja -C "${BUILDTYPE}" -k 0 $1 && limit coredumpsize unlimited && unbuffer "${BUILDTYPE}/bin/$@"
 }
 
 # export       MXX_BASE_COMPILE_ARGS="-x c++ -std=c++17 -fPIC -ftemplate-backtrace-limit=0 -DBOOST_ALL_DYN_LINK -DBOOST_ASIO_HAS_STD_STRING_VIEW -DBOOST_LOG_DYN_LINK -DCPPREST_FORCE_HTTP_CLIENT_ASIO -DCPPREST_FORCE_HTTP_LISTENER_ASIO -DCPPREST_NO_SSL_LEAK_SUPPRESS -DMXX_CATALOGUE=EPIDEMIC -DQT_CONCURRENT_LIB -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_QML_LIB -DQT_QUICK_LIB -DQT_WIDGETS_LIB -I annotation/impl_annotation -I annotation/lib_annotation -I arrange/lib_arrange -I arrange/lib_dpe -I arrange/lib_editor -I arrange/lib_score -I audio/impl_audio -I audio/lib_audio -I desktop/Sparkle -I desktop/lib_desktop -I mixer/lib_mixer -I serialization_format/lib_serialization_format -I time/lib_time -I utility/lib_utility -I video/lib_video -isystem /opt/Qt/this-version/gcc_64/include -isystem /opt/Qt/this-version/gcc_64/include/QtConcurrent -isystem /opt/Qt/this-version/gcc_64/include/QtCore -isystem /opt/Qt/this-version/gcc_64/include/QtGui -isystem /opt/Qt/this-version/gcc_64/include/QtNetwork -isystem /opt/Qt/this-version/gcc_64/include/QtQml -isystem /opt/Qt/this-version/gcc_64/include/QtQuick -isystem /opt/Qt/this-version/gcc_64/include/QtWidgets -isystem /opt/Qt/this-version/gcc_64/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu -isystem 3rdparty -isystem 3rdparty/catch2/include -isystem 3rdparty/fmt/include -isystem autogen/api"
@@ -234,29 +234,29 @@ function ctidyentr {
 }
 
 function nar() {
-	ninja -C ${BUILDTYPE} -k 0 $1                                            &&            ${BUILDTYPE}/bin/$1 $@[2,-1]
+	ninja -C "${BUILDTYPE}" -k 0 $1                                            &&            "${BUILDTYPE}/bin/$1" $@[2,-1]
 }
 function nar-debug() {
-	ninja -C ${BUILDTYPE} -k 0 $1                                            && gdb --args ${BUILDTYPE}/bin/$1 $@[2,-1]
+	ninja -C "${BUILDTYPE}" -k 0 $1                                            && gdb --args "${BUILDTYPE}/bin/$1" $@[2,-1]
 }
 function narc() {
-	ninja -C ${BUILDTYPE} -k 0 $1 |& ~/puppet/perl/tools/makeoutputparser.pl &&            ${BUILDTYPE}/bin/$1 $@[2,-1]
+	ninja -C "${BUILDTYPE}" -k 0 $1 |& ~/puppet/perl/tools/makeoutputparser.pl &&            "${BUILDTYPE}/bin/$1" $@[2,-1]
 }
 function narc-debug() {
-	ninja -C ${BUILDTYPE} -k 0 $1 |& ~/puppet/perl/tools/makeoutputparser.pl && gdb --args ${BUILDTYPE}/bin/$1 $@[2,-1]
+	ninja -C "${BUILDTYPE}" -k 0 $1 |& ~/puppet/perl/tools/makeoutputparser.pl && gdb --args "${BUILDTYPE}/bin/$1" $@[2,-1]
 }
 # TODO: Get used to na and then remove ninjaall
 function ninjaall() {
-	ls -1d ninja_* | xargs -I VAR ninja -C VAR -k 0 $@
+	ls -1d ninja_* | tr '\n' '\0' | xargs -0 -I VAR ninja -C VAR -k 0 "$@"
 }
 function na() {
-	ls -1d ninja_* | xargs -I VAR ninja -C VAR -k 0 $@
+	ls -1d ninja_* | tr '\n' '\0' | xargs -0 -I VAR ninja -C VAR -k 0 "$@"
 }
 function nbt() {
-	ninja -C ${BUILDTYPE} -k 0 $@
+	ninja -C "${BUILDTYPE}" -k 0 $@
 }
 function ctbt() {
-	( cd ${BUILDTYPE} ; ctest $@ )
+	( cd "${BUILDTYPE}" ; ctest $@ )
 }
 function ca() {
 	ORIG_LOCATION=$PWD
