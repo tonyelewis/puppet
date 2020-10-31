@@ -36,4 +36,5 @@ ninja_gcc_release
 ninja_gcc_relwithdebinfo
 ninja_gcc_rwdi
 ninja_gcc_sanitize
+ninja_gcc_static
 ninja_gcc_ubasan
