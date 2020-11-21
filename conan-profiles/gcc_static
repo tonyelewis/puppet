@@ -1,0 +1,20 @@
+[settings]
+os=Linux
+os_build=Linux
+arch=x86_64
+arch_build=x86_64
+compiler=gcc
+compiler.version=10.2
+compiler.cppstd=17
+compiler.libcxx=libstdc++11
+compiler.flavour=static
+build_type=RelWithDebInfo
+
+[options]
+
+[build_requires]
+
+[env]
+CC=/home/lewis/source/gcc/bin/gcc
+CXX=/home/lewis/source/gcc/bin/g++
+CXXFLAGS=" -static -DBoost_USE_STATIC_LIBS=ON "
