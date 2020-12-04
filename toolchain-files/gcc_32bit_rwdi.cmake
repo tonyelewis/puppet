@@ -1,0 +1,13 @@
+set( ENV{Boost_DIR}              /opt/boost_1_73_0_normal32_c++17                                                                                         )
+set( CMAKE_BUILD_TYPE            RELWITHDEBINFO                                                                                                         )
+set( CMAKE_PREFIX_PATH           "/opt/Qt/this-version/gcc_64;$ENV{HOME}/source/cpprestsdk-gcc_rwdi;$ENV{HOME}/source/QtAV-gcc;$ENV{HOME}/source/vlc-qt-gcc" )
+set( CMAKE_C_COMPILER            "/usr/bin/gcc"                                                                                                         )
+set( CMAKE_CXX_COMPILER          "/usr/bin/g++"                                                                                                         )
+set( CMAKE_CXX_FLAGS_INIT        " -m32 ${CMAKE_CXX_FLAGS}"                                                                                             )
+
+
+
+
+
+
+include( "${CMAKE_CURRENT_LIST_DIR}/misc.cmake" )
