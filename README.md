@@ -108,11 +108,15 @@ Mirror old home directory into a new subdirectory
 For fans on XPS 15, follow https://medium.com/@kasunsiyambalapitiya/fixing-constantly-running-fans-on-dell-laptops-running-ubuntu-16-04-8cf6595381d9 with settings like:
 
 ~~~no-highlight
-set config(0)   {{0 0}  -1  55  -1  60}
-set config(1)   {{1 1}  55  65  55  70}
-set config(2)   {{2 1}  75  75  65  80}
-set config(3)   {{2 2}  75 128  75 128}
+set config(0)   {{0 0}  -1  62  -1  62}
+set config(1)   {{1 0}  53  72  53  72}
+set config(2)   {{1 1}  58  77  58  77}
+set config(3)   {{2 1}  63  82  63  82}
+set config(4)   {{2 2}  68  87  68  87}
+set config(5)   {{3 3}  73  128  73  128}
 ~~~
+
+(each row defines a new config mode; numbers in nested braces are the speeds of the two fans; then two pair of numbers, one pair for plugged-in and one for battery; each pair of numbers is the temperature at which it should drop down into the next lower mode and the temperature at which it should jump up to the next mode)
 
 ## Stuff to Add
 
