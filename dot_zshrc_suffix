@@ -297,6 +297,13 @@ function email-for-git() {
 	"${SELECT_BUILD_TYPE_EXE_DIR}/.venv/bin/python" "${SELECT_BUILD_TYPE_EXE}"
 }
 
+function martha-runner() {
+	SELECT_BUILD_TYPE_EXE_REL=$( which martha-runner.py )
+	SELECT_BUILD_TYPE_EXE=$( realpath "${SELECT_BUILD_TYPE_EXE_REL}" )
+	SELECT_BUILD_TYPE_EXE_DIR=$(dirname -- "${SELECT_BUILD_TYPE_EXE}" )
+	"${SELECT_BUILD_TYPE_EXE_DIR}/.venv/bin/python" "${SELECT_BUILD_TYPE_EXE}"
+}
+
 function pymol-pdb() {
 	/usr/bin/pymol -d "load $1, format=pdb; show_as cartoon, polymer; bg_color white; util.cbc;"
 }
