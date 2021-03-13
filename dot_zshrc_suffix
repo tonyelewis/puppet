@@ -304,6 +304,8 @@ function martha-runner() {
 	"${SELECT_BUILD_TYPE_EXE_DIR}/.venv/bin/python" "${SELECT_BUILD_TYPE_EXE}" $@
 }
 
+alias mr='martha-runner'
+
 function pymol-pdb() {
 	/usr/bin/pymol -d "load $1, format=pdb; show_as cartoon, polymer; bg_color white; util.cbc;"
 }
