@@ -1,12 +1,13 @@
 .cproject
 .gdbinit
-.mypy_cache
+.mypy_cache/
 .project
+.pytest_cache/
 .sass-cache
 .settings
-.venv
-.vscode
-__pycache__
+.venv/
+.vscode/
+__pycache__/
 build
 build_clang_debug
 build_clang_profile
