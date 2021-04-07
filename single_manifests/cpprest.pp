@@ -59,15 +59,6 @@ file { "Source dir ${user_src_dir}":
 #
 # ...fails with "Could not create repository (non-repository at path)"
 
-# REMOVE THESE SOON IF NOT USED:
-# $old_profile_details = [
-#   [ 'clg70-cpp17-boost1680-normal', 'clang', '/opt/boost_1_72_0_clang_c++14_build', " -DCMAKE_C_COMPILER=/usr/bin/clang                    -DCMAKE_CXX_COMPILER=/usr/bin/clang++                                             -DCMAKE_CXX_FLAGS=' -std=c++17 -stdlib=libc++                                                                 \${CMAKE_CXX_FLAGS} ' " ],
-#   [ 'clg90-cpp17-boost1680-dbgchk', 'clang', '/opt/boost_1_72_0_clang_c++14_build', " -DCMAKE_C_COMPILER=${home_dir}/source/llvm/bin/clang -DCMAKE_CXX_COMPILER=${home_dir}/source/llvm/bin/clang++ -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS=' -std=c++17 -stdlib=libc++ -D_LIBCPP_DEBUG=0                                               \${CMAKE_CXX_FLAGS} ' " ],
-#   [ 'clg90-cpp17-boost1680-ubasan', 'clang', '/opt/boost_1_72_0_clang_c++14_build', " -DCMAKE_C_COMPILER=${home_dir}/source/llvm/bin/clang -DCMAKE_CXX_COMPILER=${home_dir}/source/llvm/bin/clang++ -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS=' -std=c++17 -stdlib=libc++ -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer \${CMAKE_CXX_FLAGS} ' " ],
-#   [ 'gcc91-cpp17-boost1680-normal', 'gcc',   '/opt/boost_1_72_0_gcc_c++14_build',   " -DCMAKE_C_COMPILER=${home_dir}/source/gcc/bin/gcc    -DCMAKE_C_COMPILER=${home_dir}/source/gcc/bin/g++                                 -DCMAKE_CXX_FLAGS=' -std=c++17                                                                                \${CMAKE_CXX_FLAGS} ' " ],
-#   [ 'gcc91-cpp17-boost1680-dbgchk', 'gcc',   '/opt/boost_1_72_0_gcc_c++14_build',   " -DCMAKE_C_COMPILER=${home_dir}/source/gcc/bin/gcc    -DCMAKE_C_COMPILER=${home_dir}/source/gcc/bin/g++        -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS=' -std=c++17                -D_GLIBCXX_DEBUG=1                                              \${CMAKE_CXX_FLAGS} ' " ],
-#   [ 'gcc91-cpp17-boost1680-ubasan', 'gcc',   '/opt/boost_1_72_0_gcc_c++14_build',   " -DCMAKE_C_COMPILER=${home_dir}/source/gcc/bin/gcc    -DCMAKE_C_COMPILER=${home_dir}/source/gcc/bin/g++        -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS=' -std=c++17                -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer \${CMAKE_CXX_FLAGS} ' " ],
-
 $profile_names = [
   'clang_dbgchk',
   'clang_debug',
@@ -104,10 +95,11 @@ $profile_names.each | String $profile_name | {
         "DISABLE_MY_STANDARD_CXX_WARNINGS=1",
         "HOME=${home_dir}",
    ],
+    # logoutput   => true,
+    # require     => Package[ 'libssl1.0-dev' ],
     creates     => "${build_dir}/build.ninja",
     group       => $user,
     require     => Package[ 'libssl-dev' ],
-    # require     => Package[ 'libssl1.0-dev' ],
     user        => $user,
   }
   ->exec { "build cpprest ${profile_name}":
