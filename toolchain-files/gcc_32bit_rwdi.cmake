@@ -6,6 +6,11 @@ set( CMAKE_CXX_COMPILER          "/usr/bin/g++"                                 
 set( CMAKE_CXX_FLAGS_INIT        " -m32 ${CMAKE_CXX_FLAGS}"                                                                                             )
 
 
+# VSCode CMake extension likes CMAKE_CXX_COMPILER/CMAKE_C_COMPILER in the cache
+# (though CMake is trying to do this a diffferent way : https://gitlab.kitware.com/cmake/cmake/-/issues/20225)
+
+
+
 
 
 
