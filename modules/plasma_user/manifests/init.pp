@@ -58,23 +58,23 @@ class plasma_user {
 
   file_line { 'shortcut for switch one desktop down' :
     path  => "${::plasma_user::config_dir}/kglobalshortcutsrc",
-    match => '^Switch One Desktop Down=[^C].*,Switch One Desktop Down$',
-    line  => 'Switch One Desktop Down=Ctrl+Alt+Down,none,Switch One Desktop Down',
+    match => '^Switch One Desktop Down=.*Down,Switch One Desktop Down$',
+    line  => 'Switch One Desktop Down=Ctrl+Alt+Down,Meta+Ctrl+Down,Switch One Desktop Down',
   }
   file_line { 'shortcut for switch one desktop up' :
     path  => "${::plasma_user::config_dir}/kglobalshortcutsrc",
-    match => '^Switch One Desktop Up=[^C].*,Switch One Desktop Up$',
-    line  => 'Switch One Desktop Up=Ctrl+Alt+Up,none,Switch One Desktop Up',
+    match => '^Switch One Desktop Up=.*Up,Switch One Desktop Up$',
+    line  => 'Switch One Desktop Up=Ctrl+Alt+Up,Meta+Ctrl+Up,Switch One Desktop Up',
   }
   file_line { 'shortcut for switch one desktop left' :
     path  => "${::plasma_user::config_dir}/kglobalshortcutsrc",
-    match => '^Switch One Desktop to the Left=[^C].*,Switch One Desktop to the Left$',
-    line  => 'Switch One Desktop to the Left=Ctrl+Alt+Left,none,Switch One Desktop to the Left',
+    match => '^Switch One Desktop to the Left=.*Left,Switch One Desktop to the Left$',
+    line  => 'Switch One Desktop to the Left=Ctrl+Alt+Left,Meta+Ctrl+Left,Switch One Desktop to the Left',
   }
   file_line { 'shortcut for switch one desktop right' :
     path  => "${::plasma_user::config_dir}/kglobalshortcutsrc",
-    match => '^Switch One Desktop to the Right=[^C].*,Switch One Desktop to the Right$',
-    line  => 'Switch One Desktop to the Right=Ctrl+Alt+Right,none,Switch One Desktop to the Right',
+    match => '^Switch One Desktop to the Right=.*Right,Switch One Desktop to the Right$',
+    line  => 'Switch One Desktop to the Right=Ctrl+Alt+Right,Meta+Ctrl+Right,Switch One Desktop to the Right',
   }
 
   file_line { 'shortcut for drag window one desktop down' :
