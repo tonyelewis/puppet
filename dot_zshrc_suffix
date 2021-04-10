@@ -23,8 +23,10 @@ export    TRILLER_ANNOTATION_DJANGO_DEVELMODE="${TRILLER_ANNOTATION_DJANGO_DEVEL
 export                          UBSAN_OPTIONS="${UBSAN_OPTIONS:- print_stacktrace=1 }"
 # export                          UBSAN_OPTIONS="${UBSAN_OPTIONS:- print_stacktrace=1 suppressions=ubsan-suppressions.txt }"
 
-export                                   PATH=~/.local/bin:~/bin:~/puppet/perl/tools:$PATH:/usr/local/cuda/bin
+# export                                   PATH=~/.local/bin:~/bin:~/puppet/perl/tools:$PATH:/usr/local/cuda/bin
 # ~/.local/bin is for Conan
+#   --- is this needed any more? - trying without it it see if anything breaks
+export                                   PATH=~/bin:~/puppet/perl/tools:$PATH:/usr/local/cuda/bin
 
 # export                DBIC_TRACE_PROFILE=console
 # export                            EDITOR=vim
@@ -88,9 +90,15 @@ function cmake-all-of() {(
 
 	ORIG_LOCATION=$PWD
 
+	# Directory for checking which profiles exist
+	#
+	# (TODO: For Conan profiles, could consider testing the return code of `conan profile show <profile>`.
+	#  Is that too slow? Could be parallelised?)
+	CONAN_PROFILE_DIR="${HOME}/.conan/profiles"
+
 	# Check each profile has an associated Conan profile file and a CMake toolchain file
 	for PROFILE_NAME in "$@" ; do
-		REQUIRED_FILES=( "${HOME}/puppet/toolchain-files/${PROFILE_NAME}.cmake" "${HOME}/puppet/conan-profiles/${PROFILE_NAME}" )
+		REQUIRED_FILES=( "${HOME}/puppet/toolchain-files/${PROFILE_NAME}.cmake" "${CONAN_PROFILE_DIR}/${PROFILE_NAME}" )
 		for REQUIRED_FILE in $REQUIRED_FILES ; do
 			if [[ ! -f ${REQUIRED_FILE} ]]; then
 				echo "File ${REQUIRED_FILE} required for profile ${PROFILE_NAME} does not exist (or isn't a file)"
@@ -113,8 +121,6 @@ function cmake-all-of() {(
 	#############################
 	for PROFILE_NAME in "$@"
 	do
-		CONAN_PROFILE_DIR="${HOME}/puppet/conan-profiles"
-		CONAN_PROFILE_FILE="${CONAN_PROFILE_DIR}/${PROFILE_NAME}"
 		CMAKE_TOOLCHAIN_FILE="${HOME}/puppet/toolchain-files/${PROFILE_NAME}.cmake"
 		NINJA_VERSION_OF_FOLDER="ninja_${PROFILE_NAME}"
 
@@ -136,7 +142,7 @@ function cmake-all-of() {(
 				return 1
 			fi
 
-			conan install --build missing --install-folder "${NINJA_VERSION_OF_FOLDER}" . --profile "${CONAN_PROFILE_FILE}" --profile "${PROJECT_SPECIFIC_PROFILE}"
+			conan install --build missing --install-folder "${NINJA_VERSION_OF_FOLDER}" . --profile "${PROFILE_NAME}" --profile "project/${PROJECT_SOURCE_DIR_NAME_STRIPPED}"
 		fi
 		cmake "-B${NINJA_VERSION_OF_FOLDER}"    -H. "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}"
 		set +x
@@ -272,7 +278,7 @@ function extract-flags {
 	TEMP_EXTRACT_PROFILE_TYPE=${BUILDTYPE#"ninja_"}
 	CONAN_PROFILE_FILE_ARGS=" "
 	if [[ -f 'conanfile.txt' || -f 'conanfile.py' ]]; then
-		CONAN_PROFILE_FILE_ARGS="--conan-profile-file $(ls -1d ~/puppet/conan-profiles/${TEMP_EXTRACT_PROFILE_TYPE}) "
+		CONAN_PROFILE_FILE_ARGS="--conan-profile ${TEMP_EXTRACT_PROFILE_TYPE} "
 	fi
 	NEW_ARGS=$( MXX_EDIT_SUITE_PROJECT_LEVEL=COMPLETE extract-cmake-flags.py ${=CONAN_PROFILE_FILE_ARGS} -- -DCMAKE_TOOLCHAIN_FILE=$( ls -1d ~/puppet/toolchain-files/${TEMP_EXTRACT_PROFILE_TYPE}.cmake ) 2> /dev/null )
 	export CMAKE_EXTRACTED_COMPILE_FLAGS=" $NEW_ARGS "
