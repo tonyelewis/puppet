@@ -144,7 +144,7 @@ function cmake-all-of() {(
 
 			conan install --build missing --install-folder "${NINJA_VERSION_OF_FOLDER}" . --profile "${PROFILE_NAME}" --profile "project/${PROJECT_SOURCE_DIR_NAME_STRIPPED}"
 		fi
-		cmake "-B${NINJA_VERSION_OF_FOLDER}"    -H. "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}"
+		cmake "-B${NINJA_VERSION_OF_FOLDER}"    -H. "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}" "-DCMAKE_MODULE_PATH=${NINJA_VERSION_OF_FOLDER}"
 		set +x
 	done
 
@@ -280,7 +280,7 @@ function extract-flags {
 	if [[ -f 'conanfile.txt' || -f 'conanfile.py' ]]; then
 		CONAN_PROFILE_FILE_ARGS="--conan-profile ${TEMP_EXTRACT_PROFILE_TYPE} "
 	fi
-	NEW_ARGS=$( MXX_EDIT_SUITE_PROJECT_LEVEL=COMPLETE extract-cmake-flags.py ${=CONAN_PROFILE_FILE_ARGS} -- -DCMAKE_TOOLCHAIN_FILE=$( ls -1d ~/puppet/toolchain-files/${TEMP_EXTRACT_PROFILE_TYPE}.cmake ) 2> /dev/null )
+	NEW_ARGS=$( MXX_EDIT_SUITE_PROJECT_LEVEL=COMPLETE extract-cmake-flags.py ${=CONAN_PROFILE_FILE_ARGS} -- -DCMAKE_TOOLCHAIN_FILE=$( ls -1d ~/puppet/toolchain-files/${TEMP_EXTRACT_PROFILE_TYPE}.cmake ) -DCMAKE_MODULE_PATH=#EXTRACT_BUILD_DIR# 2> /dev/null )
 	export CMAKE_EXTRACTED_COMPILE_FLAGS=" $NEW_ARGS "
 	echo "Updated CMAKE_EXTRACTED_COMPILE_FLAGS to : '$CMAKE_EXTRACTED_COMPILE_FLAGS'"
 }
