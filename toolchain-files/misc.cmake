@@ -25,10 +25,15 @@ string( REGEX REPLACE "-[0-9]$" "" PROJECT_SOURCE_DIR_NAME_STRIPPED "${PROJECT_S
 set( PROJECT_SPECIFIC_CMAKE_CONFIG "${PROJECT_CONFIG_DIR}/${PROJECT_SOURCE_DIR_NAME_STRIPPED}.cmake" )
 set( DEFAULT_PROJECT_SPECIFIC_CMAKE_CONFIG "${PROJECT_CONFIG_DIR}/default.cmake" )
 
+# If there is a project specific config, use it
 if( EXISTS "${PROJECT_SPECIFIC_CMAKE_CONFIG}" )
 	message( "Including project-specific configuration file ${PROJECT_SPECIFIC_CMAKE_CONFIG}" )
 	include( "${PROJECT_SPECIFIC_CMAKE_CONFIG}" )
-else()
+# Otherwise (as long as the project isn't "CMakeTmp") use the default project config
+#
+# TODO: What about this getting called from "CMakeTmp"? Does this mean the project
+#       should be stored in a CACHE variable and that gets used here? Does it matter?
+elseif( NOT ${PROJECT_SOURCE_DIR_NAME_STRIPPED} STREQUAL "CMakeTmp" )
 	message( "No project-specific configuration file ${PROJECT_SPECIFIC_CMAKE_CONFIG} found - including ${DEFAULT_PROJECT_SPECIFIC_CMAKE_CONFIG}" )
 	include( "${DEFAULT_PROJECT_SPECIFIC_CMAKE_CONFIG}" )
 endif()
