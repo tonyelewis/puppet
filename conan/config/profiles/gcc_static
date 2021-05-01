@@ -4,7 +4,7 @@ os_build=Linux
 arch=x86_64
 arch_build=x86_64
 compiler=gcc
-compiler.version=11.1
+compiler.version=9.3
 compiler.cppstd=17
 compiler.libcxx=libstdc++11
 compiler.flavour=static
@@ -15,6 +15,6 @@ build_type=RelWithDebInfo
 [build_requires]
 
 [env]
-CC=/home/lewis/source/gcc/bin/gcc
-CXX=/home/lewis/source/gcc/bin/g++
-CXXFLAGS=" -static -DBoost_USE_STATIC_LIBS=ON "
+CC=/usr/bin/gcc
+CXX=/usr/bin/g++
+CXXFLAGS=" -static -D Boost_USE_STATIC_LIBS:BOOL=ON "
