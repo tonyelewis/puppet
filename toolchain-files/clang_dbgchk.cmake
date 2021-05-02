@@ -1,8 +1,7 @@
 set( CMAKE_BUILD_TYPE            Debug                                CACHE STRING   "CMake build type" )
-set( CMAKE_PREFIX_PATH           "/opt/Qt/this-version/gcc_64;$ENV{HOME}/source/vlc-qt-clang"           )
 set( CMAKE_C_COMPILER            "$ENV{HOME}/source/llvm/bin/clang"   CACHE FILEPATH "The C compiler"   )
 set( CMAKE_CXX_COMPILER          "$ENV{HOME}/source/llvm/bin/clang++" CACHE FILEPATH "The C++ compiler" )
-set( CMAKE_CXX_FLAGS_INIT        " ${CMAKE_CXX_FLAGS_INIT} -stdlib=libc++ -D_LIBCPP_DEBUG=0 "           )
+set( CMAKE_CXX_FLAGS_TLCHN_INIT  " -stdlib=libc++ -D_LIBCPP_DEBUG=0 "                                   )
 set( CMAKE_EXE_LINKER_FLAGS_INIT " -Wl,-rpath=$ENV{HOME}/source/llvm/lib "                              )
 
 

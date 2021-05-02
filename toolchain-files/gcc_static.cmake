@@ -1,8 +1,7 @@
 set( CMAKE_BUILD_TYPE            RelWithDebInfo                       CACHE STRING   "CMake build type"     )
-set( CMAKE_PREFIX_PATH           "/opt/Qt/this-version/gcc_64;$ENV{HOME}/source/vlc-qt-gcc"                 )
 set( CMAKE_C_COMPILER            "/usr/bin/gcc"      CACHE FILEPATH "The C compiler"                        )
 set( CMAKE_CXX_COMPILER          "/usr/bin/g++"      CACHE FILEPATH "The C++ compiler"                      )
-set( CMAKE_CXX_FLAGS_INIT        " ${CMAKE_CXX_FLAGS_INIT} -static -DBoost_USE_STATIC_LIBS=ON "             )
+set( CMAKE_CXX_FLAGS_TLCHN_INIT  " -static -DBoost_USE_STATIC_LIBS=ON "                                     )
 set( Boost_USE_STATIC_LIBS       ON                                   CACHE BOOL     "Booost static libs"   )
 set( BUILD_SHARED_LIBS           OFF                                  CACHE BOOL     "Build shared library" )
 

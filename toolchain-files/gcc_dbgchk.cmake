@@ -1,8 +1,7 @@
-set( CMAKE_BUILD_TYPE            Debug                                CACHE STRING   "CMake build type"            )
-set( CMAKE_PREFIX_PATH           "/opt/Qt/this-version/gcc_64;$ENV{HOME}/source/vlc-qt-gcc"                        )
-set( CMAKE_C_COMPILER            "$ENV{HOME}/source/gcc/bin/gcc"      CACHE FILEPATH "The C compiler"              )
-set( CMAKE_CXX_COMPILER          "$ENV{HOME}/source/gcc/bin/g++"      CACHE FILEPATH "The C++ compiler"            )
-set( CMAKE_CXX_FLAGS_INIT        " ${CMAKE_CXX_FLAGS_INIT} -D_GLIBCXX_DEBUG -DRANGES_NO_STD_FORWARD_DECLARATIONS " )
+set( CMAKE_BUILD_TYPE            Debug                                CACHE STRING   "CMake build type" )
+set( CMAKE_C_COMPILER            "$ENV{HOME}/source/gcc/bin/gcc"      CACHE FILEPATH "The C compiler"   )
+set( CMAKE_CXX_COMPILER          "$ENV{HOME}/source/gcc/bin/g++"      CACHE FILEPATH "The C++ compiler" )
+set( CMAKE_CXX_FLAGS_TLCHN_INIT  " -D_GLIBCXX_DEBUG -DRANGES_NO_STD_FORWARD_DECLARATIONS "              )
 
 
 

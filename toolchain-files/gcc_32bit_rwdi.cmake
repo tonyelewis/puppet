@@ -1,8 +1,7 @@
 set( CMAKE_BUILD_TYPE            RelWithDebInfo                       CACHE STRING   "CMake build type" )
-set( CMAKE_PREFIX_PATH           "/opt/Qt/this-version/gcc_64;$ENV{HOME}/source/vlc-qt-gcc"             )
 set( CMAKE_C_COMPILER            "/usr/bin/gcc"                       CACHE FILEPATH "The C compiler"   )
 set( CMAKE_CXX_COMPILER          "/usr/bin/g++"                       CACHE FILEPATH "The C++ compiler" )
-set( CMAKE_CXX_FLAGS_INIT        " ${CMAKE_CXX_FLAGS_INIT} -m32 "                                       )
+set( CMAKE_CXX_FLAGS_TLCHN_INIT  " -m32 "                                                               )
 
 
 
