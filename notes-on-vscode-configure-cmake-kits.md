@@ -14,5 +14,5 @@ Add a `clang_rwdi` kit to the bottom of `~/.local/share/CMakeTools/cmake-tools-k
 ~~~sh
 cd <PROJECT_DIR>
 mkdir build
-conan install --update --build outdated --build cascade --install-folder build . --profile clang_rwdi --profile project/<PROJECT_NAME>
+conan install --update --build outdated --build cascade --install-folder .vscode-cmake-build . --profile clang_rwdi --profile project/<PROJECT_NAME>
 ~~~
