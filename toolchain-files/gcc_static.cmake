@@ -2,8 +2,8 @@ set( CMAKE_BUILD_TYPE            RelWithDebInfo                       CACHE STRI
 set( CMAKE_C_COMPILER            "/usr/bin/gcc"      CACHE FILEPATH "The C compiler"                        )
 set( CMAKE_CXX_COMPILER          "/usr/bin/g++"      CACHE FILEPATH "The C++ compiler"                      )
 set( CMAKE_CXX_FLAGS_TLCHN_INIT  " -static -DBoost_USE_STATIC_LIBS=ON "                                     )
-set( Boost_USE_STATIC_LIBS       ON                                   CACHE BOOL     "Booost static libs"   )
-set( BUILD_SHARED_LIBS           OFF                                  CACHE BOOL     "Build shared library" )
+option( Boost_USE_STATIC_LIBS "Booost static libs"   ON  )
+option( BUILD_SHARED_LIBS     "Build shared library" OFF )
 
 # VSCode CMake extension likes CMAKE_CXX_COMPILER/CMAKE_C_COMPILER in the cache
 # (though CMake is trying to do this a diffferent way : https://gitlab.kitware.com/cmake/cmake/-/issues/20225)
