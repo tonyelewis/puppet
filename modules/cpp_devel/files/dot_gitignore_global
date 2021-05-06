@@ -1,4 +1,5 @@
 .cproject
+.env
 .gdbinit
 .mypy_cache/
 .project
