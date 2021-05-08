@@ -1,4 +1,5 @@
 .cproject
+.dockerignore
 .env
 .gdbinit
 .mypy_cache/
