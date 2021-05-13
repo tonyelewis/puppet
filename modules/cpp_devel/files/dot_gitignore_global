@@ -4,6 +4,7 @@
 .gdbinit
 .mypy_cache/
 .project
+.pylintrc
 .pytest_cache/
 .sass-cache
 .settings
