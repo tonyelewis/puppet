@@ -1,3 +1,7 @@
+if ( ${IS_VSCODE_CMAKE_BUILD} )
+	set( MXX_EDIT_SUITE_PROJECT_LEVEL COMPLETE CACHE STRING "How much of the project to build" FORCE )
+endif()
+
 if ( NOT EDIT_SUITE_TOOLCHAIN_FILE_HAS_APPENDED_TO_PREFIX_PATH )
 	list( APPEND CMAKE_PREFIX_PATH "/opt/Qt/this-version/gcc_64" )
 	list( APPEND CMAKE_PREFIX_PATH "$ENV{HOME}/source/vlc-qt-gcc" )
