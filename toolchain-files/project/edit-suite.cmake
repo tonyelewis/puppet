@@ -1,4 +1,7 @@
 if ( ${IS_VSCODE_CMAKE_BUILD} )
+	if ( NOT ${MXX_EDIT_SUITE_PROJECT_LEVEL} STREQUAL "COMPLETE" )
+		message( STATUS "In VSCode CMake build => force MXX_EDIT_SUITE_PROJECT_LEVEL to \"COMPLETE\"" )
+	endif()
 	set( MXX_EDIT_SUITE_PROJECT_LEVEL COMPLETE CACHE STRING "How much of the project to build" FORCE )
 endif()
 
