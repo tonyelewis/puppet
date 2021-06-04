@@ -17,4 +17,5 @@ build_type=Debug
 [env]
 CC=/home/lewis/source/llvm/bin/clang
 CXX=/home/lewis/source/llvm/bin/clang++
-CXXFLAGS=" -fsanitize=memory "
+# TODO: Soon update locally-built clang and then use fsanitize-ignorelist over -fsanitize-blacklist
+CXXFLAGS=" -fsanitize=memory -fsanitize-blacklist=/home/lewis/puppet/toolchain-files/sanitizer-ignorelist "
