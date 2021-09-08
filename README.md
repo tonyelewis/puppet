@@ -85,6 +85,7 @@ Mirror old home directory into a new subdirectory
 * "systemsettings" &rarr; "Startup and Shutdown" &rarr; "Login Screen (SDDM)" &rarr; "Background" &rarr; "
 * "Configure Desktop" &rarr; "Wallpaper" &rarr; "Wallpaper Type" : Hunyango
 * "Configure Desktop" &rarr; "Location" &rarr; "Specify a folder" : `/opt/empty_directory`
+* Copy binary from https://github.com/cantino/mcfly/releases/latest (mcfly-vX.X.X-x86_64-unknown-linux-musl.tar.gz?) into ~/bin ?
 * Chrome settings: "Advanced" -> "Allow Chrome sign-in" -> false
 * Chrome settings: "Advanced" -> "Downloads" -> "/tmp" -> Ask
 * Chrome settings: "On start-up" -> "Continue where you left off"; "Download location" -> "/tmp"; "Ask where to save each file before downloading" -> true
@@ -118,6 +119,7 @@ Audio stuttering :
 
 ## Stuff to Add
 
+* Copy binary from https://github.com/cantino/mcfly/releases/latest (mcfly-vX.X.X-x86_64-unknown-linux-musl.tar.gz?) into ~/bin ?
 * Possibly `azcopy` into `~/bin`?
 * `move-tab-to-left` and `move-tab-to-right` in `~/.local/share/kxmlgui5/konsole/konsoleui.rc`
 * Conan settings.yml (need to run a conan command to create it and then need to add flavours)
