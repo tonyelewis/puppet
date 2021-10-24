@@ -66,13 +66,15 @@ Unfortunately this actually requires manually building up a big `dpkg -i` comman
 
 (and manually install all the dependency tree those things require :) )
 
+For strongmango, eventually managed to just get one of the wifi dongles working on live USB and then after a couple of boots of the installed OS, it recognised the internal wifi (which probably happened after I'd done the UEFI secure boot MOK enrollment I was instructed to perform.)
+
 When installing Ubuntu 18.04 on bigslide, the installer repeatedly crashed just at the point of getting going with the install. The solution turned out to be to turn the display setting to 100% (see [this](https://bugs.launchpad.net/ubuntu/+source/ubiquity/+bug/1751252)).
 
 Mirror old home directory into a new subdirectory
 
 ## Manual Pre-Puppet Steps
 
-* Create ssh key: `ssh-keygen -t rsa -b 4096`
+* Create ssh key: `ssh-keygen -t ed25519`
 * Sort out keys for GitHub and Diskstation and ensure can clone from both
 
 ## Manual Post-Puppet Steps
@@ -94,8 +96,8 @@ Mirror old home directory into a new subdirectory
 * Chrome settings -> Manage search engines -> Add -> google.co.uk / google.co.uk / https://www.google.co.uk/search?&q=%s
 * Firefox preferences: "When Firefox starts" -> "Show my windows and tabs from last time"
 * Firefox preferences: save files to /tmp -> "Always ask you where to save files"
-* Download VSCode settings (via "Settings Sync" extension)
-* Install "The Great Suspender" on Chrome
+* Download VSCode settings (now using official [https://code.visualstudio.com/docs/editor/settings-sync]("Settings Sync") with my personal GitHub account; previously used "Settings Sync" extension)
+* Install "1Password" on Chrome
 * Download latest [`FindBoost.cmake`](https://raw.githubusercontent.com/Kitware/CMake/master/Modules/FindBoost.cmake) on top of relevant file (eg `/usr/share/cmake-3.10/Modules/FindBoost.cmake`)
 * Change clock to show date
 * Icons:
