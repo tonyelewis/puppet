@@ -8,7 +8,11 @@
 
 # mkdir -p  ~/source/llvm{,-build,-master}
 # git clone --depth 100  https://github.com/llvm/llvm-project.git ~/source/llvm-master
-# cmake -B$( ls -1d ~/source/llvm-build ) -H$( ls -1d ~/source/llvm-master/llvm ) -GNinja -DCMAKE_INSTALL_PREFIX=$( ls -1d ~/source/llvm ) -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_ASSERTIONS=OFF '-DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra;compiler-rt;libcxx;libcxxabi;lldb'
+# # This structure uses the newly built clang to build libcxx+libcxxabi
+# cmake -B$( ls -1d ~/source/llvm-build ) -H$( ls -1d ~/source/llvm-master/llvm ) -GNinja -DCMAKE_INSTALL_PREFIX=$( ls -1d ~/source/llvm ) -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_ASSERTIONS=OFF '-DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra;compiler-rt;lldb' '-DLLVM_ENABLE_RUNTIMES=libcxx;libcxxabi'
+# ninja -C ~/source/llvm-build -k 0 runtimes
+# ninja -C ~/source/llvm-build -k 0 check-runtimes
+# ninja -C ~/source/llvm-build -k 0 install-runtimes
 # ninja -C ~/source/llvm-build -k 0
 # ninja -C ~/source/llvm-build -k 0 install
 
