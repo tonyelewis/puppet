@@ -24,8 +24,8 @@
 #
 # cd ${BUILD_GCC_BUILD_DIR}
 # ${BUILD_GCC_SOURCE_DIR}/configure -v --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --prefix=${BUILD_GCC_INSTALL_DIR} --enable-checking=release --enable-languages=c,c++,fortran --disable-multilib --program-suffix=-${BUILD_GCC_VERSION_SHORT}
-# make -j 4
-# make -j 4 install-strip
+# make -j $( nproc )
+# make -j $( nproc ) install-strip
 #
 # rm -f                                ${BUILD_GCC_ROOT_DIR}/gcc
 # ln -s ${BUILD_GCC_INSTALL_BASENAME}  ${BUILD_GCC_ROOT_DIR}/gcc
@@ -62,5 +62,5 @@
 #
 # cd ${BUILD_GCC_BUILD_DIR}
 # ${BUILD_GCC_SOURCE_DIR}/configure -v --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --prefix=${BUILD_GCC_INSTALL_DIR} --enable-checking=release --enable-languages=c,c++,fortran --disable-multilib --program-suffix=-${BUILD_GCC_VERSION_SHORT}
-# make -j 4
-# make -j 4 install-strip
+# make -j $( nproc )
+# make -j $( nproc ) install-strip
