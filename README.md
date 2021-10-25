@@ -85,6 +85,7 @@ Mirror old home directory into a new subdirectory
 * "systemsettings" &rarr; "Search" &rarr; "File Search" &rarr; Deselect "Enable File Search" &rarr; "Apply"
 * "systemsettings" &rarr; "Power Management" &rarr; make some decisions
 * "systemsettings" &rarr; "Startup and Shutdown" &rarr; "Login Screen (SDDM)" &rarr; "Background" &rarr; "
+* "systemsettings" &rarr; "Personalisation" &rarr; "Account Details" &rarr; "KDE Wallet" &rarr; "Wallet Preferences" &rarr; untick "Enable the KDE wallet subsystem"
 * "Configure Desktop" &rarr; "Wallpaper" &rarr; "Wallpaper Type" : Hunyango
 * "Configure Desktop" &rarr; "Location" &rarr; "Specify a folder" : `/opt/empty_directory`
 * Copy binary from https://github.com/cantino/mcfly/releases/latest (mcfly-vX.X.X-x86_64-unknown-linux-musl.tar.gz?) into ~/bin ?
