@@ -109,6 +109,17 @@ Mirror old home directory into a new subdirectory
  chrome  | calculator      | sublime-text | VSCode/cath-tools
  konsole | system settings | synaptic     | update manager
 
+For Ubuntu 20.04 on XSP 17, had problem with screen tearing/flickering. It's starting to look like the problem is [this](https://wiki.archlinux.org/title/intel_graphics#Screen_flickering) and that the solution is to change `/etc/default/grub`:
+
+~~~diff
+10c10
+< GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
+---
+> GRUB_CMDLINE_LINUX_DEFAULT="quiet splash i915.enable_psr=0"
+~~~
+
+...and then `sudo update-grub`.
+
 Don't fiddle XPS 15's fans - you only make stuff worse.
 
 Audio stuttering :
