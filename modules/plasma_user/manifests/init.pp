@@ -171,7 +171,12 @@ class plasma_user {
     }
   }
 
-  augeas { 'Specify four desktops in two rows and meta as the modifier key' :
+  file { 'kwinrc owned by user' :
+    ensure => 'file',
+    owner  => $user,
+    path   => "${::plasma_user::config_dir}/kwinrc",
+  }
+  ->augeas { 'Specify four desktops in two rows and meta as the modifier key' :
     lens    => 'Rsyncd.lns',
     incl    => "${::plasma_user::config_dir}/kwinrc",
     context => "/files/${::plasma_user::config_dir}/kwinrc",
@@ -208,7 +213,12 @@ class plasma_user {
 
   # Set the KDE keyboard to GB (and Dvorak GB)
   #  (should this be .kde/share/config/kxkbrc ?)
-  augeas { 'kde_keyboard_to_gb_plus_dvorak' :
+  file { 'KDE keyboard config owned by user' :
+    ensure => 'file',
+    owner  => $user,
+    path   => "${::plasma_user::config_dir}/kxkbrc",
+  }
+  ->augeas { 'kde_keyboard_to_gb_plus_dvorak' :
     lens    => 'Rsyncd.lns',
     incl    => "${::plasma_user::config_dir}/kxkbrc",
     context => "/files/${::plasma_user::config_dir}/kxkbrc",
@@ -221,7 +231,12 @@ class plasma_user {
   }
   
   # Set the Plasma Breeze titlebar buttons to be small
-  augeas { 'title_bar_buttons_to_small' :
+  file { 'Breeze config owned by user' :
+    ensure => 'file',
+    owner  => $user,
+    path   => "${::plasma_user::config_dir}/breezerc",
+  }
+  ->augeas { 'title_bar_buttons_to_small' :
     lens    => 'Rsyncd.lns',
     incl    => "${::plasma_user::config_dir}/breezerc",
     context => "/files/${::plasma_user::config_dir}/breezerc",
