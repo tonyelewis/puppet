@@ -344,7 +344,7 @@ class cpp_devel {
     group    => $repos_group,
     user     => $repos_user,
   }
-  $gen_cmake_list_bins = [ 'extract-cmake-flags.py', 'gen_cmake_list.py', 'select-build-type/select-build-type.py' ]
+  $gen_cmake_list_bins = [ 'extract-cmake-flags.py', 'gen_cmake_list.py', 'git-branch-force/git-branch-force.py', 'select-build-type/select-build-type.py' ]
   $gen_cmake_list_bins.each | String $gen_cmake_list_bin | {
 
     $gen_cmake_list_bin_basename = split( $gen_cmake_list_bin, /\// )[ -1 ]
