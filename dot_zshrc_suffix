@@ -267,6 +267,10 @@ function extract-flags {
 	echo "Updated CMAKE_EXTRACTED_COMPILE_FLAGS to : '$CMAKE_EXTRACTED_COMPILE_FLAGS'"
 }
 
+function gbf() {
+	"git-branch-force.py" $@
+}
+
 function bt() {
 	OLD_BUILD_TYPE=${BUILDTYPE}
 	SELECT_BUILD_TYPE_EXE_REL=$( which select-build-type.py )
