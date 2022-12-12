@@ -360,6 +360,8 @@ unsetopt share_history
 # setenv LD_LIBRARY_PATH  /usr/local/cuda/lib64
 
 eval "$(mcfly init zsh)"
+export MCFLY_RESULTS=48
+export MCFLY_RESULTS_SORT=LAST_RUN
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
