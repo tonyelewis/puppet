@@ -68,7 +68,7 @@ Unfortunately this actually requires manually building up a big `dpkg -i` comman
 
 For strongmango, eventually managed to just get one of the wifi dongles working on live USB and then after a couple of boots of the installed OS, it recognised the internal wifi (which probably happened after I'd done the UEFI secure boot MOK enrollment I was instructed to perform.)
 
-When installing Ubuntu 18.04 on bigslide, the installer repeatedly crashed just at the point of getting going with the install. The solution turned out to be to turn the display setting to 100% (see [this](https://bugs.launchpad.net/ubuntu/+source/ubiquity/+bug/1751252)).
+[***Looks like this has been fixed and is a non-issue now&hellip;*** When installing Ubuntu 18.04 on bigslide, the installer repeatedly crashed just at the point of getting going with the install. The solution turned out to be to turn the display setting to 100% (see [this](https://bugs.launchpad.net/ubuntu/+source/ubiquity/+bug/1751252)).]
 
 Mirror old home directory into a new subdirectory
 
@@ -81,7 +81,7 @@ Mirror old home directory into a new subdirectory
 
 * (**IMPORTANT** stop's meta+l hibernating machine) In `~/.config/kglobalshortcutsrc`, change `Hibernate=Hibernate,Hibernate,Hibernate` to `Hibernate=none,Hibernate,Hibernate`
 * (**IMPORTANT** stop's meta+l hibernating machine) In `~/.config/kglobalshortcutsrc`, change `Sleep=Sleep,Sleep,Suspend`               to `Sleep=none,Sleep,Suspend`
-* For HiDPI XPS 15: "systemsettings &rarr; "Hardware" &rarr; "Display and Monitor" &rarr; "Scale Display" &rarr; 1.5
+* For HiDPI XPS 15: "systemsettings &rarr; "Hardware" &rarr; "Display and Monitor" &rarr; "Scale Display" &rarr; 1.5 (200% for strongmango)
 * "systemsettings" &rarr; "Search" &rarr; "File Search" &rarr; Deselect "Enable File Search" &rarr; "Apply"
 * "systemsettings" &rarr; "Power Management" &rarr; make some decisions
 * "systemsettings" &rarr; "Startup and Shutdown" &rarr; "Login Screen (SDDM)" &rarr; "Background" &rarr; "
@@ -109,7 +109,7 @@ Mirror old home directory into a new subdirectory
  chrome  | calculator      | sublime-text | VSCode/cath-tools
  konsole | system settings | synaptic     | update manager
 
-For Ubuntu 20.04 on XSP 17, had problem with screen tearing/flickering. It's starting to look like the problem is [this](https://wiki.archlinux.org/title/intel_graphics#Screen_flickering) and that the solution is to change `/etc/default/grub`:
+For Ubuntu 20.04 on XPS 17, had problem with screen tearing/flickering. It's starting to look like the problem is [this](https://wiki.archlinux.org/title/intel_graphics#Screen_flickering) and that the solution is to change `/etc/default/grub`:
 
 ~~~diff
 10c10
