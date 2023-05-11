@@ -26,7 +26,7 @@ class cpp_devel {
 
   # TODO: Could upgrade this to 10 soon. Only Ubuntu binary currently listed on https://releases.llvm.org/download.html is:
   #       https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz
-  $clang_major_version  = '9'
+  $clang_major_version  = '16'
   $clang_version        = "${$clang_major_version}.0.0"
   $repos_root_dir       = '/home/lewis'
   $repos_user           = 'lewis'
@@ -66,6 +66,7 @@ class cpp_devel {
       #'libclang-dev',         # For iwyu
       'libgsl-dev',           # For cath-tools
       'libncurses5-dev',      # For iwyu
+      'libtinfo5',            # Seems required to run clang 16 as of May 2023
       'ninja-build',          #
       'python3-pip',          #
       # 'ninja-build-doc',     # Does not seem to exist in 16.10
@@ -104,8 +105,8 @@ class cpp_devel {
   if ( $::operatingsystem == 'Ubuntu' and $::operatingsystemmajrelease == '18.04' ) {
     package {
       [
-        'g++-8',
-        'gcc-8',
+        'g++-11',
+        'gcc-11',
       ]:
       ensure  => 'latest',
       require => Package[ 'g++' ],
@@ -113,12 +114,12 @@ class cpp_devel {
 
     $gcc_bins = [ 'gcc', 'g++' ]
     $gcc_bins.each | String $gcc_bin | {
-      alternative_entry { "/usr/bin/${gcc_bin}-8" :
+      alternative_entry { "/usr/bin/${gcc_bin}-11" :
         ensure   => present,
         altlink  => "/usr/bin/${gcc_bin}",
         altname  => $gcc_bin,
         priority => 100,
-        require  => [ Package[ 'g++-8' ], Package[ 'gcc-8' ] ],
+        require  => [ Package[ 'g++-11' ], Package[ 'gcc-11' ] ],
         before   => Exec[ 'gcc_is_ready' ],
       }
     }
@@ -143,22 +144,24 @@ class cpp_devel {
   # $clang_base_stem = "clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-14.04"
   # $clang_base_stem = "clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-16.04"
   # $clang_base_stem = "clang+llvm-${clang_version}-x86_64-linux-sles12.3"
-  $clang_base_stem = $::operatingsystemmajrelease ? {
-    '18.04' => "clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-18.04",
-    default => "clang+llvm-${clang_version}-x86_64-pc-linux-gnu",
-  }
+  $clang_base_stem = "clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-18.04"
 
   $clang_tar_base  = "${clang_base_stem}.tar.xz"
   $clang_tar_file  = "/opt/${clang_tar_base}"
   $clang_dir       = "/opt/${clang_base_stem}"
+  # As of May 2023, this appeared to have trouble with the redirects involved in
+  # downloading from the new github.com location. I didn't have time, so I just
+  # downloaded the file manually and put it in place.
   file { 'Download prebuilt Clang archive':
     ensure  => file,
     mode    => 'a+r',
     path    => $clang_tar_file,
     replace => false,
-    source  => "http://releases.llvm.org/${clang_version}/${clang_tar_base}",
+    source  => "https://github.com/llvm/llvm-project/releases/download/llvmorg-${clang_version}/${clang_tar_base}",
+    # source  => "http://releases.llvm.org/${clang_version}/${clang_tar_base}",
   }
-  ->file { 'Create directory into which to untar prebuilt Clang' :
+  ->
+  file { 'Create directory into which to untar prebuilt Clang' :
     ensure => 'directory',
     path   => $clang_dir,
   }
@@ -179,21 +182,13 @@ class cpp_devel {
     }
   }
 
-  # sudo update-alternatives --set clang++             /opt/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/clang++
-  # sudo update-alternatives --set clang-format        /opt/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/clang-format
-  # sudo update-alternatives --set clang-include-fixer /opt/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/clang-include-fixer
-  # sudo update-alternatives --set clang-tidy          /opt/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/clang-tidy
-  # sudo update-alternatives --set clang               /opt/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/clang
-  # sudo update-alternatives --set llvm-symbolizer     /opt/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/llvm-symbolizer
-  # sudo update-alternatives --set scan-build          /opt/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/scan-build
-
-  # sudo update-alternatives --set clang++             /opt/clang+llvm-9.0.0-x86_64-pc-linux-gnu/bin/clang++
-  # sudo update-alternatives --set clang-format        /opt/clang+llvm-9.0.0-x86_64-pc-linux-gnu/bin/clang-format
-  # sudo update-alternatives --set clang-include-fixer /opt/clang+llvm-9.0.0-x86_64-pc-linux-gnu/bin/clang-include-fixer
-  # sudo update-alternatives --set clang-tidy          /opt/clang+llvm-9.0.0-x86_64-pc-linux-gnu/bin/clang-tidy
-  # sudo update-alternatives --set clang               /opt/clang+llvm-9.0.0-x86_64-pc-linux-gnu/bin/clang
-  # sudo update-alternatives --set llvm-symbolizer     /opt/clang+llvm-9.0.0-x86_64-pc-linux-gnu/bin/llvm-symbolizer
-  # sudo update-alternatives --set scan-build          /opt/clang+llvm-9.0.0-x86_64-pc-linux-gnu/bin/scan-build
+  # sudo update-alternatives --set clang++             /opt/clang+llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/clang++
+  # sudo update-alternatives --set clang-format        /opt/clang+llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/clang-format
+  # sudo update-alternatives --set clang-include-fixer /opt/clang+llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/clang-include-fixer
+  # sudo update-alternatives --set clang-tidy          /opt/clang+llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/clang-tidy
+  # sudo update-alternatives --set clang               /opt/clang+llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/clang
+  # sudo update-alternatives --set llvm-symbolizer     /opt/clang+llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/llvm-symbolizer
+  # sudo update-alternatives --set scan-build          /opt/clang+llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/scan-build
 
   # Use to hack this by copying clang libraries into /usr/lib/x86_64-linux-gnu but that's a bad idea.
   # It's much better to use toolchain settings that tell the compiler where to find these libraries.
@@ -509,5 +504,11 @@ class cpp_devel {
     scope => 'global',
     key   => 'pull.ff',
     value => 'only',
+  }
+  git::config { 'Set user Git user.name' :
+    user  => $repos_user,
+    scope => 'global',
+    key   => 'user.name',
+    value => 'Tony Lewis',
   }
 }

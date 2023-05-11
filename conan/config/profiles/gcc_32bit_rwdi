@@ -5,7 +5,7 @@ arch=x86
 arch_build=x86_64
 arch_target=x86
 compiler=gcc
-compiler.version=9.3
+compiler.version=11.3
 compiler.cppstd=17
 compiler.libcxx=libstdc++11
 compiler.flavour=normal
@@ -13,11 +13,17 @@ build_type=RelWithDebInfo
 
 [options]
 
-[build_requires]
+[conf]
+tools.build:cflags=[" -m32 "]
+tools.build:cxxflags=[" -m32 "]
+tools.build:sharedlinkflags=[" -m32 "]
 
-[env]
-#CC=/home/lewis/source/gcc/bin/gcc
-#CXX=/home/lewis/source/gcc/bin/g++
-CFLAGS=" -m32 "
-CXXFLAGS=" -m32 "
-LDFLAGS=" -m32 "
+[env] # At present (May 2023, using Conan 1.59.0), it seems some recipes only heed the compiler set in [env] (eg fmt) and some only to that in [buildenv] (eg boost)
+
+[buildenv] # At present (May 2023, using Conan 1.59.0), it seems some recipes only heed the compiler set in [env] (eg fmt) and some only to that in [buildenv] (eg boost)
+
+# CC=/home/lewis/source/gcc/bin/gcc
+# CXX=/home/lewis/source/gcc/bin/g++
+# CFLAGS=" -m32 "
+# CXXFLAGS=" -m32 "
+# LDFLAGS=" -m32 "

@@ -3,8 +3,12 @@
 ## Installing Conan
 
 ~~~sh
-sudo pip3 install conan
+# sudo pip3 install conan
+
+sudo pip3 install conan==1.59.0
 ~~~
+
+(v2 seems to cause a lot of problems - sticking with 1.59 for now)
 
 &hellip;and tell Conan to install config from this puppet repo:
 
@@ -14,13 +18,7 @@ conan config install ~/puppet/conan/config
 
 ## Updating config
 
-After any modification to the Conan config in puppet, re-install it in Conan with:
-
-~~~sh
-conan config install
-~~~
-
-(&hellip;which works because it remembers source locations to install from - see the output of `conan config install --list`).
+After any modification to the Conan config in puppet, re-install it with the above command.
 
 ## Upgrading
 

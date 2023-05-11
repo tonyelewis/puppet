@@ -144,7 +144,7 @@ function cmake-all-of() {(
 				return 1
 			fi
 
-			conan install --build outdated --build cascade --install-folder "${NINJA_VERSION_OF_FOLDER}" . --profile "${PROFILE_NAME}" --profile "project/${PROJECT_SOURCE_DIR_NAME_STRIPPED}"
+			conan install --build outdated --build cascade --install-folder "${NINJA_VERSION_OF_FOLDER}" . -pr:b "${PROFILE_NAME}" -pr:b "project/${PROJECT_SOURCE_DIR_NAME_STRIPPED}" -pr:h "${PROFILE_NAME}"
 		fi
 		cmake -B "${NINJA_VERSION_OF_FOLDER}" -S . -D "CMAKE_TOOLCHAIN_FILE:FILEPATH=${CMAKE_TOOLCHAIN_FILE}" -D "CMAKE_MODULE_PATH:PATH=${ABS_NINJA_VERSION_OF_FOLDER}"
 		set +x

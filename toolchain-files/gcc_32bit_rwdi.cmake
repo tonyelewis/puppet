@@ -10,8 +10,4 @@ set( CMAKE_CXX_FLAGS_TLCHN_INIT  " -m32 "                                       
 
 
 
-
-
-
-
 include( "${CMAKE_CURRENT_LIST_DIR}/misc.cmake" )

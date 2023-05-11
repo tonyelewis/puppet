@@ -4,7 +4,7 @@ os_build=Linux
 arch=x86_64
 arch_build=x86_64
 compiler=clang
-compiler.version=9
+compiler.version=16
 compiler.cppstd=17
 compiler.libcxx=libc++
 compiler.flavour=normal
@@ -12,8 +12,13 @@ build_type=RelWithDebInfo
 
 [options]
 
-[build_requires]
+[conf]
+tools.build:cxxflags=[" -DBOOST_NO_CXX98_FUNCTION_BASE -isystem /home/lewis/source/llvm/include/x86_64-unknown-linux-gnu/c++/v1 "]
 
-[env]
+[env] # At present (May 2023, using Conan 1.59.0), it seems some recipes only heed the compiler set in [env] (eg fmt) and some only to that in [buildenv] (eg boost)
+CC=/usr/bin/clang
+CXX=/usr/bin/clang++
+
+[buildenv] # At present (May 2023, using Conan 1.59.0), it seems some recipes only heed the compiler set in [env] (eg fmt) and some only to that in [buildenv] (eg boost)
 CC=/usr/bin/clang
 CXX=/usr/bin/clang++

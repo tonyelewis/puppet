@@ -4,7 +4,7 @@ os_build=Linux
 arch=x86_64
 arch_build=x86_64
 compiler=clang
-compiler.version=14
+compiler.version=17
 compiler.cppstd=17
 compiler.libcxx=libc++
 compiler.flavour=memsan
@@ -12,10 +12,14 @@ build_type=Debug
 
 [options]
 
-[build_requires]
+[conf]
+tools.build:cxxflags=[" -fsanitize=memory -fsanitize-blacklist=/home/lewis/puppet/toolchain-files/sanitizer-ignorelist -DBOOST_NO_CXX98_FUNCTION_BASE -isystem /home/lewis/source/llvm/include/x86_64-unknown-linux-gnu/c++/v1 "]
 
-[env]
+[env] # At present (May 2023, using Conan 1.59.0), it seems some recipes only heed the compiler set in [env] (eg fmt) and some only to that in [buildenv] (eg boost)
+CC=/home/lewis/source/llvm/bin/clang
+CXX=/home/lewis/source/llvm/bin/clang++
+
+[buildenv] # At present (May 2023, using Conan 1.59.0), it seems some recipes only heed the compiler set in [env] (eg fmt) and some only to that in [buildenv] (eg boost)
 CC=/home/lewis/source/llvm/bin/clang
 CXX=/home/lewis/source/llvm/bin/clang++
 # TODO: Soon update locally-built clang and then use fsanitize-ignorelist over -fsanitize-blacklist
-CXXFLAGS=" -fsanitize=memory -fsanitize-blacklist=/home/lewis/puppet/toolchain-files/sanitizer-ignorelist "

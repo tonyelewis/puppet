@@ -72,7 +72,6 @@ compiler:
         threads: [None, posix]
         libcxx: [libCstd, libstdcxx, libstlport, libstdc++]
     gcc: &gcc
-        flavour: [ dbgchk, normal, static, ubasan ]
         version: ["4.1", "4.4", "4.5", "4.6", "4.7", "4.8", "4.9",
                   "5", "5.1", "5.2", "5.3", "5.4", "5.5",
                   "6", "6.1", "6.2", "6.3", "6.4", "6.5",
@@ -81,7 +80,7 @@ compiler:
                   "9", "9.1", "9.2", "9.3", "9.4", "9.5",
                   "10", "10.1", "10.2", "10.3", "10.4",
                   "11", "11.1", "11.2", "11.3",
-                  "12", "12.1", "12.2", "13.1"]
+                  "12", "12.1", "12.2"]
         libcxx: [libstdc++, libstdc++11]
         threads: [None, posix, win32]  # Windows MinGW
         exception: [None, dwarf2, sjlj, seh]  # Windows MinGW
@@ -103,10 +102,9 @@ compiler:
         cppstd: [98, 14, 17, 20, 23]
         toolset: [None, v110_xp, v120_xp, v140_xp, v141_xp]
     clang:
-        flavour: [ dbgchk, memsan, normal, thrsan, ubasan ]
         version: ["3.3", "3.4", "3.5", "3.6", "3.7", "3.8", "3.9", "4.0",
                   "5.0", "6.0", "7.0", "7.1",
-                  "8", "9", "10", "11", "12", "13", "14", "15", "16", "17"]
+                  "8", "9", "10", "11", "12", "13", "14", "15", "16"]
         libcxx: [None, libstdc++, libstdc++11, libc++, c++_shared, c++_static]
         cppstd: [None, 98, gnu98, 11, gnu11, 14, gnu14, 17, gnu17, 20, gnu20, 23, gnu23]
         runtime: [None, MD, MT, MTd, MDd, static, dynamic]

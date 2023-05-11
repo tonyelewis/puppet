@@ -10,8 +10,4 @@ set( CMAKE_CXX_COMPILER          "$ENV{HOME}/source/gcc/bin/g++"      CACHE FILE
 
 
 
-
-
-
-
 include( "${CMAKE_CURRENT_LIST_DIR}/misc.cmake" )

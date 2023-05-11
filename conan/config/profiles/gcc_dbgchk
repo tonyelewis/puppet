@@ -4,7 +4,7 @@ os_build=Linux
 arch=x86_64
 arch_build=x86_64
 compiler=gcc
-compiler.version=11.2
+compiler.version=13.1
 compiler.cppstd=17
 compiler.libcxx=libstdc++11
 compiler.flavour=dbgchk
@@ -12,9 +12,13 @@ build_type=Debug
 
 [options]
 
-[build_requires]
+[conf]
+tools.build:cxxflags=[" -D_GLIBCXX_DEBUG -DRANGES_NO_STD_FORWARD_DECLARATIONS "]
 
-[env]
+[env] # At present (May 2023, using Conan 1.59.0), it seems some recipes only heed the compiler set in [env] (eg fmt) and some only to that in [buildenv] (eg boost)
 CC=/home/lewis/source/gcc/bin/gcc
 CXX=/home/lewis/source/gcc/bin/g++
-CXXFLAGS=" -D_GLIBCXX_DEBUG -DRANGES_NO_STD_FORWARD_DECLARATIONS "
+
+[buildenv] # At present (May 2023, using Conan 1.59.0), it seems some recipes only heed the compiler set in [env] (eg fmt) and some only to that in [buildenv] (eg boost)
+CC=/home/lewis/source/gcc/bin/gcc
+CXX=/home/lewis/source/gcc/bin/g++

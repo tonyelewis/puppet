@@ -77,26 +77,28 @@ class plasma_user {
     line  => 'Switch One Desktop to the Right=Ctrl+Alt+Right,Meta+Ctrl+Right,Switch One Desktop to the Right',
   }
 
-  file_line { 'shortcut for drag window one desktop down' :
-    path  => "${::plasma_user::config_dir}/kglobalshortcutsrc",
-    match => '^Window One Desktop Down=.*,none,Window One Desktop Down$',
-    line  => 'Window One Desktop Down=Ctrl+Alt+Shift+Down,none,Window One Desktop Down',
-  }
-  file_line { 'shortcut for drag window one desktop up' :
-    path  => "${::plasma_user::config_dir}/kglobalshortcutsrc",
-    match => '^Window One Desktop Up=.*,none,Window One Desktop Up$',
-    line  => 'Window One Desktop Up=Ctrl+Alt+Shift+Up,none,Window One Desktop Up',
-  }
-  file_line { 'shortcut for drag window one desktop left' :
-    path  => "${::plasma_user::config_dir}/kglobalshortcutsrc",
-    match => '^Window One Desktop to the Left=.*,none,Window One Desktop to the Left$',
-    line  => 'Window One Desktop to the Left=Ctrl+Alt+Shift+Left,none,Window One Desktop to the Left',
-  }
-  file_line { 'shortcut for drag window one desktop right' :
-    path  => "${::plasma_user::config_dir}/kglobalshortcutsrc",
-    match => '^Window One Desktop to the Right=.*,none,Window One Desktop to the Right$',
-    line  => 'Window One Desktop to the Right=Ctrl+Alt+Shift+Right,none,Window One Desktop to the Right',
-  }
+  # Just do this manually - don't waste time on it
+  # systemsettings => Shortcuts -> KWin -> type 'window one' and update the four options
+  # file_line { 'shortcut for drag window one desktop down' :
+  #   path  => "${::plasma_user::config_dir}/kglobalshortcutsrc",
+  #   match => '^Window One Desktop Down=[^A]*$',
+  #   line  => 'Window One Desktop Down=Ctrl+Alt+Shift+Down\tMeta+Ctrl+Shift+Down,Meta+Ctrl+Shift+Down,Window One Desktop Down',
+  # }
+  # file_line { 'shortcut for drag window one desktop up' :
+  #   path  => "${::plasma_user::config_dir}/kglobalshortcutsrc",
+  #   match => '^Window One Desktop Up=[^A]*$',
+  #   line  => 'Window One Desktop Up=Ctrl+Alt+Shift+Up\tMeta+Ctrl+Shift+Up,Meta+Ctrl+Shift+Up,Window One Desktop Up',
+  # }
+  # file_line { 'shortcut for drag window one desktop left' :
+  #   path  => "${::plasma_user::config_dir}/kglobalshortcutsrc",
+  #   match => '^Window One Desktop to the Left=[^A]*$',
+  #   line  => 'Window One Desktop Left=Ctrl+Alt+Shift+Left\tMeta+Ctrl+Shift+Left,Meta+Ctrl+Shift+Left,Window One Desktop Left',
+  # }
+  # file_line { 'shortcut for drag window one desktop right' :
+  #   path  => "${::plasma_user::config_dir}/kglobalshortcutsrc",
+  #   match => '^Window One Desktop to the Right=[^A]*$',
+  #   line  => 'Window One Desktop Right=Ctrl+Alt+Shift+Right\tMeta+Ctrl+Shift+Right,Meta+Ctrl+Shift+Right,Window One Desktop Right',
+  # }
   
   # TODO: Is there best practice for this ensure-file-exists-then-augeas-it two-step?
   #

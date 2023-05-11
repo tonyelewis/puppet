@@ -259,18 +259,6 @@ class general_desktop {
   #update-alternatives --config javac
   #update-alternatives --config javaws
 
-  # Download the GithHub Atom package and install it
-  general_desktop::download_file { 'Download of Atom package file' :
-    uri    => 'https://atom.io/download/deb',
-    target => '/opt/atom-amd64.deb'
-  }
-  ->package { 'atom' : # Does this require package gconf2 ?
-    ensure   => latest,
-    provider => dpkg,
-    require  => Package[ 'gconf2' ],
-    source   => '/opt/atom-amd64.deb',
-  }
-
   # # Eclipse
   # #$eclipse_stem             = 'eclipse-cpp-mars-R'
   # #$eclipse_archive_url_dir  = 'http://www.mirrorservice.org/sites/download.eclipse.org/eclipseMirror/technology/epp/downloads/release/mars/R'

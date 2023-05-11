@@ -10,10 +10,6 @@ option( BUILD_SHARED_LIBS     "Build shared library" OFF )
 
 
 
-
-
-
-
 include( "${CMAKE_CURRENT_LIST_DIR}/misc.cmake" )
 
 # The problem with this is that it needs to be disabled for the auto-generated code in edit-suite

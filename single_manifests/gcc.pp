@@ -2,8 +2,8 @@
 
 # sudo apt-get install build-essential libgmp-dev libmpfr-dev libmpc-dev
 #
-# export BUILD_GCC_VERSION=11.2.0
-# export BUILD_GCC_VERSION_SHORT=11.2
+# export BUILD_GCC_VERSION=13.1.0
+# export BUILD_GCC_VERSION_SHORT=13.1
 # export BUILD_GCC_ROOT_DIR=$( echo ~/source )
 # export BUILD_GCC_SOURCE_DIR=${BUILD_GCC_ROOT_DIR}/gcc-${BUILD_GCC_VERSION}-source
 # export BUILD_GCC_BUILD_DIR=${BUILD_GCC_ROOT_DIR}/gcc-${BUILD_GCC_VERSION}-build
@@ -19,7 +19,8 @@
 # echo "BUILD_GCC_INSTALL_DIR      : ${BUILD_GCC_INSTALL_DIR}"
 #
 # mkdir -p ${BUILD_GCC_ROOT_DIR} ${BUILD_GCC_SOURCE_DIR} ${BUILD_GCC_BUILD_DIR} ${BUILD_GCC_INSTALL_DIR}
-# wget "https://ftpmirror.gnu.org/gcc/gcc-${BUILD_GCC_VERSION}/gcc-${BUILD_GCC_VERSION}.tar.gz" -O ${BUILD_GCC_ROOT_DIR}/gcc-${BUILD_GCC_VERSION}.tar.gz
+# # wget "https://ftpmirror.gnu.org/gcc/gcc-${BUILD_GCC_VERSION}/gcc-${BUILD_GCC_VERSION}.tar.gz" -O ${BUILD_GCC_ROOT_DIR}/gcc-${BUILD_GCC_VERSION}.tar.gz
+# wget "https://mirrorservice.org/sites/sourceware.org/pub/gcc/releases/gcc-${BUILD_GCC_VERSION}/gcc-${BUILD_GCC_VERSION}.tar.gz" -O ${BUILD_GCC_ROOT_DIR}/gcc-${BUILD_GCC_VERSION}.tar.gz
 # tar --directory=${BUILD_GCC_SOURCE_DIR} --strip-components=1 -zxvf ${BUILD_GCC_ROOT_DIR}/gcc-${BUILD_GCC_VERSION}.tar.gz
 #
 # cd ${BUILD_GCC_BUILD_DIR}
