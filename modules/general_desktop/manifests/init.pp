@@ -138,8 +138,8 @@ class general_desktop {
   }
   ->file_line { 'ohmyzsh prompt' :
     path  => "${::general_desktop::home_dir}/.oh-my-zsh/themes/robbyrussell.zsh-theme",
-    match => '^PROMPT.*git_prompt_info',
-    line  => "PROMPT+='%{\$fg_bold[white]%}%M %{\$fg[cyan]%}%d%{\$reset_color%} \$(git_prompt_info)'",
+    match => '^PROMPT.*fg_bold',
+    line  => "PROMPT=\"%(?:%{\$fg_bold[green]%}➜ :%{\$fg_bold[red]%}➜ )%{\$fg_bold[white]%}%M %{\$fg[cyan]%}%d%{\$reset_color%}\"",
   }
   ->file { 'concat ohmyzsh .zshrc and my suffix':
     ensure  => file,
