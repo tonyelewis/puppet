@@ -201,7 +201,7 @@ function clomp {
 }
 function comp {
 	echo "\033[1;34mGCC compiling $@\033[0m"
-	~/source/gcc/bin/g++                -S ${=CMAKE_EXTRACTED_COMPILE_FLAGS} ${=TEL_BASE_GCC_COMPILE_ARGS}   ${=COMPILE_WARNINGS} -o /tmp/.xomp.dummy.o  -c $@
+	~/source/gcc/bin/g++                -S ${=TEL_BASE_GCC_COMPILE_ARGS}   ${=CMAKE_EXTRACTED_COMPILE_FLAGS} ${=COMPILE_WARNINGS} -o /tmp/.xomp.dummy.o  -c $@
 }
 function clentr {
 	echo "\033[1;34mWatching clang-compiling $@\033[0m"
@@ -209,7 +209,7 @@ function clentr {
 }
 function centr {
 	echo "\033[1;34mWatching GCC-compiling $@\033[0m"
-	lsc | entr -cs '~/source/gcc/bin/g++                -S ${=CMAKE_EXTRACTED_COMPILE_FLAGS} ${=TEL_BASE_GCC_COMPILE_ARGS}    ${=COMPILE_WARNINGS} -o /tmp/.xentr.dummy.o -c '$@' |& head -n 30'
+	lsc | entr -cs '~/source/gcc/bin/g++                -S ${=TEL_BASE_GCC_COMPILE_ARGS}   ${=CMAKE_EXTRACTED_COMPILE_FLAGS} ${=COMPILE_WARNINGS} -o /tmp/.xentr.dummy.o -c '$@' |& head -n 30'
 }
 function ctidy {
 	echo "\033[1;34mRunning clang-tidy $@\033[0m"
