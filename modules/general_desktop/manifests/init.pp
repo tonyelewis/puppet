@@ -87,6 +87,7 @@ class general_desktop {
       'mesa-common-dev',                 # For MXX
       'mkdocs',
       'mkdocs-doc',
+      'ncal',                            # It appears `cal` now needs to be installed via this package
       'ncdu',
       'nedit',
       'okular',
