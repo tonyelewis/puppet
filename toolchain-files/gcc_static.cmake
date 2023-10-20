@@ -1,6 +1,6 @@
 set( CMAKE_BUILD_TYPE            RelWithDebInfo                       CACHE STRING   "CMake build type"     )
-set( CMAKE_C_COMPILER            "/usr/bin/gcc"      CACHE FILEPATH "The C compiler"                        )
-set( CMAKE_CXX_COMPILER          "/usr/bin/g++"      CACHE FILEPATH "The C++ compiler"                      )
+set( CMAKE_C_COMPILER            "/usr/bin/gcc-12"                    CACHE FILEPATH "The C compiler"       )
+set( CMAKE_CXX_COMPILER          "/usr/bin/g++-12"                    CACHE FILEPATH "The C++ compiler"     )
 set( CMAKE_CXX_FLAGS_TLCHN_INIT  " -static -DBoost_USE_STATIC_LIBS=ON "                                     )
 option( Boost_USE_STATIC_LIBS "Booost static libs"   ON  )
 option( BUILD_SHARED_LIBS     "Build shared library" OFF )
