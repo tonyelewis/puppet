@@ -97,6 +97,10 @@ Mirror old home directory into a new subdirectory
 * Chrome settings: "Privacy and security" -> "Site settings" -> "Location" -> "Blocked; "Motions sensors" -> "Blocked"
 * Chrome bookmarks from `~/puppet/browser_bookmarks.html`
 * Chrome settings -> Manage search engines -> Add -> google.co.uk / google.co.uk / https://www.google.co.uk/search?&q=%s
+* Konsole: "Settings" → "Create New Profile…" → Immediately click OK and leave (see https://www.reddit.com/r/kde/comments/y45vnk/konsole_profiles_arent_saving_why/?rdt=59998)
+* Konsole: "Settings" → "Edit Current Profile…" → "Appearance" → "Colour scheme & font" → "Linux Colours"
+* Konsole: "Settings" → "Edit Current Profile…" → "Appearance" → "Colour scheme & font" → "Font" → "Choose…" → "Font" → "Size" → 14
+* Konsole: "Settings" → "Configure Keyboard Shortcuts…" → enter search text "Move tab to the" → set left to Ctrl+Shift+Left and right to Ctrl+Shift+Right
 * Firefox preferences: "When Firefox starts" -> "Show my windows and tabs from last time"
 * Firefox preferences: save files to /tmp -> "Always ask you where to save files"
 * Download VSCode settings (now using official [https://code.visualstudio.com/docs/editor/settings-sync]("Settings Sync") with my personal GitHub account; previously used "Settings Sync" extension)
@@ -139,7 +143,7 @@ Currently trying to stop creation of `~/Pictures/` etc by changing `~/.config/us
 
 * Copy binary from https://github.com/cantino/mcfly/releases/latest (mcfly-vX.X.X-x86_64-unknown-linux-musl.tar.gz?) into ~/bin ?
 * Possibly `azcopy` into `~/bin`?
-* `move-tab-to-left` and `move-tab-to-right` in `~/.local/share/kxmlgui5/konsole/konsoleui.rc`
+* `move-tab-to-left` and `move-tab-to-right` in `~/.local/share/kxmlgui5/konsole/konsoleui.rc` (looks hard because that file has complicated structure and it's only created by making a change)
 * Conan settings.yml (need to run a conan command to create it and then need to add flavours)
 * Conan bincrafters (`conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan`)
 * Had to install download of CMake 3.12 on Ubuntu 18.04 LTS on bigslide and put link in `~/bin` - but maybe future Ubuntu releases will have &ge; 3.12?
