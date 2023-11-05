@@ -182,13 +182,21 @@ class cpp_devel {
     }
   }
 
-  # sudo update-alternatives --set clang++             /opt/clang+llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/clang++
-  # sudo update-alternatives --set clang-format        /opt/clang+llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/clang-format
-  # sudo update-alternatives --set clang-include-fixer /opt/clang+llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/clang-include-fixer
-  # sudo update-alternatives --set clang-tidy          /opt/clang+llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/clang-tidy
-  # sudo update-alternatives --set clang               /opt/clang+llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/clang
-  # sudo update-alternatives --set llvm-symbolizer     /opt/clang+llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/llvm-symbolizer
-  # sudo update-alternatives --set scan-build          /opt/clang+llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04/bin/scan-build
+  # sudo update-alternatives --install "/usr/bin/clang++"             "clang++"             "/opt/clang+llvm-16.0.4-x86_64-linux-gnu-ubuntu-22.04/bin/clang++"             1
+  # sudo update-alternatives --install "/usr/bin/clang-format"        "clang-format"        "/opt/clang+llvm-16.0.4-x86_64-linux-gnu-ubuntu-22.04/bin/clang-format"        1
+  # sudo update-alternatives --install "/usr/bin/clang-include-fixer" "clang-include-fixer" "/opt/clang+llvm-16.0.4-x86_64-linux-gnu-ubuntu-22.04/bin/clang-include-fixer" 1
+  # sudo update-alternatives --install "/usr/bin/clang-tidy"          "clang-tidy"          "/opt/clang+llvm-16.0.4-x86_64-linux-gnu-ubuntu-22.04/bin/clang-tidy"          1
+  # sudo update-alternatives --install "/usr/bin/clang"               "clang"               "/opt/clang+llvm-16.0.4-x86_64-linux-gnu-ubuntu-22.04/bin/clang"               1
+  # sudo update-alternatives --install "/usr/bin/llvm-symbolizer"     "llvm-symbolizer"     "/opt/clang+llvm-16.0.4-x86_64-linux-gnu-ubuntu-22.04/bin/llvm-symbolizer"     1
+  # sudo update-alternatives --install "/usr/bin/scan-build"          "scan-build"          "/opt/clang+llvm-16.0.4-x86_64-linux-gnu-ubuntu-22.04/bin/scan-build"          1
+
+  # sudo update-alternatives --set     clang++             /opt/clang+llvm-16.0.4-x86_64-linux-gnu-ubuntu-22.04/bin/clang++
+  # sudo update-alternatives --set     clang-format        /opt/clang+llvm-16.0.4-x86_64-linux-gnu-ubuntu-22.04/bin/clang-format
+  # sudo update-alternatives --set     clang-include-fixer /opt/clang+llvm-16.0.4-x86_64-linux-gnu-ubuntu-22.04/bin/clang-include-fixer
+  # sudo update-alternatives --set     clang-tidy          /opt/clang+llvm-16.0.4-x86_64-linux-gnu-ubuntu-22.04/bin/clang-tidy
+  # sudo update-alternatives --set     clang               /opt/clang+llvm-16.0.4-x86_64-linux-gnu-ubuntu-22.04/bin/clang
+  # sudo update-alternatives --set     llvm-symbolizer     /opt/clang+llvm-16.0.4-x86_64-linux-gnu-ubuntu-22.04/bin/llvm-symbolizer
+  # sudo update-alternatives --set     scan-build          /opt/clang+llvm-16.0.4-x86_64-linux-gnu-ubuntu-22.04/bin/scan-build
 
   # Use to hack this by copying clang libraries into /usr/lib/x86_64-linux-gnu but that's a bad idea.
   # It's much better to use toolchain settings that tell the compiler where to find these libraries.
