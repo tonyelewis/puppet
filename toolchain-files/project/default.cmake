@@ -5,7 +5,6 @@ set( CMAKE_CXX_FLAGS_PRJCT_INIT_LIST
 	-Wimplicit-fallthrough
 	-Wno-deprecated-declarations
 	-Wnon-virtual-dtor
-	-Wnull-dereference
 	-Wshadow
 	-Wsign-compare
 	-Wsign-conversion
@@ -13,13 +12,13 @@ set( CMAKE_CXX_FLAGS_PRJCT_INIT_LIST
 
 if ( CMAKE_CXX_COMPILER MATCHES "clang\\+\\+$"  )
 	list( APPEND CMAKE_CXX_FLAGS_PRJCT_INIT_LIST
+		-Wnull-dereference
 		-Wmove
 	)
 elseif ( CMAKE_CXX_COMPILER MATCHES "g\\+\\+$"  )
 	list( APPEND CMAKE_CXX_FLAGS_PRJCT_INIT_LIST
 		-Wduplicated-branches
 		-Wduplicated-cond
-		-Wnull-dereference
 		-Wrestrict
 	)
 endif()
