@@ -6,7 +6,6 @@ arch_build=x86_64
 arch_target=x86
 compiler=gcc
 compiler.version=11.3
-compiler.cppstd=17
 compiler.libcxx=libstdc++11
 compiler.flavour=normal
 build_type=RelWithDebInfo
