@@ -7,14 +7,14 @@
 # sudo apt-get install build-essential subversion swig python2.7-dev libedit-dev libncurses5-dev
 
 # mkdir -p  ~/source/llvm{,-build,-master}
-# git clone --depth 100  https://github.com/llvm/llvm-project.git ~/source/llvm-master
+# git clone --depth 500  https://github.com/llvm/llvm-project.git ~/source/llvm-master
 # # This structure uses the newly built clang to build libcxx+libcxxabi
-# cmake -B$( ls -1d ~/source/llvm-build ) -H$( ls -1d ~/source/llvm-master/llvm ) -GNinja -DCMAKE_INSTALL_PREFIX=$( ls -1d ~/source/llvm ) -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_ASSERTIONS=OFF '-DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra;compiler-rt;lldb' '-DLLVM_ENABLE_RUNTIMES=libcxx;libcxxabi'
-# ninja -C ~/source/llvm-build -k 0 runtimes
-# ninja -C ~/source/llvm-build -k 0 check-runtimes
-# ninja -C ~/source/llvm-build -k 0 install-runtimes
-# ninja -C ~/source/llvm-build -k 0
-# ninja -C ~/source/llvm-build -k 0 install
+# cmake -B$( ls -1d ~/source/llvm-build ) -H$( ls -1d ~/source/llvm-master/llvm ) -GNinja -DCMAKE_INSTALL_PREFIX=$( ls -1d ~/source/llvm ) -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_ASSERTIONS=OFF '-DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra;compiler-rt;lldb' '-DLLVM_ENABLE_RUNTIMES=libcxx;libcxxabi;libunwind'
+# ninja -C ~/source/llvm-build -j 10 -k 0 runtimes
+# ninja -C ~/source/llvm-build -j 10 -k 0 check-runtimes
+# ninja -C ~/source/llvm-build -j 10 -k 0 install-runtimes
+# ninja -C ~/source/llvm-build -j 10 -k 0
+# ninja -C ~/source/llvm-build -j 10 -k 0 install
 
 # # You may consider cloning the whole respository (ie remove `--depth 100`) and then checking-out a tag (eg `llvmorg-11.0.0-rc6`)
 
