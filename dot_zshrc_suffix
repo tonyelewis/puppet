@@ -4,6 +4,9 @@ setopt NO_CHECK_JOBS
 
 limit coredumpsize unlimited
 
+# Seems to be necessary to prevent oh-my-zsh doing annoying jiggery-pokery to add unwanted escapes with pasted strings
+export                DISABLE_MAGIC_FUNCTIONS="${DISABLE_MAGIC_FUNCTIONS:-true}"
+
 export                  BOOST_TEST_BUILD_INFO="${BOOST_TEST_BUILD_INFO:-yes}"
 export                BOOST_TEST_COLOR_OUTPUT="${BOOST_TEST_COLOR_OUTPUT:-yes}"
 export                   BOOST_TEST_LOG_LEVEL="${BOOST_TEST_LOG_LEVEL:-message}"
