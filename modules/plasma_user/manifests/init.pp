@@ -144,7 +144,7 @@ class plasma_user {
 #     ],
 #   }
 
-  if $hostname == 'bigslide' {
+  if $facts['networking']['hostname'] == 'bigslide' {
     augeas { 'Force font dpi to 240' :
       lens    => 'Rsyncd.lns',
       incl    => "${::plasma_user::config_dir}/kcmfonts",

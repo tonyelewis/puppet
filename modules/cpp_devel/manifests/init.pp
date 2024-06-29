@@ -47,6 +47,8 @@ class cpp_devel {
   }
 
   # C++ Development
+  #
+  # 'libtinfo5' was needed to run clang 16 in Ubuntu 22.04 (in May 2023) but no longer seems needed in 24.04
   package {
     [
       'cimg-dev',             # Currently required by LTFG code - can this be dropped for Boost Image Library?
@@ -66,7 +68,6 @@ class cpp_devel {
       #'libclang-dev',         # For iwyu
       'libgsl-dev',           # For cath-tools
       'libncurses5-dev',      # For iwyu
-      'libtinfo5',            # Seems required to run clang 16 as of May 2023
       'ninja-build',          #
       'python3-pip',          #
       # 'ninja-build-doc',     # Does not seem to exist in 16.10
@@ -92,7 +93,7 @@ class cpp_devel {
   # }
 
   package { ['conan']:
-    ensure => present,
+    ensure => present, # Should somehow specify '1.59.0'
     provider => pip3,
     require => Package['python3-pip'],
   }
@@ -102,7 +103,7 @@ class cpp_devel {
     command     => '/bin/true',
     refreshonly => true,
   }
-  if ( $::operatingsystem == 'Ubuntu' and $::operatingsystemmajrelease == '18.04' ) {
+  if ( $facts['os']['name'] == 'Ubuntu' and $facts['os']['release']['major'] == '18.04' ) {
     package {
       [
         'g++-11',

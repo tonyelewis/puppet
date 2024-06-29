@@ -62,7 +62,6 @@ class general_desktop {
       'bat',
       'entr',
       'expect',                          # Contains unbuffer which is useful for tricking clang-tidy into thinking it's talking directly to a tty
-      'gconf2',                          # For Atom
       'gnuplot',
       'graphviz',
       'gwenview',
@@ -70,12 +69,10 @@ class general_desktop {
       'inkscape',
       'kubuntu-desktop',
       'latex-mk',
-      'libappindicator1',                # For Chrome
       'libasound2-dev',                  # For MXX
       'libcurl4-gnutls-dev',             # For MXX
       'libgd-perl',                      # For plotting pictures in Perl
       'libimage-exiftool-perl',
-      'libindicator7',                   # For Chrome
       'libipc-run3-perl',                # For general Perl use
       'liblog-log4perl-perl',            # For general Perl use
       'libmoosex-params-validate-perl',  # MooseX::Params::Validate for General Perl use and for gen_cmake_list.pl in   particular
@@ -234,7 +231,6 @@ class general_desktop {
     ensure   => installed,
     provider => dpkg,
     source   => '/opt/google-chrome-stable_current_amd64.deb',
-    require  => Package[ 'libappindicator1', 'libindicator7' ],
   }
 
   file { 'put symlink to /usr/bin/batcat as ~/bin/bat' :

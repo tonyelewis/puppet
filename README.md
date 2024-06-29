@@ -79,14 +79,16 @@ Mirror old home directory into a new subdirectory
 
 ## Manual Post-Puppet Steps
 
+* (ensure keyboard is function locked with fn+esc)
 * (**IMPORTANT** stop's meta+l hibernating machine) In `~/.config/kglobalshortcutsrc`, change `Hibernate=Hibernate,Hibernate,Hibernate` to `Hibernate=none,Hibernate,Hibernate`
 * (**IMPORTANT** stop's meta+l hibernating machine) In `~/.config/kglobalshortcutsrc`, change `Sleep=Sleep,Sleep,Suspend`               to `Sleep=none,Sleep,Suspend`
 * For HiDPI XPS 15: "systemsettings &rarr; "Hardware" &rarr; "Display and Monitor" &rarr; "Scale Display" &rarr; 1.5 (200% for strongmango)
 * "systemsettings" &rarr; "Search" &rarr; "File Search" &rarr; Deselect "Enable File Search" &rarr; "Apply"
 * "systemsettings" &rarr; "Power Management" &rarr; make some decisions
 * "systemsettings" &rarr; "Startup and Shutdown" &rarr; "Login Screen (SDDM)" &rarr; "Background" &rarr; "
-* "systemsettings" &rarr; "Personalisation" &rarr; "Account Details" &rarr; "KDE Wallet" &rarr; "Wallet Preferences" &rarr; untick "Enable the KDE wallet subsystem"
-* "systemsettings" &rarr; "Shortcuts" &rarr; "KWin" &rarr; type 'window one' and update the four options &rarr; "Apply"
+* "systemsettings" &rarr; "Personalisation" &rarr; "KDE Wallet" &rarr; "Wallet Preferences" &rarr; untick "Enable the KDE wallet subsystem"
+* "systemsettings" &rarr; "Shortcuts" &rarr; "Shortcuts" &rarr; "KWin" &rarr; type 'window one' and update the four options &rarr; "Apply"
+* "systemsettings" &rarr; "Shortcuts" &rarr; "Shortcuts" &rarr; "Audio Volume" &rarr; add `Ins` to "Increase Volume"
 * "IBus Preferences" &rarr; "Emoji" &rarr; "Emoji annotation" &rarr; do stuff to remove `<Ctrl> period` (because that's a useful shortcut for whitespace in VSCode and emoji is a worse use)
 * "Configure Desktop" &rarr; "Wallpaper" &rarr; "Wallpaper Type" : Hunyango
 * "Configure Desktop" &rarr; "Location" &rarr; "Specify a folder" : `/opt/empty_directory`
