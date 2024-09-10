@@ -97,6 +97,8 @@ Mirror old home directory into a new subdirectory
 * Chrome settings: "Advanced" -> "Downloads" -> "/tmp" -> Ask
 * Chrome settings: "On start-up" -> "Continue where you left off"; "Download location" -> "/tmp"; "Ask where to save each file before downloading" -> true
 * Chrome settings: "Privacy and security" -> "Site settings" -> "Location" -> "Blocked; "Motions sensors" -> "Blocked"
+* Chrome settings: "Languages" -> "Preferred Languages" -> Make list only contain "English (United Kingdom)" (not OED spelling - that means ize endings)
+* Chrome settings: "Languages" -> "Spell check" -> enable and select "Basic spell check"
 * Chrome bookmarks from `~/puppet/browser_bookmarks.html`
 * Chrome settings -> Manage search engines -> Add -> google.co.uk / google.co.uk / https://www.google.co.uk/search?&q=%s
 * Konsole: "Settings" → "Create New Profile…" → Immediately click OK and leave (see https://www.reddit.com/r/kde/comments/y45vnk/konsole_profiles_arent_saving_why/?rdt=59998)
