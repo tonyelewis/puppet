@@ -145,6 +145,7 @@ Audio stuttering :
 
 Currently trying to stop creation of `~/Pictures/` etc by changing `~/.config/user-dirs.dirs` to use `"/tmp/Pictures"` etc rather than `"$HOME/Pictures` etc. If that works, puppetise soon.
 
+* Install calmly (I used the .tar.gz, but I seemed to have to untar it (in `~lewis/source/`) as root and then run `chmod 4755 ~lewis/source/calmly-writer-2.0.55/chrome-sandbox`)
 * Copy binary from https://github.com/cantino/mcfly/releases/latest (mcfly-vX.X.X-x86_64-unknown-linux-musl.tar.gz?) into ~/bin ?
 * Possibly `azcopy` into `~/bin`?
 * `move-tab-to-left` and `move-tab-to-right` in `~/.local/share/kxmlgui5/konsole/konsoleui.rc` (looks hard because that file has complicated structure and it's only created by making a change)
