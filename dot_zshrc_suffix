@@ -50,7 +50,7 @@ alias               jd='jj diff'
 alias               jl='jj log'
 alias              jst='jj st'
 alias              lsc='find . -type f \( -name "*.c" -o -name "*.cpp" -o -name "*.cu" -o -name "*.cuh" -o -name "*.cxx" -o -name "*.h" -o -name "*.hpp" -o -name "*.tex" \) -print                                   | grep -vP "\/\.backup\." | grep -vP "\/\.kate-backup" | sed "s#^\./##g" | grep -vP "^(\.venv|\.vscode-cmake-build|3rdparty|cpp-external-lib|misc/deprecated_code|ninja_|range-v3|third-party-code)" | mysortpipe '
-alias              lsj='find . \( -path "*/node_modules" -o -path "*/.venv" -o -path "*/.next" \) -prune -o -type f \( -iname "*.ts" -o -iname "*.tsx" -o -iname "*.js" -o -iname "*.jsx" \) -print | sed "s#^\./##g" | mysortpipe'
+alias              lsj='find . \( -path "*/node_modules" -o -path "*/.venv" -o -path "**/.next" \) -prune -o -type f \( -iname "*.ts" -o -iname "*.tsx" -o -iname "*.js" -o -iname "*.jsx" \) -print | sed "s#^\./##g" | mysortpipe'
 alias              lsr='find . -iname "*.rs" | grep -vP "^\.\/target/" | sed "s#^\./##g" | mysortpipe'
 alias              lsv='find . -type f \( \( -path "./processing-master" -o -path "./Processing.app" \) -prune -o -iname "*.java" \) | grep -vP "^\.\/(processing-master|Processing.app)" | sed "s#^\./##g" | mysortpipe '
 alias            lscol='ls --color=always '
@@ -328,6 +328,7 @@ unsetopt share_history
 #   pv      Quantify amount of data going through a pipe ("pipe viewer") (in Ubuntu package 'pv')
 #   rename  Perl extension for renaming multiple files
 #   strings Print all the strings in a binary
+#   shuf    Generate random permutations (`shuf -n 100` takes 100 random lines)
 #   ts      Prepend a timestamp before each line of stdin (in Ubuntu package 'moreutils')
 #   vipe    Run a text-editor to tweak data as it's passed through a pipe (in Ubuntu package 'moreutils')
 #
