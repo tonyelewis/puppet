@@ -74,7 +74,11 @@ alias        timestamp='date +%Y%m%d-%H%M%S'
 alias             wget='wget -U Firefox --content-disposition'
 
 function bpn {
-	bat --paging=never $@
+	bat --paging=never --pager=doesnotexist $@
+}
+
+function jib {
+	jj new --no-edit -B $@
 }
 
 function lgt {
