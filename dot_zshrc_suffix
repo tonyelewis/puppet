@@ -41,13 +41,31 @@ export                                   PATH=~/bin:~/puppet/perl/tools:$PATH:/u
 #
 # This appears before the other aliases so they can use it
 alias             auto='libtoolize --force;aclocal;autoconf;touch NEWS AUTHORS README ChangeLog;automake --add-missing'
+alias              bpn='bat --paging=never --pager=doesnotexist'
 alias        datestamp='date +%Y%m%d'
 alias              gwl='git worktree list'
 alias          lastcol='awk '\''{print $NF}'\'
 alias         lsbigmov='find . -type f \( \( -name "*.mp4" -o -name "*.wmv" -o -name "*.mp*g" -o -name "*.avi" -o -name "*.mov" -o -name "*.flv" -o -name "*.asf" \) -a -size +30M \) '
 alias                c='cargo'
+alias               jb='jj bookmark'
 alias               jd='jj diff'
-alias               jl='jj log'
+alias            jdmsg='jj desc --message'
+alias              jds='jj desc'
+alias               je='jj edit'
+alias             jgcl='jj git clone'
+alias              jgf='jj git fetch'
+alias              jgp='jj git push'
+alias               ji='jj new --no-edit'
+alias              jib='jj new --no-edit -B'
+alias               jl='jj log --reversed --limit 500 --revisions "all()"'
+alias              jla='jj log -r "all()"'
+alias               jn='jj new'
+alias              jol='jj op log'
+alias              jrb='jj rebase'
+alias              jrs='jj restore'
+alias              jrt='cd "$(jj root \|\| echo .)"'
+alias              jsp='jj split'
+alias              jsq='jj squash'
 alias              jst='jj st'
 alias              lsc='find . -type f \( -name "*.c" -o -name "*.cpp" -o -name "*.cu" -o -name "*.cuh" -o -name "*.cxx" -o -name "*.h" -o -name "*.hpp" -o -name "*.tex" \) -print                                   | grep -vP "\/\.backup\." | grep -vP "\/\.kate-backup" | sed "s#^\./##g" | grep -vP "^(\.venv|\.vscode-cmake-build|3rdparty|cpp-external-lib|misc/deprecated_code|ninja_|range-v3|third-party-code)" | mysortpipe '
 alias              lsj='find . \( -path "*/node_modules" -o -path "*/.venv" -o -path "**/.next" \) -prune -o -type f \( -iname "*.ts" -o -iname "*.tsx" -o -iname "*.js" -o -iname "*.jsx" \) -print | sed "s#^\./##g" | mysortpipe'
@@ -72,14 +90,6 @@ alias      recmake-all='cmake-all-of $( present-profiles )'
 alias             svba='source .venv/bin/activate'
 alias        timestamp='date +%Y%m%d-%H%M%S'
 alias             wget='wget -U Firefox --content-disposition'
-
-function bpn {
-	bat --paging=never --pager=doesnotexist $@
-}
-
-function jib {
-	jj new --no-edit -B $@
-}
 
 function lgt {
 	( git --no-pager log -n 1500 --color --all --decorate --oneline --graph --format=format:"%C(auto)%h%C(reset)%C(auto)%d%C(reset) %C(white)%s%C(reset)   %C(blue)%an, %ar%C(reset)" $@ && echo ) | tac | perl -pe 's/(\w+)\\([^[:print:]])/\1#\2/g; s/(\w+)\/([^[:print:]])/\1\\\2/g; s/(\w+)#([^[:print:]])/\1\/\2/g;'
