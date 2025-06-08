@@ -16,7 +16,7 @@
 # ninja -C ~/source/llvm-build -j 10 -k 0
 # ninja -C ~/source/llvm-build -j 10 -k 0 install
 
-# # You may consider cloning the whole respository (ie remove `--depth 100`) and then checking-out a tag (eg `llvmorg-11.0.0-rc6`)
+# # You may consider cloning the whole repository (ie remove `--depth 100`) and then checking-out a tag (eg `llvmorg-11.0.0-rc6`)
 
 # # If necessary, comment out line `CHECK_SIZE_AND_OFFSET(ipc_perm, mode);` in `~/source/llvm-master/compiler-rt/lib/sanitizer_common/sanitizer_platform_limits_posix.cpp`
 

@@ -132,6 +132,8 @@ For Ubuntu 20.04 on XPS 17, had problem with screen tearing/flickering. It's sta
 
 Don't fiddle XPS 15's fans - you only make stuff worse.
 
+Recently commented out a bunch of clang setup in case it was interfering with Rust. In the end it probably wasn't and the solution was just to wipe `~/.cargo/registry/`. But leaving it commented out because maybe the simplicity of just using the system-provided Clang is a better option nowadays?
+
 Audio stuttering :
 
 * https://askubuntu.com/questions/1044552/audio-stuttering-in-ubuntu-18-04 ? Don't think so.

@@ -24,10 +24,10 @@
 class cpp_devel {
   include git
 
-  # TODO: Could upgrade this to 10 soon. Only Ubuntu binary currently listed on https://releases.llvm.org/download.html is:
-  #       https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz
-  $clang_major_version  = '16'
-  $clang_version        = "${$clang_major_version}.0.0"
+  # # TODO: Could upgrade this to 10 soon. Only Ubuntu binary currently listed on https://releases.llvm.org/download.html is:
+  # #       https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz
+  # $clang_major_version  = '16'
+  # $clang_version        = "${$clang_major_version}.0.0"
   $repos_root_dir       = '/home/lewis'
   $repos_user           = 'lewis'
   $repos_group          = 'lewis'
@@ -35,7 +35,7 @@ class cpp_devel {
   # $repos_root_dir       = '/cath/homes2/ucbctnl'
   # $repos_user           = 'ucbctnl'
   # $repos_group          = 'users'
-  $cath_tools_url         = 'git@github.com:UCLOrengoGroup/cath-tools.git'
+  # $cath_tools_url         = 'git@github.com:UCLOrengoGroup/cath-tools.git'
   $gen_cmake_list_url     = 'git@github.com:tonyelewis/gen_cmake_list.git'
   $tell_url               = 'git@github.com:tonyelewis/tell.git'
 
@@ -66,7 +66,7 @@ class cpp_devel {
       #'libc++abi-dev',        #
       #'libc6-dev-i386',       #
       #'libclang-dev',         # For iwyu
-      'libgsl-dev',           # For cath-tools
+      # 'libgsl-dev',           # For cath-tools
       'libncurses5-dev',      # For iwyu
       'ninja-build',          #
       'python3-pip',          #
@@ -134,54 +134,56 @@ class cpp_devel {
     #  * echo | /usr/bin/g++-7 -xc++ -v -fsyntax-only -
   }
 
-  # As of 19th March 2020, having to hack the following to get /opt/clang+llvm-9.0.0-x86_64-pc-linux-gnu/bin/clang++ to work on Ubuntu 19.10
-  # As of 25th May 2020, having to do the same on Ubuntu 20.04
-  #
-  #     sudo apt-get install libz3-4
-  #     sudo ln -s libz3.so.4 /usr/lib/x86_64-linux-gnu/libz3.so.4.8
-  #
-  # Perhaps this is a good indication that it'd be better to move to building the latest release (as well as master) instead of downloading binaries
+  # Removing stuff with latest version of clang because it interferes with Rust
 
-  # $clang_base_stem = "clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-14.04"
-  # $clang_base_stem = "clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-16.04"
-  # $clang_base_stem = "clang+llvm-${clang_version}-x86_64-linux-sles12.3"
-  $clang_base_stem = "clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-18.04"
+  # # As of 19th March 2020, having to hack the following to get /opt/clang+llvm-9.0.0-x86_64-pc-linux-gnu/bin/clang++ to work on Ubuntu 19.10
+  # # As of 25th May 2020, having to do the same on Ubuntu 20.04
+  # #
+  # #     sudo apt-get install libz3-4
+  # #     sudo ln -s libz3.so.4 /usr/lib/x86_64-linux-gnu/libz3.so.4.8
+  # #
+  # # Perhaps this is a good indication that it'd be better to move to building the latest release (as well as master) instead of downloading binaries
 
-  $clang_tar_base  = "${clang_base_stem}.tar.xz"
-  $clang_tar_file  = "/opt/${clang_tar_base}"
-  $clang_dir       = "/opt/${clang_base_stem}"
-  # As of May 2023, this appeared to have trouble with the redirects involved in
-  # downloading from the new github.com location. I didn't have time, so I just
-  # downloaded the file manually and put it in place.
-  file { 'Download prebuilt Clang archive':
-    ensure  => file,
-    mode    => 'a+r',
-    path    => $clang_tar_file,
-    replace => false,
-    source  => "https://github.com/llvm/llvm-project/releases/download/llvmorg-${clang_version}/${clang_tar_base}",
-    # source  => "http://releases.llvm.org/${clang_version}/${clang_tar_base}",
-  }
-  ->
-  file { 'Create directory into which to untar prebuilt Clang' :
-    ensure => 'directory',
-    path   => $clang_dir,
-  }
-  ->exec { 'Untar prebuilt Clang archive' :
-    command => "tar -Jxvf ${clang_tar_file} --directory ${clang_dir} --strip-components=1",
-    creates => "${clang_dir}/bin/clang-tidy",
-    path    => [ '/bin', '/usr/bin' ], # Needs /bin for tar and /usr/bin/ for child process xz
-  }
+  # # $clang_base_stem = "clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-14.04"
+  # # $clang_base_stem = "clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-16.04"
+  # # $clang_base_stem = "clang+llvm-${clang_version}-x86_64-linux-sles12.3"
+  # $clang_base_stem = "clang+llvm-${clang_version}-x86_64-linux-gnu-ubuntu-18.04"
 
-  $clang_bins = [ 'clang', 'clang++', 'clang-format', 'clang-include-fixer', 'clang-tidy', 'llvm-symbolizer', 'scan-build' ]
-  $clang_bins.each | String $clang_bin | {
-    alternative_entry { "/opt/${clang_base_stem}/bin/${clang_bin}" :
-      ensure   => present,
-      altlink  => "/usr/bin/${clang_bin}",
-      altname  => $clang_bin,
-      priority => 100,
-      require  => Exec[ 'Untar prebuilt Clang archive' ],
-    }
-  }
+  # $clang_tar_base  = "${clang_base_stem}.tar.xz"
+  # $clang_tar_file  = "/opt/${clang_tar_base}"
+  # $clang_dir       = "/opt/${clang_base_stem}"
+  # # As of May 2023, this appeared to have trouble with the redirects involved in
+  # # downloading from the new github.com location. I didn't have time, so I just
+  # # downloaded the file manually and put it in place.
+  # file { 'Download prebuilt Clang archive':
+  #   ensure  => file,
+  #   mode    => 'a+r',
+  #   path    => $clang_tar_file,
+  #   replace => false,
+  #   source  => "https://github.com/llvm/llvm-project/releases/download/llvmorg-${clang_version}/${clang_tar_base}",
+  #   # source  => "http://releases.llvm.org/${clang_version}/${clang_tar_base}",
+  # }
+  # ->
+  # file { 'Create directory into which to untar prebuilt Clang' :
+  #   ensure => 'directory',
+  #   path   => $clang_dir,
+  # }
+  # ->exec { 'Untar prebuilt Clang archive' :
+  #   command => "tar -Jxvf ${clang_tar_file} --directory ${clang_dir} --strip-components=1",
+  #   creates => "${clang_dir}/bin/clang-tidy",
+  #   path    => [ '/bin', '/usr/bin' ], # Needs /bin for tar and /usr/bin/ for child process xz
+  # }
+
+  # $clang_bins = [ 'clang', 'clang++', 'clang-format', 'clang-include-fixer', 'clang-tidy', 'llvm-symbolizer', 'scan-build' ]
+  # $clang_bins.each | String $clang_bin | {
+  #   alternative_entry { "/opt/${clang_base_stem}/bin/${clang_bin}" :
+  #     ensure   => present,
+  #     altlink  => "/usr/bin/${clang_bin}",
+  #     altname  => $clang_bin,
+  #     priority => 100,
+  #     require  => Exec[ 'Untar prebuilt Clang archive' ],
+  #   }
+  # }
 
   # sudo update-alternatives --install "/usr/bin/clang++"             "clang++"             "/opt/clang+llvm-16.0.4-x86_64-linux-gnu-ubuntu-22.04/bin/clang++"             1
   # sudo update-alternatives --install "/usr/bin/clang-format"        "clang-format"        "/opt/clang+llvm-16.0.4-x86_64-linux-gnu-ubuntu-22.04/bin/clang-format"        1
@@ -238,13 +240,13 @@ class cpp_devel {
   #   target => "/usr/include/locale.h",
   # }
 
-  file { 'Install cath-tools_konsole.desktop shortcut' :
-    ensure  => 'present',
-    path    => "${desktop_files_dir}/cath-tools_konsole.desktop",
-    source  => 'puppet:///modules/cpp_devel/cath-tools_konsole.desktop',
-    replace => 'yes',
-    mode    => '0644',
-  }
+  # file { 'Install cath-tools_konsole.desktop shortcut' :
+  #   ensure  => 'present',
+  #   path    => "${desktop_files_dir}/cath-tools_konsole.desktop",
+  #   source  => 'puppet:///modules/cpp_devel/cath-tools_konsole.desktop',
+  #   replace => 'yes',
+  #   mode    => '0644',
+  # }
 
 #  file { 'Install eclipse.desktop shortcut' :
 #    path    => "$desktop_files_dir/eclipse.desktop",
@@ -324,20 +326,20 @@ class cpp_devel {
 #  }
 #  # This doesn't seem to chown all files to the correct user, so (as root) run: chown -R lewis:lewis ~lewis/svn
 
-  vcsrepo { 'clone cath-tools git repository' :
-    ensure   => present,
-    path     => "${repos_root_dir}/cath-tools",
-    provider => git,
-    source   => $cath_tools_url,
-    owner    => $repos_user,
-    group    => $repos_group,
-    user     => $repos_user,
-  }
-  ->file { 'put symlink to cath-tools in the root directory' :
-    ensure => 'link',
-    name   => '/cath-tools',
-    target => "${repos_root_dir}/cath-tools",
-  }
+  # vcsrepo { 'clone cath-tools git repository' :
+  #   ensure   => present,
+  #   path     => "${repos_root_dir}/cath-tools",
+  #   provider => git,
+  #   source   => $cath_tools_url,
+  #   owner    => $repos_user,
+  #   group    => $repos_group,
+  #   user     => $repos_user,
+  # }
+  # ->file { 'put symlink to cath-tools in the root directory' :
+  #   ensure => 'link',
+  #   name   => '/cath-tools',
+  #   target => "${repos_root_dir}/cath-tools",
+  # }
 
   vcsrepo { 'clone gen_cmake_list git repository' :
     ensure   => present,
